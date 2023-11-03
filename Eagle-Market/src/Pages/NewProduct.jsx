@@ -2,41 +2,43 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import useAuthContext from '@/Context/AuthContext/useAuthContext'
 
 const NewProduct = () => {
   const [registerProduct, setRegisterProduct] = useState({})
+  const { token } = useAuthContext()
 
-  // useEffect(() => {
-  //   console.log('effect:', signUpInfo)
-  //   if (signUpInfo?.email?.length > 0) {
-  //     console.log('Signing up')
-  //     const register = fetch('https://eagle-market.onrender.com/register', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({
-  //         ...signUpInfo
-  //       })
-  //     })
+  useEffect(() => {
+    console.log('effect:', registerProduct)
+    if (registerProduct?.product_name?.length > 0) {
+      console.log('Registrando')
+      const register = fetch('https://eagle-market.onrender.com/items', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          ...registerProduct
+        })
+      })
 
-  //     register.then((value) => {
-  //       console.log(value)
-  //       if (value.ok) {
-  //         return value.json()
-  //       } else {
-  //         throw new Error('No está permitido')
-  //       }
-  //     })
-  //       .then((value) => {
-  //         console.log(value)
-  //       })
-  //       .catch((e) => {
-  //         console.log(e)
-  //       })
-  //   }
-  // }, [registerProduct])
+      register.then((value) => {
+        console.log(value)
+        if (value.ok) {
+          return value.json()
+        } else {
+          throw new Error('No está permitido')
+        }
+      })
+        .then((value) => {
+          console.log(value)
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    }
+  }, [registerProduct, token])
 
   const categoriesAllowed = ['Books', 'Movies', 'Music', 'Games', 'Electronics', 'Computers',
     'Home', 'Garden', 'Tools', 'Grocery', 'Health', 'Beauty', 'Toys', 'Kids', 'Baby', 'Clothing',
@@ -45,11 +47,11 @@ const NewProduct = () => {
   const registerProductFormSchema = yup.object().shape({
     product_name: yup.string().required('Escribe el nombre de tu producto'),
     brand: yup.string().required('Escribe la marca de tu producto'),
-    price: yup.number().positive('El precio debe ser positivo').required('Escribe el precio de tu producto'),
+    price: yup.number('Debes ingresar un número').positive('El precio debe ser positivo').required('Escribe el precio de tu producto'),
     category: yup.mixed().oneOf(categoriesAllowed, 'Selecciona la categoría de tu producto').defined(),
     description: yup.string().required('Escribe la descripción de tu producto'),
     sku: yup.string(),
-    image: yup.string().url('Ingresa una url válida').required('Ingresa una url')
+    image: yup.string().required('Ingresa una url')
   })
 
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -58,12 +60,12 @@ const NewProduct = () => {
 
   const onSubmit = (data) => {
     console.log('datos del formulario', data)
-    // setSignUpInfo({ ...data })
+    setRegisterProduct({ ...data })
   }
 
   return (
     <>
-      <h2>Regístrate ahora para iniciar a comprar</h2>
+      <h2>Crear un nuevo producto</h2>
       <div className='login'>
         <div className='login-container'>
           <form
@@ -102,47 +104,48 @@ const NewProduct = () => {
 
             <label htmlFor='category'>Categoría</label>
             <select name='category' id='category' {...register('category')}>
+              <option value=''>Selecciona una categoría</option>
               {categoriesAllowed.map((element, index) => {
                 return <option value={element} key={index}>{element}</option>
               })}
             </select>
             <p>{errors.category?.message}</p>
 
-            <label htmlFor='role'>Rol</label>
-            <select name='role' id='role' {...register('role')}>
-              <option value=''>Elige un rol</option>
-              <option value='CUSTOMER'>Customer</option>
-              <option value='ADMIN'>Admin</option>
-            </select>
-            <p>{errors.role?.message}</p>
+            <label htmlFor='description'>Descripción del producto</label>
+            <textarea
+              name='description'
+              placeholder='Descripción de tu producto'
+              id='description'
+              {...register('description')}
+            />
+            <p>{errors.description?.message}</p>
 
-            <label htmlFor='email'>Email</label>
+            <label htmlFor='sku'>SKU del producto</label>
             <input
               type='text'
-              name='email'
-              placeholder='correo@mail.com'
-              id='email'
-              {...register('email')}
+              name='sku'
+              placeholder='SKU de tu producto'
+              id='sku'
+              {...register('sku')}
             />
-            <p>{errors.email?.message}</p>
+            <p>{errors.sku?.message}</p>
 
-            <label htmlFor='password'>Password</label>
+            <label htmlFor='image'>URL de la imagen del producto</label>
             <input
-              type='password'
-              name='password'
-              id='password'
-              {...register('password')}
+              type='text'
+              name='image'
+              placeholder='URL'
+              id='image'
+              {...register('image')}
             />
-            <p>{errors.password?.message}</p>
+            <p>{errors.image?.message}</p>
 
             <button type='submit'>
-              Iniciar Sesion
+              Crear producto
             </button>
           </form>
         </div>
       </div>
-      <p>Ya eres un usuario?</p>
-      <Link to='/login'>Inicia sesión</Link>
     </>
   )
 }
