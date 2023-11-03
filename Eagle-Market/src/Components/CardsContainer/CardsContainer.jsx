@@ -1,8 +1,11 @@
 import ProductCard from '@/Components/ProductCard/ProductCard'
 import { useEffect, useState } from 'react'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
+import { useNavigate } from 'react-router-dom'
 
-const CardsContainer = () => {
+const CardsContainer = ({ isAdmin }) => {
+  const navigate = useNavigate()
+
   const [products, setProducts] = useState([])
 
   const { navSearch } = useProductsContext()
@@ -27,6 +30,7 @@ const CardsContainer = () => {
   return (
     <>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {isAdmin ? <div className='card' style={{ width: '18rem' }} onClick={() => navigate('/new-product')}> + </div> : ''}
         {productsArray.map((element, index) => {
           return <ProductCard data={element} key={index} />
         })}

@@ -3,10 +3,11 @@ import CardsContainer from '@/Components/CardsContainer/CardsContainer'
 
 const Home = () => {
   const { token, userInfo, setToken } = useAuthContext()
+  console.log(userInfo?.role === 'ADMIN')
   return (
     <>
       <div>Bienvenido {userInfo.first_name}</div>
-      <CardsContainer />
+      <CardsContainer isAdmin={userInfo?.role === 'ADMIN'} />
     </>
   )
 }

@@ -26,6 +26,7 @@ const Navbar = () => {
             </li>
           </ul>
           <p className='blanco'>Bienvenido {userInfo.first_name}</p>
+          {loginStatus && userInfo?.role === 'ADMIN' ? <NavLink to='/new-product'>Crear nuevo producto</NavLink> : ''}
           <input
             type='text'
             value={navSearch}
@@ -39,7 +40,7 @@ const Navbar = () => {
           <div className='d-flex'>
             {!loginStatus
               ? <> <NavLink className='navbar-brand' to='/signup'>Registrarse</NavLink> <NavLink className='navbar-brand' to='/login'>Iniciar Sesión</NavLink> </>
-              : <NavLink className='navbar-brand' to='/logout'>Cerrar Sesión</NavLink>}
+              : <> <NavLink to='/checkout'>Ver carrito</NavLink> <NavLink className='navbar-brand' to='/logout'>Cerrar Sesión</NavLink></>}
           </div>
         </div>
       </div>
