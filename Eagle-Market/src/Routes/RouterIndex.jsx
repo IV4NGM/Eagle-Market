@@ -4,6 +4,7 @@ import Login from '@/Pages/Login'
 import Logout from '@/Pages/Logout'
 import Signup from '@/Pages/Signup'
 import ProductDetail from '@/Pages/ProductDetail'
+import Checkout from '@/Pages/Checkout'
 
 const RouterIndex = () => {
   return (
@@ -13,6 +14,7 @@ const RouterIndex = () => {
       <Route path='/logout' element={<Logout />} />
       <Route path='/signup' element={<Signup />} />
       <Route path='/product/:id' element={<ProductDetail />} />
+      <Route path='/checkout' element={<Checkout />} />
     </Routes>
   )
 }
