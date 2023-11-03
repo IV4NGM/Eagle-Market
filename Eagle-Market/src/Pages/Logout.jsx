@@ -1,4 +1,4 @@
-import useAuthContext from '@/Context/useAuthContext'
+import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import { useEffect } from 'react'
 
 const Logout = () => {

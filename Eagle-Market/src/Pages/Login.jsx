@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import useAuthContext from '@/Context/useAuthContext'
+import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import AuthContext from './AuthContext'
+import AuthContext from '@/Context/AuthContext/AuthContext'
 
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
