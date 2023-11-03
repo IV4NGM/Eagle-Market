@@ -1,13 +1,18 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import './Navbar.scss'
-import useAuthContext from '@/Context/useAuthContext'
+
+import useAuthContext from '@/Context/AuthContext/useAuthContext'
+import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 
 const Navbar = () => {
-  const { token, userInfo, setToken } = useAuthContext()
+  const navigate = useNavigate()
+
+  const { loginStatus, userInfo } = useAuthContext()
+  const { navSearch, setNavSearch } = useProductsContext()
   return (
     <nav className='navbar navbar-expand-lg bg-body-tertiary sticky-top' data-bs-theme='dark'>
       <div className='container-fluid'>
-        <NavLink className='navbar-brand' to='/'>
+        <NavLink className='navbar-brand' to='/' onClick={() => setNavSearch('')}>
           <img src='https://flaticons.net/icon.php?slug_category=wildlife&slug_icon=eagle' alt='Eagle blade logo' className='d-inline-block align-text-top logo-nav' />
           <p>Eagle Market</p>
         </NavLink>
@@ -21,10 +26,20 @@ const Navbar = () => {
             </li>
           </ul>
           <p className='blanco'>Bienvenido {userInfo.first_name}</p>
-          <input type='text' />
+          <input
+            type='text'
+            value={navSearch}
+            onChange={(event) => setNavSearch(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                navigate('/')
+              }
+            }}
+          />
           <div className='d-flex'>
-            <NavLink className='navbar-brand' to='/login'>Iniciar Sesión</NavLink>
-            <NavLink className='navbar-brand' to='/logout'>Cerrar Sesión</NavLink>
+            {!loginStatus
+              ? <> <NavLink className='navbar-brand' to='/signup'>Registrarse</NavLink> <NavLink className='navbar-brand' to='/login'>Iniciar Sesión</NavLink> </>
+              : <NavLink className='navbar-brand' to='/logout'>Cerrar Sesión</NavLink>}
           </div>
         </div>
       </div>
