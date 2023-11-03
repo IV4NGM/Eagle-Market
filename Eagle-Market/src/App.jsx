@@ -5,6 +5,7 @@ import RouterIndex from '@/Routes/RouterIndex'
 import Footer from '@/Components/Footer/Footer'
 import AuthProvider from '@/Context/AuthContext/AuthProvider'
 import ProductsProvider from '@/Context/ProductsContext/ProductsProvider'
+import CartProvider from '@/Context/CartContext/CartProvider'
 
 function App () {
   return (
@@ -12,9 +13,11 @@ function App () {
       <BrowserRouter>
         <AuthProvider>
           <ProductsProvider>
-            <Navbar />
-            <RouterIndex />
-            <Footer />
+            <CartProvider>
+              <Navbar />
+              <RouterIndex />
+              <Footer />
+            </CartProvider>
           </ProductsProvider>
         </AuthProvider>
       </BrowserRouter>
