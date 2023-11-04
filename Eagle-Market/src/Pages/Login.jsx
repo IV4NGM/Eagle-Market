@@ -16,7 +16,6 @@ const Login = () => {
   const { setNavSearch, setApiCall } = useProductsContext()
   const { setCart } = useCartContext()
   const [loginInfo, setLoginInfo] = useState({})
-
   const [errorMessage, setErrorMessage] = useState('')
   const [showModalFailure, setShowModalFailure] = useState(false)
   const [showModalSuccess, setShowModalSuccess] = useState(false)
@@ -43,9 +42,9 @@ const Login = () => {
         switch (value.status) {
           case 200: return value.json()
           case 401: setErrorMessage('El usuario o contraseña son incorrectos')
-            throw new Error('Usuario o contraseña incorrectos')
+            throw new Error('IncorrectData')
           case 404: setErrorMessage('El usuario o contraseña son incorrectos')
-            throw new Error('Usuario o contraseña incorrectos')
+            throw new Error('IncorrectData')
           default: setShowModalFailure(true)
         }
       //   if (value.ok) {
@@ -85,6 +84,9 @@ const Login = () => {
         .catch((e) => {
           setApiCall(true)
           console.log(e)
+          if (e.message !== 'IncorrectData') {
+            setShowModalFailure(true)
+          }
         })
     }
   }, [loginInfo, setToken, setLoginStatus, setUserInfo, navigate, setCart, setApiCall, setLastLetter])

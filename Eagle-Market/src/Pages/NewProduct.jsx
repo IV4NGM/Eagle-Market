@@ -13,7 +13,6 @@ const NewProduct = () => {
   const { token } = useAuthContext()
   const { setApiCall } = useProductsContext()
 
-  const [errorMessage, setErrorMessage] = useState('')
   const [showModalFailure, setShowModalFailure] = useState(false)
   const [showModalSuccess, setShowModalSuccess] = useState(false)
 
@@ -38,8 +37,7 @@ const NewProduct = () => {
         setApiCall(true)
         switch (value.status) {
           case 200: return value.json()
-          default: setShowModalFailure(true)
-            throw new Error('No está permitido')
+          default: throw new Error('No está permitido')
         }
       })
         .then((value) => {
@@ -49,6 +47,7 @@ const NewProduct = () => {
         .catch((e) => {
           console.log(e)
           setApiCall(true)
+          setShowModalFailure(true)
         })
     }
   }, [registerProduct, setApiCall, token])

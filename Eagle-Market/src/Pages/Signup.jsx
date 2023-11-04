@@ -36,9 +36,9 @@ const Signup = () => {
         switch (value.status) {
           case 201: return value.json()
           case 400: setErrorMessage('Revisa tus datos e intenta nuevamente')
-            throw new Error('Datos no válidos')
+            throw new Error('IncorrectData')
           case 403: setErrorMessage('Ya existe un usuario con ese email')
-            throw new Error('Email duplicado')
+            throw new Error('IncorrectData')
           default: setShowModalFailure(true)
         }
       })
@@ -50,6 +50,9 @@ const Signup = () => {
         .catch((e) => {
           console.log(e)
           setApiCall(true)
+          if (e.message !== 'IncorrectData') {
+            setShowModalFailure(true)
+          }
         })
     }
   }, [setApiCall, signUpInfo])
