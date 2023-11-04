@@ -8,7 +8,7 @@ import useCartContext from '@/Context/CartContext/useCartContext'
 const Navbar = () => {
   const navigate = useNavigate()
 
-  const { loginStatus, userInfo } = useAuthContext()
+  const { loginStatus, userInfo, lastLetter } = useAuthContext()
   const { navSearch, setNavSearch } = useProductsContext()
   const { cart } = useCartContext()
 
@@ -33,7 +33,7 @@ const Navbar = () => {
               <a className='nav-link active'>Todos tus productos</a>
             </li>
           </ul>
-          <p className='blanco'>Bienvenido {userInfo.first_name}</p>
+          <p className='blanco'>Bienvenid{lastLetter} {userInfo.first_name}</p>
           {loginStatus && userInfo?.role === 'ADMIN' ? <NavLink to='/new-product'>Crear nuevo producto</NavLink> : ''}
           <input
             type='text'

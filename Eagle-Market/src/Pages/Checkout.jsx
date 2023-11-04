@@ -93,15 +93,15 @@ const Checkout = () => {
         title='Comprar ahora'
         showModal={showModalBuyNow}
         setShowModal={setShowModalBuyNow}
-        text={`¿Estás seguro de que quieres comprar ${productToBuy?.product_amount} artículos con valor de` + '$' + ` ${productToBuy?.product_amount * productToBuy?.price}`}
+        text={`¿Estás seguro de que quieres comprar ${productToBuy?.product_amount} artículos con valor de` + ' $ ' + ` ${productToBuy?.product_amount * productToBuy?.price}`}
         onYes={comprarAhora}
       />
       <CustomModal
         title='Comprar carrito'
         showModal={showModalBuyAllCart}
         setShowModal={setShowModalBuyAllCart}
-        text={`¿Estás seguro de que quieres comprar ${productsAmount} artículos con valor de` + '$' + ` ${totalPrice}`}
-        onYes={comprarAhora}
+        text={`¿Estás seguro de que quieres comprar ${productsAmount} artículos con valor de` + ' $ ' + ` ${totalPrice}`}
+        onYes={comprarCarrito}
       />
       <CustomModal
         title='Compra realizada exitosamente'
@@ -112,13 +112,8 @@ const Checkout = () => {
           setNavSearch('')
           navigate('/')
         }}
-        onNo={() => {
-          setNavSearch('')
-          navigate('/')
-        }}
-        isCancelButton={false}
         textYes='Volver a Inicio'
-        estatico
+        textNo='Ver carrito'
       />
       <CustomModal
         title='Eliminar el producto'
@@ -135,7 +130,7 @@ const Checkout = () => {
         onYes={() => modifyCart(deleteCartParams.newValue, deleteCartParams.id)}
       />
       {Object.keys(productToBuy).length > 0
-        ? <> <h2>Comprar ahora</h2> <CartProductCard data={productToBuy} changeValueFunction={changeValueFunction} type='productToBuy' onDelete={() => setShowModalDeleteBuy(true)} /> <button onClick={comprarAhora}>Comprar ahora</button> <button onClick={addToCart}>Agregar al carrito</button> </>
+        ? <> <h2>Comprar ahora</h2> <CartProductCard data={productToBuy} changeValueFunction={changeValueFunction} type='productToBuy' onDelete={() => setShowModalDeleteBuy(true)} /> <button onClick={() => setShowModalBuyNow(true)}>Comprar ahora</button> <button onClick={addToCart}>Agregar al carrito</button> </>
         : ''}
       <h3>Carrito</h3>
       {cart.map((element, index) => {
@@ -150,7 +145,7 @@ const Checkout = () => {
       })}
       <p>Cantidad de productos: {productsAmount}</p>
       <p><strong>Gran total: ${totalPrice}</strong></p>
-      <button onClick={comprarCarrito}>Comprar carrito</button>
+      <button onClick={() => setShowModalBuyAllCart(true)}>Comprar carrito</button>
     </>
   )
 }

@@ -4,11 +4,18 @@ import * as yup from 'yup'
 import { useEffect, useState } from 'react'
 import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
+import CustomModal from '@/Components/CustomModal/CustomModal'
+import { useNavigate } from 'react-router-dom'
 
 const NewProduct = () => {
+  const navigate = useNavigate()
   const [registerProduct, setRegisterProduct] = useState({})
   const { token } = useAuthContext()
   const { setApiCall } = useProductsContext()
+
+  const [errorMessage, setErrorMessage] = useState('')
+  const [showModalFailure, setShowModalFailure] = useState(false)
+  const [showModalSuccess, setShowModalSuccess] = useState(false)
 
   useEffect(() => {
     console.log('effect:', registerProduct)
@@ -29,14 +36,15 @@ const NewProduct = () => {
       register.then((value) => {
         console.log(value)
         setApiCall(true)
-        if (value.ok) {
-          return value.json()
-        } else {
-          throw new Error('No está permitido')
+        switch (value.status) {
+          case 200: return value.json()
+          default: setShowModalFailure(true)
+            throw new Error('No está permitido')
         }
       })
         .then((value) => {
           console.log(value)
+          setShowModalSuccess(true)
         })
         .catch((e) => {
           console.log(e)
@@ -151,6 +159,29 @@ const NewProduct = () => {
           </form>
         </div>
       </div>
+      <CustomModal
+        title='Error al crear el producto'
+        showModal={showModalFailure}
+        setShowModal={setShowModalFailure}
+        text='Hubo un error al intentar crear el producto. Intente de nuevo más tarde'
+        isCancelButton={false}
+        textYes='Regresar'
+        estatico
+      />
+      <CustomModal
+        title='Producto creado exitosamente'
+        showModal={showModalSuccess}
+        setShowModal={setShowModalSuccess}
+        text='Se ha creado el producto exitosamente. Vuelve a Inicio para seguir comprando'
+        onYes={() => {
+          navigate('/')
+        }}
+        onNo={() => {
+          navigate('/')
+        }}
+        isCancelButton={false}
+        textYes='Volver a Inicio'
+      />
     </>
   )
 }

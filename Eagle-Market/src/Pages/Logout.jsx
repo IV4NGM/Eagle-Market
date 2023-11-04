@@ -1,10 +1,15 @@
 import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import useCartContext from '@/Context/CartContext/useCartContext'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import CustomModal from '@/Components/CustomModal/CustomModal'
+import { useNavigate } from 'react-router-dom'
 
 const Logout = () => {
-  const { setToken, setLoginStatus, setUserInfo } = useAuthContext()
+  const navigate = useNavigate()
+  const { setToken, setLoginStatus, setUserInfo, setLastLetter } = useAuthContext()
   const { setCart } = useCartContext()
+
+  const [showModalSuccess, setShowModalSuccess] = useState(true)
   // setToken('')
   // setLoginStatus(false)
   // setUserInfo({})
@@ -13,14 +18,29 @@ const Logout = () => {
     sessionStorage.setItem('loginStatus', JSON.stringify(false))
     sessionStorage.setItem('userInfo', JSON.stringify({}))
     sessionStorage.setItem('cart', JSON.stringify([]))
+    sessionStorage.setItem('lastLetter', 'o')
     setToken('')
     setLoginStatus(false)
     setUserInfo({})
+    setLastLetter('o')
     setCart([])
-  }, [setCart, setLoginStatus, setToken, setUserInfo])
+  }, [setCart, setLastLetter, setLoginStatus, setToken, setUserInfo])
 
   return (
-    <div>Has cerrado sesión exitosamente</div>
+    <CustomModal
+      title='Sesión cerrada exitosamente'
+      showModal={showModalSuccess}
+      setShowModal={setShowModalSuccess}
+      text='Has cerrado sesión correctamente. ¡Vamos a inicio para empezar a comprar!'
+      onNo={() => {
+        navigate('/')
+      }}
+      onYes={() => {
+        navigate('/login')
+      }}
+      textNo='Ir a Inicio'
+      textYes='Iniciar sesión con otra cuenta'
+    />
   )
 }
 
