@@ -4,7 +4,8 @@ import ProductsContext from '@/Context/ProductsContext/ProductsContext'
 // eslint-disable-next-line react/prop-types
 const ProductsProvider = ({ children }) => {
   const [navSearch, setNavSearch] = useState('')
-  const data = { navSearch, setNavSearch }
+  const [apiCall, setApiCall] = useState(true)
+  const data = { navSearch, setNavSearch, apiCall, setApiCall }
   return (
     <ProductsContext.Provider value={data}>
       {children}

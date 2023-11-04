@@ -5,11 +5,14 @@ import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import useCartContext from '@/Context/CartContext/useCartContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import Loader from '@/Components/Loader/Loader'
+import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 
 const Login = () => {
   const navigate = useNavigate()
 
   const { setToken, setLoginStatus, setUserInfo } = useAuthContext()
+  const { setApiCall } = useProductsContext()
   const { setCart } = useCartContext()
   const [loginInfo, setLoginInfo] = useState({})
 
@@ -17,6 +20,7 @@ const Login = () => {
     console.log('effect', loginInfo)
     if (loginInfo?.email) {
       console.log('Logging in')
+      setApiCall(false)
       const login = fetch('https://eagle-market.onrender.com/login', {
         method: 'POST',
         headers: {
@@ -30,6 +34,7 @@ const Login = () => {
 
       login.then((value) => {
         console.log(value.ok)
+        setApiCall(true)
         if (value.ok) {
           return value.json()
         } else {
@@ -53,10 +58,11 @@ const Login = () => {
           navigate('/')
         })
         .catch((e) => {
+          setApiCall(true)
           console.log(e)
         })
     }
-  }, [loginInfo, setToken, setLoginStatus, setUserInfo, navigate, setCart])
+  }, [loginInfo, setToken, setLoginStatus, setUserInfo, navigate, setCart, setApiCall])
 
   const loginFormSchema = yup.object().shape({
     email: yup.string().required('Ingresa un email válido').email('Debes ingresar un email válido'),
@@ -75,6 +81,7 @@ const Login = () => {
 
   return (
     <>
+      <Loader />
       <h2>Inicia sesión para empezar a comprar</h2>
       <div className='login'>
         <div className='login-container'>

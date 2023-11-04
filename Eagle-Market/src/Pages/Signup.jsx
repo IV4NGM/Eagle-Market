@@ -3,14 +3,17 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 
 const Signup = () => {
   const [signUpInfo, setSignUpInfo] = useState({})
+  const { setApiCall } = useProductsContext()
 
   useEffect(() => {
     console.log('effect:', signUpInfo)
     if (signUpInfo?.email?.length > 0) {
       console.log('Signing up')
+      setApiCall(false)
       const register = fetch('https://eagle-market.onrender.com/register', {
         method: 'POST',
         headers: {
@@ -23,6 +26,7 @@ const Signup = () => {
 
       register.then((value) => {
         console.log(value)
+        setApiCall(true)
         if (value.ok) {
           return value.json()
         } else {
@@ -34,14 +38,15 @@ const Signup = () => {
         })
         .catch((e) => {
           console.log(e)
+          setApiCall(true)
         })
     }
-  }, [signUpInfo])
+  }, [setApiCall, signUpInfo])
 
   const signUpFormSchema = yup.object().shape({
     first_name: yup.string().required('Escribe tu nombre'),
     last_name: yup.string().required('Escribe tu apellido'),
-    gender: yup.mixed().oneOf(['M', 'F', 'Otro'], 'Selecciona un género').defined(),
+    gender: yup.mixed().oneOf(['M', 'F', 'O'], 'Selecciona un género').defined(),
     email: yup.string().required('Ingresa un email válido').email('Debes ingresar un email válido'),
     password: yup.string().required('No ingresaste una contraseña').min(5, 'La contraseña debe tener al menos 5 caracteres').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%.^&*])/, 'La contraseña debe tener al menos 5 caracteres, un número, una letra mayúscula, una letra minúscula y un caracter especial'),
     role: yup.mixed().oneOf(['ADMIN', 'CUSTOMER'], 'Selecciona un rol').defined()
@@ -90,7 +95,7 @@ const Signup = () => {
               <option value=''>Elige un genero</option>
               <option value='M'>Masculino</option>
               <option value='F'>Femenino</option>
-              <option value='Otro'>Otro</option>
+              <option value='O'>Otro</option>
             </select>
             <p>{errors.gender?.message}</p>
 

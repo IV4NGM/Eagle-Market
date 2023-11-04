@@ -3,15 +3,18 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useEffect, useState } from 'react'
 import useAuthContext from '@/Context/AuthContext/useAuthContext'
+import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 
 const NewProduct = () => {
   const [registerProduct, setRegisterProduct] = useState({})
   const { token } = useAuthContext()
+  const { setApiCall } = useProductsContext()
 
   useEffect(() => {
     console.log('effect:', registerProduct)
     if (registerProduct?.product_name?.length > 0) {
       console.log('Registrando')
+      setApiCall(false)
       const register = fetch('https://eagle-market.onrender.com/items', {
         method: 'POST',
         headers: {
@@ -25,6 +28,7 @@ const NewProduct = () => {
 
       register.then((value) => {
         console.log(value)
+        setApiCall(true)
         if (value.ok) {
           return value.json()
         } else {
@@ -36,9 +40,10 @@ const NewProduct = () => {
         })
         .catch((e) => {
           console.log(e)
+          setApiCall(true)
         })
     }
-  }, [registerProduct, token])
+  }, [registerProduct, setApiCall, token])
 
   const categoriesAllowed = ['Books', 'Movies', 'Music', 'Games', 'Electronics', 'Computers',
     'Home', 'Garden', 'Tools', 'Grocery', 'Health', 'Beauty', 'Toys', 'Kids', 'Baby', 'Clothing',
