@@ -2,7 +2,7 @@
 // import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import { useNavigate } from 'react-router-dom'
 
-const CartProductCard = ({ data, changeValueFunction, type }) => {
+const CartProductCard = ({ data, changeValueFunction, type, onDelete }) => {
   const navigate = useNavigate()
   // const { userInfo } = useAuthContext()
   return (
@@ -25,6 +25,12 @@ const CartProductCard = ({ data, changeValueFunction, type }) => {
       </button>
       <p>Precio individual: ${data.price}</p>
       <p><strong>Total: ${data.price * data.product_amount}</strong></p>
+      <button onClick={(event) => {
+        event.stopPropagation()
+        onDelete()
+      }}
+      >X
+      </button>
     </div>
   )
 }

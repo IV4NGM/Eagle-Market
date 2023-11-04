@@ -3,12 +3,20 @@ import './Navbar.scss'
 
 import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
+import useCartContext from '@/Context/CartContext/useCartContext'
 
 const Navbar = () => {
   const navigate = useNavigate()
 
   const { loginStatus, userInfo } = useAuthContext()
   const { navSearch, setNavSearch } = useProductsContext()
+  const { cart } = useCartContext()
+
+  let productsAmount = 0
+  for (const item of cart) {
+    productsAmount += item.product_amount
+  }
+
   return (
     <nav className='navbar navbar-expand-lg bg-body-tertiary sticky-top' data-bs-theme='dark'>
       <div className='container-fluid'>
@@ -40,7 +48,7 @@ const Navbar = () => {
           <div className='d-flex'>
             {!loginStatus
               ? <> <NavLink className='navbar-brand' to='/signup'>Registrarse</NavLink> <NavLink className='navbar-brand' to='/login'>Iniciar Sesión</NavLink> </>
-              : <> <NavLink to='/checkout'>Ver carrito</NavLink> <NavLink className='navbar-brand' to='/logout'>Cerrar Sesión</NavLink></>}
+              : <> <NavLink to='/checkout'>Ver carrito</NavLink> <p style={{ color: 'white' }}><strong>{productsAmount}</strong> elementos</p> <NavLink className='navbar-brand' to='/logout'>Cerrar Sesión</NavLink></>}
           </div>
         </div>
       </div>
