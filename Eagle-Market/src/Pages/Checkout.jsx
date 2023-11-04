@@ -3,11 +3,13 @@ import CartProductCard from '@/Components/CartProductCard/CartProductCard'
 import CustomModal from '@/Components/CustomModal/CustomModal'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 
 const Checkout = () => {
   const navigate = useNavigate()
 
   const { cart, setCart, productToBuy, setProductToBuy } = useCartContext()
+  const { setNavSearch } = useProductsContext()
 
   const [showModalBuyNow, setShowModalBuyNow] = useState(false)
   const [showModalBuyAllCart, setShowModalBuyAllCart] = useState(false)
@@ -106,8 +108,14 @@ const Checkout = () => {
         showModal={showModalSuccess}
         setShowModal={setShowModalSuccess}
         text='Compra realizada exitosamente. Vuelve al inicio para seguir comprando'
-        onYes={() => navigate('/')}
-        onNo={() => navigate('/')}
+        onYes={() => {
+          setNavSearch('')
+          navigate('/')
+        }}
+        onNo={() => {
+          setNavSearch('')
+          navigate('/')
+        }}
         isCancelButton={false}
         textYes='Volver a Inicio'
         estatico
