@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import './Navbar.scss'
+import eagleLogo from '@/assets/eagle.png'
 
 import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
@@ -21,7 +22,7 @@ const Navbar = () => {
     <nav className='navbar navbar-expand-lg bg-body-tertiary sticky-top' data-bs-theme='dark'>
       <div className='container-fluid'>
         <NavLink className='navbar-brand' to='/' onClick={() => setNavSearch('')}>
-          <img src='https://flaticons.net/icon.php?slug_category=wildlife&slug_icon=eagle' alt='Eagle blade logo' className='d-inline-block align-text-top logo-nav' />
+          <img src={eagleLogo} alt='Eagle blade logo' className='d-inline-block align-text-top logo-nav' />
           <p>Eagle Market</p>
         </NavLink>
         <button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent'>
@@ -48,7 +49,7 @@ const Navbar = () => {
           <div className='d-flex'>
             {!loginStatus
               ? <> <NavLink className='navbar-brand' to='/signup'>Registrarse</NavLink> <NavLink className='navbar-brand' to='/login'>Iniciar Sesión</NavLink> </>
-              : <> <NavLink to='/checkout'>Ver carrito</NavLink> <p style={{ color: 'white' }}><strong>{productsAmount}</strong> elementos</p> <NavLink className='navbar-brand' to='/logout'>Cerrar Sesión</NavLink></>}
+              : <> <NavLink to='/my-orders'>Historial</NavLink> <NavLink to='/checkout'>Ver carrito</NavLink> <p style={{ color: 'white' }}><strong>{productsAmount}</strong> elementos</p> <NavLink className='navbar-brand' to='/logout'>Cerrar Sesión</NavLink></>}
           </div>
         </div>
       </div>
