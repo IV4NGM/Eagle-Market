@@ -1,15 +1,17 @@
 import useCartContext from '@/Context/CartContext/useCartContext'
 import CartProductCard from '@/Components/CartProductCard/CartProductCard'
 import CustomModal from '@/Components/CustomModal/CustomModal'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
+import useAuthContext from '@/Context/AuthContext/useAuthContext'
 
 const Checkout = () => {
   const navigate = useNavigate()
 
+  const { token } = useAuthContext()
   const { cart, setCart, productToBuy, setProductToBuy } = useCartContext()
-  const { setNavSearch } = useProductsContext()
+  const { setNavSearch, setApiCall } = useProductsContext()
 
   const [showModalBuyNow, setShowModalBuyNow] = useState(false)
   const [showModalBuyAllCart, setShowModalBuyAllCart] = useState(false)
@@ -19,20 +21,89 @@ const Checkout = () => {
   const [showModalDeleteCartItem, setShowModalDeleteCartItem] = useState(false)
   const [deleteCartParams, setDeleteCartParams] = useState({})
 
-  const comprarAhora = () => {
-    setProductToBuy({})
-    console.log('Comprado')
-    setShowModalBuyNow(false)
-    setShowModalSuccess(true)
-  }
+  const [buyNow, setBuyNow] = useState(false)
+  const [buyAllCart, setBuyAllCart] = useState(false)
+  const [showModalFailure, setShowModalFailure] = useState(false)
 
-  const comprarCarrito = () => {
-    sessionStorage.setItem('cart', JSON.stringify([]))
-    setCart([])
-    console.log('Carrito comprado')
-    setShowModalBuyAllCart(false)
-    setShowModalSuccess(true)
-  }
+  useEffect(() => {
+    const comprarAhora = () => {
+      setProductToBuy({})
+      console.log('Comprado')
+      setShowModalBuyNow(false)
+      setShowModalSuccess(true)
+    }
+
+    const comprarCarrito = () => {
+      sessionStorage.setItem('cart', JSON.stringify([]))
+      setCart([])
+      console.log('Carrito comprado')
+      setShowModalBuyAllCart(false)
+      setShowModalSuccess(true)
+    }
+
+    const productsToBuy = []
+
+    if (buyNow) {
+      productsToBuy.push(productToBuy)
+    }
+
+    if (buyAllCart) {
+      for (const element of cart) {
+        productsToBuy.push(element)
+      }
+    }
+
+    if (buyNow || buyAllCart) {
+      let productsAmount = 0
+      let totalPrice = 0
+      if (buyNow) {
+        productsAmount = productToBuy.product_amount
+        totalPrice = productToBuy?.product_amount * productToBuy?.price
+      } else if (buyAllCart) {
+        for (const item of cart) {
+          productsAmount += item.product_amount
+          totalPrice += item.price * item.product_amount
+        }
+      }
+      setApiCall(false)
+      const buy = fetch('https://eagle-market.onrender.com/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          products: productsToBuy,
+          products_amount: productsAmount,
+          total_price: totalPrice
+        })
+      })
+
+      buy.then((value) => {
+        console.log(value)
+        setApiCall(true)
+        return value.json()
+      })
+        .then((value) => {
+          console.log(value)
+          if (buyNow) {
+            comprarAhora()
+            setBuyNow(false)
+          }
+          if (buyAllCart) {
+            comprarCarrito()
+            setBuyAllCart(false)
+          }
+        })
+        .catch((e) => {
+          console.log(e)
+          setApiCall(true)
+          setBuyNow(false)
+          setBuyAllCart(false)
+          setShowModalFailure(true)
+        })
+    }
+  }, [buyAllCart, buyNow, cart, productToBuy, setApiCall, setCart, setProductToBuy, token])
 
   const addToCart = () => {
     const newCart = [...cart]
@@ -94,14 +165,14 @@ const Checkout = () => {
         showModal={showModalBuyNow}
         setShowModal={setShowModalBuyNow}
         text={`¿Estás seguro de que quieres comprar ${productToBuy?.product_amount} artículos con valor de` + ' $ ' + ` ${productToBuy?.product_amount * productToBuy?.price}`}
-        onYes={comprarAhora}
+        onYes={() => setBuyNow(true)}
       />
       <CustomModal
         title='Comprar carrito'
         showModal={showModalBuyAllCart}
         setShowModal={setShowModalBuyAllCart}
         text={`¿Estás seguro de que quieres comprar ${productsAmount} artículos con valor de` + ' $ ' + ` ${totalPrice}`}
-        onYes={comprarCarrito}
+        onYes={() => setBuyAllCart(true)}
       />
       <CustomModal
         title='Compra realizada exitosamente'
@@ -114,6 +185,15 @@ const Checkout = () => {
         }}
         textYes='Volver a Inicio'
         textNo='Ver carrito'
+      />
+      <CustomModal
+        title='Error al comprar productos'
+        showModal={showModalFailure}
+        setShowModal={setShowModalFailure}
+        text='Hubo un error al intentar comprar los productos. Intente de nuevo más tarde'
+        isCancelButton={false}
+        textYes='Regresar'
+        estatico
       />
       <CustomModal
         title='Eliminar el producto'
