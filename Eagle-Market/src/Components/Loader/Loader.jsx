@@ -9,7 +9,7 @@ const Loader = () => {
     <>
       {!apiCall
         ? <div className='loader-container'>
-          <p>Cargando contenido...</p>
+          {/* <p>Cargando contenido...</p> */}
           <img className='loader-img' src={loader} alt='Loading' />
           </div>
         : ''}
