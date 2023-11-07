@@ -80,7 +80,7 @@ const Login = () => {
             sessionStorage.setItem('lastLetter', '@')
             setLastLetter('@')
           }
-          setShowModalSuccess(true)
+          // setShowModalSuccess(true)
         })
         .catch((e) => {
           setApiCall(true)

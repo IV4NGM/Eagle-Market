@@ -7,10 +7,10 @@ import NoLoggedRedirect from '@/Context/AuthContext/NoLoggedRedirect'
 
 const Logout = () => {
   const navigate = useNavigate()
-  const { token, setToken, setLoginStatus, setUserInfo, setLastLetter } = useAuthContext()
+  const { setToken, setLoginStatus, setUserInfo, setLastLetter } = useAuthContext()
   const { setCart } = useCartContext()
 
-  const [showModalSuccess, setShowModalSuccess] = useState(true)
+  const [showModalSuccess, setShowModalSuccess] = useState(false)
   // setToken('')
   // setLoginStatus(false)
   // setUserInfo({})
@@ -26,6 +26,7 @@ const Logout = () => {
     setUserInfo({})
     setLastLetter('o')
     setCart([])
+    // setShowModalSuccess(true)
   }, [setCart, setLastLetter, setLoginStatus, setToken, setUserInfo])
 
   return (
