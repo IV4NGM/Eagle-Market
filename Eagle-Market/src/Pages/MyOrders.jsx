@@ -1,12 +1,13 @@
 import useAuthContext from '@/Context/AuthContext/useAuthContext'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import CustomModal from '@/Components/CustomModal/CustomModal'
 import HistoryOrderContainer from '@/Components/HistoryOrderContainer/HistoryOrderContainer'
 import { useNavigate } from 'react-router-dom'
 import useHistoryApi from '@/Hooks/useHistoryApi'
+import NoLoggedRedirect from '@/Context/AuthContext/NoLoggedRedirect'
 
 const MyOrders = () => {
-  const { history } = useAuthContext()
+  const { token, history } = useAuthContext()
   const navigate = useNavigate()
 
   const [showModalFailure, setShowModalFailure] = useState(false)
@@ -49,7 +50,9 @@ const MyOrders = () => {
 
   return (
     <>
+      <NoLoggedRedirect />
       <h2>Historial de compras</h2>
+      {historyLoaded && history.length === 0 ? 'No hay compras realizadas todavía' : ''}
       {history
         ? history.map((element, index) => {
           return <HistoryOrderContainer key={index} totalPrice={element?.total_price} productsAmount={element?.products_amount} orderId={element?.orderId} orderDate={element?.orderDate} orderTime={element?.orderTime} productsArray={element?.products} onClick={() => navigate(`/my-orders/${element?.orderId}`)} />

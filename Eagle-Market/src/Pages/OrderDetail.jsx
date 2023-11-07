@@ -1,13 +1,13 @@
 import CustomModal from '@/Components/CustomModal/CustomModal'
 import HistoryOrderContainer from '@/Components/HistoryOrderContainer/HistoryOrderContainer'
+import NoLoggedRedirect from '@/Context/AuthContext/NoLoggedRedirect'
 import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import useHistoryApi from '@/Hooks/useHistoryApi'
-import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 const OrderDetail = () => {
-  const { history } = useAuthContext()
-  const navigate = useNavigate()
+  const { token, history } = useAuthContext()
 
   const { id } = useParams()
 
@@ -50,6 +50,7 @@ const OrderDetail = () => {
 
   return (
     <>
+      <NoLoggedRedirect />
       {element ? <HistoryOrderContainer totalPrice={element?.total_price} productsAmount={element?.products_amount} orderId={element?.orderId} orderDate={element?.orderDate} orderTime={element?.orderTime} productsArray={element?.products} /> : ''}
       {historyLoaded && !element ? 'Esta compra no existe.' : ''}
       <CustomModal

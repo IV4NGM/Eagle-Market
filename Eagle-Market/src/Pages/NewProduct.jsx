@@ -6,11 +6,12 @@ import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import CustomModal from '@/Components/CustomModal/CustomModal'
 import { useNavigate } from 'react-router-dom'
+import NoAdminRedirect from '@/Context/AuthContext/NoAdminRedirect'
 
 const NewProduct = () => {
   const navigate = useNavigate()
   const [registerProduct, setRegisterProduct] = useState({})
-  const { token } = useAuthContext()
+  const { token, userInfo } = useAuthContext()
   const { setApiCall } = useProductsContext()
 
   const [showModalFailure, setShowModalFailure] = useState(false)
@@ -77,6 +78,7 @@ const NewProduct = () => {
 
   return (
     <>
+      <NoAdminRedirect />
       <h2>Crear un nuevo producto</h2>
       <div className='login'>
         <div className='login-container'>

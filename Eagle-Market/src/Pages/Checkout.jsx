@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import useAuthContext from '@/Context/AuthContext/useAuthContext'
+import NoLoggedRedirect from '@/Context/AuthContext/NoLoggedRedirect'
 
 const Checkout = () => {
   const navigate = useNavigate()
@@ -160,6 +161,7 @@ const Checkout = () => {
 
   return (
     <>
+      <NoLoggedRedirect />
       <CustomModal
         title='Comprar ahora'
         showModal={showModalBuyNow}

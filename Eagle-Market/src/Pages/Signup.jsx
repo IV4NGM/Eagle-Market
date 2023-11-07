@@ -5,11 +5,14 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import CustomModal from '@/Components/CustomModal/CustomModal'
+import LoggedRedirect from '@/Context/AuthContext/LoggedRedirect'
+import useAuthContext from '@/Context/AuthContext/useAuthContext'
 
 const Signup = () => {
   const navigate = useNavigate()
   const [signUpInfo, setSignUpInfo] = useState({})
   const { setApiCall } = useProductsContext()
+  const { token } = useAuthContext()
 
   const [errorMessage, setErrorMessage] = useState('')
   const [showModalFailure, setShowModalFailure] = useState(false)
@@ -77,6 +80,7 @@ const Signup = () => {
 
   return (
     <>
+      <LoggedRedirect />
       <h2>Regístrate ahora para iniciar a comprar</h2>
       <div className='login'>
         <div className='login-container'>

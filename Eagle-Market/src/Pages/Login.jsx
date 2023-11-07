@@ -5,10 +5,10 @@ import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import useCartContext from '@/Context/CartContext/useCartContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import Loader from '@/Components/Loader/Loader'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import CustomModal from '@/Components/CustomModal/CustomModal'
 import useHistoryApi from '@/Hooks/useHistoryApi'
+import LoggedRedirect from '@/Context/AuthContext/LoggedRedirect'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -109,7 +109,7 @@ const Login = () => {
 
   return (
     <>
-      <Loader />
+      <LoggedRedirect />
       <h2>Inicia sesión para empezar a comprar</h2>
       <div className='login'>
         <div className='login-container'>
