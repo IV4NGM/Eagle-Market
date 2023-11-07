@@ -19,6 +19,7 @@ const Logout = () => {
     sessionStorage.setItem('userInfo', JSON.stringify({}))
     sessionStorage.setItem('cart', JSON.stringify([]))
     sessionStorage.setItem('lastLetter', 'o')
+    sessionStorage.setItem('history', JSON.stringify([]))
     setToken('')
     setLoginStatus(false)
     setUserInfo({})

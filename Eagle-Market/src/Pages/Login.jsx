@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import Loader from '@/Components/Loader/Loader'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import CustomModal from '@/Components/CustomModal/CustomModal'
+import useHistoryApi from '@/Hooks/useHistoryApi'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -19,6 +20,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [showModalFailure, setShowModalFailure] = useState(false)
   const [showModalSuccess, setShowModalSuccess] = useState(false)
+  useHistoryApi()
 
   useEffect(() => {
     console.log('effect', loginInfo)
@@ -79,7 +81,6 @@ const Login = () => {
             setLastLetter('@')
           }
           setShowModalSuccess(true)
-          // navigate('/')
         })
         .catch((e) => {
           setApiCall(true)

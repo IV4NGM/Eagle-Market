@@ -7,6 +7,7 @@ import ProductDetail from '@/Pages/ProductDetail'
 import Checkout from '@/Pages/Checkout'
 import NewProduct from '@/Pages/NewProduct'
 import MyOrders from '@/Pages/MyOrders'
+import OrderDetail from '@/Pages/OrderDetail'
 
 const RouterIndex = () => {
   return (
@@ -19,6 +20,7 @@ const RouterIndex = () => {
       <Route path='/checkout' element={<Checkout />} />
       <Route path='/new-product' element={<NewProduct />} />
       <Route path='/my-orders' element={<MyOrders />} />
+      <Route path='/my-orders/:id' element={<OrderDetail />} />
     </Routes>
   )
 }
