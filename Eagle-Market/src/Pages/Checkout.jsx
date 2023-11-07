@@ -227,7 +227,7 @@ const Checkout = () => {
       })}
       <p>Cantidad de productos: {productsAmount}</p>
       <p><strong>Gran total: ${totalPrice}</strong></p>
-      <button onClick={() => setShowModalBuyAllCart(true)}>Comprar carrito</button>
+      {cart.length > 0 ? <button onClick={() => setShowModalBuyAllCart(true)}>Comprar carrito</button> : ''}
     </>
   )
 }
