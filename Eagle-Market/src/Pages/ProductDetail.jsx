@@ -18,13 +18,15 @@ const ProductDetail = () => {
   const [showModalFailure, setShowModalFailure] = useState(false)
   const [showModalSuccess, setShowModalSuccess] = useState(false)
 
+  const [addedToCart, setAddedToCart] = useState(false)
+
   const { cart, setCart, productToBuy, setProductToBuy } = useCartContext()
   const { setNavSearch, setApiCall } = useProductsContext()
 
   useEffect(() => {
     if (!showModalSuccess) {
       console.log('Getting')
-      setApiCall(false)
+      // setApiCall(false)
       const getProducts = fetch(`https://eagle-market.onrender.com/items/${id}`, {
         method: 'GET',
         headers: {
@@ -35,13 +37,13 @@ const ProductDetail = () => {
         return result.json()
       })
         .then((result) => {
-          setApiCall(true)
+          // setApiCall(true)
           console.log(result)
           setProductDetails(result)
         })
         .catch(e => {
           console.log(e)
-          setApiCall(true)
+          // setApiCall(true)
         })
     }
     if (deleteProduct) {
@@ -109,6 +111,7 @@ const ProductDetail = () => {
       console.log(newCart)
       sessionStorage.setItem('cart', JSON.stringify(newCart))
       setCart(newCart)
+      setAddedToCart(true)
     } else {
       navigate('/login')
     }
@@ -139,7 +142,7 @@ const ProductDetail = () => {
           <button className='btn btn-success' onClick={() => buyItem()}>Comprar ahora</button>
           <button className='btn btn-secondary' onClick={() => addToCart()}>Agregar al carrito</button>
           {userInfo?.role === 'ADMIN' ? <button className='btn btn-danger' onClick={() => setShowModalDelete(true)}>Eliminar producto</button> : ''}
-        </div>
+          </div>
         : ''}
       <CustomModal
         title='Eliminar producto'
@@ -173,6 +176,18 @@ const ProductDetail = () => {
         isCancelButton={false}
         textYes='Volver a Inicio'
         estatico
+      />
+      <CustomModal
+        title='Producto agregado al carrito'
+        showModal={addedToCart}
+        setShowModal={setAddedToCart}
+        text='Producto agregado al carrito exitosamente.'
+        onYes={() => {
+          setNavSearch('')
+          navigate('/checkout')
+        }}
+        textYes='Ver carrito'
+        textNo='Seguir comprando'
       />
     </>
   )
