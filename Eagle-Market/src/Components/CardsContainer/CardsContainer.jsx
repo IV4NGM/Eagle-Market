@@ -9,11 +9,10 @@ import CustomModal from '@/Components/CustomModal/CustomModal'
 const CardsContainer = ({ isAdmin }) => {
   const navigate = useNavigate()
 
-  const [products, setProducts] = useState([])
   const [loaded, setLoaded] = useState(false)
   const [showModalFailure, setShowModalFailure] = useState(false)
 
-  const { navSearch } = useProductsContext()
+  const { products, setProducts, navSearch } = useProductsContext()
 
   useEffect(() => {
     console.log('Getting')
@@ -32,7 +31,7 @@ const CardsContainer = ({ isAdmin }) => {
         console.log(e)
         setShowModalFailure(true)
       })
-  }, [])
+  }, [setProducts])
 
   const productsArray = products.filter((item) => item.product_name.toLocaleLowerCase().trim().includes(navSearch.toLocaleLowerCase().trim()))
 
