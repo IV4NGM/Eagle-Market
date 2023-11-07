@@ -3,8 +3,10 @@ import SearchCardsContainer from '@/Components/SearchCardsContainer/SearchCardsC
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import { useEffect, useState } from 'react'
 import { Slider } from '@mui/material/index'
+import { useParams, useNavigate } from 'react-router-dom'
 
 const Search = () => {
+  const navigate = useNavigate()
   const { products, setProducts, advancedSearch, setAdvancedSearch } = useProductsContext()
   const [loaded, setLoaded] = useState(false)
   const [showModalFailure, setShowModalFailure] = useState(false)
@@ -13,7 +15,13 @@ const Search = () => {
   const [allCategories, setAllCategories] = useState(true)
   const [sliderValue, setSliderValue] = useState([0, 1000])
 
+  const { text } = useParams()
+
   useEffect(() => {
+    if (text) {
+      setSelectedCategories([text])
+      setAllCategories(false)
+    }
     console.log('Getting')
     const getProducts = fetch('https://eagle-market.onrender.com/items', {
       method: 'GET'
@@ -30,9 +38,8 @@ const Search = () => {
         console.log(e)
         setShowModalFailure(true)
       })
-  }, [setProducts])
+  }, [setProducts, text])
 
-  // const categoriesDict = {}
   const categoriesArray = []
   for (const element of products) {
     if (!categoriesArray.includes(element.category)) {
@@ -40,9 +47,21 @@ const Search = () => {
     }
   }
 
+  const resetFilters = () => {
+    setAllCategories(true)
+    setAdvancedSearch('')
+    setSliderValue([0, 1000])
+    navigate('/search')
+  }
+
   return (
     <>
       <h2>Búsqueda avanzada</h2>
+      <input
+        type='text'
+        value={advancedSearch}
+        onChange={(event) => setAdvancedSearch(event.target.value)}
+      />
       <div className='form-check'>
         <input
           className='form-check-input' type='checkbox' id='allCategoriesCheckbox' onChange={() => {
@@ -69,6 +88,7 @@ const Search = () => {
                   }
                 }}
                 disabled={allCategories}
+                defaultChecked={element === text}
               />
               <label className='form-check-label' htmlFor={`category-${index}`}>
                 {element}
@@ -90,6 +110,7 @@ const Search = () => {
 
       {/* {selectedCategories.map((element, index) => <p key={index}>{element}</p>)} */}
 
+      <button onClick={resetFilters}>Restablecer filtros</button>
       <CustomModal
         title='Error al cargar los productos'
         showModal={showModalFailure}
@@ -98,11 +119,6 @@ const Search = () => {
         isCancelButton={false}
         textYes='Regresar'
         estatico
-      />
-      <input
-        type='text'
-        value={advancedSearch}
-        onChange={(event) => setAdvancedSearch(event.target.value)}
       />
       <SearchCardsContainer products={products} loaded={loaded} search={advancedSearch} selectedCategories={selectedCategories} allCategories={allCategories} prices={sliderValue} />
     </>
