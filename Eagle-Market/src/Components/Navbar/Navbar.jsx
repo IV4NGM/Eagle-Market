@@ -10,7 +10,7 @@ const Navbar = () => {
   const navigate = useNavigate()
 
   const { loginStatus, userInfo, lastLetter } = useAuthContext()
-  const { navSearch, setNavSearch } = useProductsContext()
+  const { navSearch, setNavSearch, setAdvancedSearch } = useProductsContext()
   const { cart } = useCartContext()
 
   let productsAmount = 0
@@ -42,10 +42,15 @@ const Navbar = () => {
             onChange={(event) => setNavSearch(event.target.value)}
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
-                navigate('/')
+                setAdvancedSearch(navSearch)
+                setNavSearch('')
+                navigate('/search')
               }
             }}
           />
+          <NavLink to='/search'>
+            Búsqueda avanzada
+          </NavLink>
           <div className='d-flex'>
             {!loginStatus
               ? <> <NavLink className='navbar-brand' to='/signup'>Registrarse</NavLink> <NavLink className='navbar-brand' to='/login'>Iniciar Sesión</NavLink> </>

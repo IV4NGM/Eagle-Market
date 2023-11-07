@@ -9,6 +9,7 @@ import NewProduct from '@/Pages/NewProduct'
 import MyOrders from '@/Pages/MyOrders'
 import OrderDetail from '@/Pages/OrderDetail'
 import PageNotFound from '@/Pages/PageNotFound'
+import Search from '@/Pages/Search'
 
 const RouterIndex = () => {
   return (
@@ -22,6 +23,8 @@ const RouterIndex = () => {
       <Route path='/new-product' element={<NewProduct />} />
       <Route path='/my-orders' element={<MyOrders />} />
       <Route path='/my-orders/:id' element={<OrderDetail />} />
+      <Route path='/search' element={<Search />} />
+      <Route path='/search/:text' element={<Search />} />
       <Route path='/*' element={<PageNotFound />} />
     </Routes>
   )
