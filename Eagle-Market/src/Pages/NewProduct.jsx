@@ -11,7 +11,7 @@ import NoAdminRedirect from '@/Context/AuthContext/NoAdminRedirect'
 const NewProduct = () => {
   const navigate = useNavigate()
   const [registerProduct, setRegisterProduct] = useState({})
-  const { token, userInfo } = useAuthContext()
+  const { token } = useAuthContext()
   const { setApiCall } = useProductsContext()
 
   const [showModalFailure, setShowModalFailure] = useState(false)
@@ -80,8 +80,8 @@ const NewProduct = () => {
     <>
       <NoAdminRedirect />
       <h2>Crear un nuevo producto</h2>
-      <div className='login'>
-        <div className='login-container'>
+      <div className='newproduct'>
+        <div className='newproduct-container'>
           <form
             onSubmit={handleSubmit(onSubmit)}
             style={{ display: 'flex', flexDirection: 'column' }}
