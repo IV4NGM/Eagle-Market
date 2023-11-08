@@ -34,6 +34,7 @@ const Home = () => {
         console.log(e)
         setShowModalFailure(true)
       })
+    window.scrollTo(0, 0)
   }, [setProducts])
 
   const categoriesArray = []
@@ -42,6 +43,7 @@ const Home = () => {
       categoriesArray.push(element.category)
     }
   }
+  categoriesArray.sort()
   console.log(categoriesArray)
   const responsiveCarousel = {
     superLargeDesktop: {
