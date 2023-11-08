@@ -10,6 +10,7 @@ import MyOrders from '@/Pages/MyOrders'
 import OrderDetail from '@/Pages/OrderDetail'
 import PageNotFound from '@/Pages/PageNotFound'
 import Search from '@/Pages/Search'
+import EditProduct from '@/Pages/EditProduct'
 
 const RouterIndex = () => {
   return (
@@ -25,6 +26,7 @@ const RouterIndex = () => {
       <Route path='/my-orders/:id' element={<OrderDetail />} />
       <Route path='/search' element={<Search />} />
       <Route path='/search/:text' element={<Search />} />
+      <Route path='/edit/:id' element={<EditProduct />} />
       <Route path='/*' element={<PageNotFound />} />
     </Routes>
   )

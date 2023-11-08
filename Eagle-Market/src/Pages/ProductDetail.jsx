@@ -142,6 +142,7 @@ const ProductDetail = () => {
           <button className='btn btn-success' onClick={() => buyItem()}>Comprar ahora</button>
           <button className='btn btn-secondary' onClick={() => addToCart()}>Agregar al carrito</button>
           {userInfo?.role === 'ADMIN' ? <button className='btn btn-danger' onClick={() => setShowModalDelete(true)}>Eliminar producto</button> : ''}
+          {userInfo?.role === 'ADMIN' ? <button className='btn btn-primary' onClick={() => navigate(`/edit/${productDetails.id}`)}>Editar producto</button> : ''}
           </div>
         : ''}
       <CustomModal
