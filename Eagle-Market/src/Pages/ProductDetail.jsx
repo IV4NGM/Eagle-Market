@@ -133,7 +133,7 @@ const ProductDetail = () => {
           <h2>{productDetails.product_name}</h2>
           <p>Marca: {productDetails.brand}</p>
           <p>Categoría: {productDetails.category}</p>
-          <img src={productDetails.image} alt={productDetails.product_name} />
+          <img src={productDetails?.image || productDetails?.base64Image} alt={productDetails.product_name} />
           <p>Descripción: {productDetails.description}</p>
           <p>Precio: ${productDetails.price}</p>
           <button onClick={() => setProductAmount(Math.max(1, productAmount - 1))}>-</button>
@@ -172,10 +172,10 @@ const ProductDetail = () => {
         }}
         onNo={() => {
           setNavSearch('')
-          navigate('/')
+          navigate(-1)
         }}
-        isCancelButton={false}
         textYes='Volver a Inicio'
+        textNo='Atrás'
         estatico
       />
       <CustomModal

@@ -17,6 +17,11 @@ const NewProduct = () => {
   const [showModalFailure, setShowModalFailure] = useState(false)
   const [showModalSuccess, setShowModalSuccess] = useState(false)
 
+  const [imageSrc, setImageSrc] = useState('url')
+  const [imageFile, setImageFile] = useState()
+  const [base64Image, setBase64Image] = useState('')
+  const [base64ErrorText, setBase64ErrorText] = useState('')
+
   useEffect(() => {
     console.log('effect:', registerProduct)
     if (registerProduct?.product_name?.length > 0) {
@@ -53,9 +58,9 @@ const NewProduct = () => {
     }
   }, [registerProduct, setApiCall, token])
 
-  const categoriesAllowed = ['Books', 'Movies', 'Music', 'Games', 'Electronics', 'Computers',
-    'Home', 'Garden', 'Tools', 'Grocery', 'Health', 'Beauty', 'Toys', 'Kids', 'Baby', 'Clothing',
-    'Jewerly', 'Sports', 'Outdoors', 'Automotive', 'Industrial', 'Other']
+  const categoriesAllowed = ['Automotive', 'Baby', 'Beauty', 'Books', 'Clothing', 'Computers', 'Electronics',
+    'Games', 'Garden', 'Grocery', 'Health', 'Home', 'Industrial', 'Jewerly', 'Kids', 'Movies', 'Music',
+    'Outdoors', 'Sports', 'Tools', 'Toys', 'Other']
 
   const registerProductFormSchema = yup.object().shape({
     product_name: yup.string().required('Escribe el nombre de tu producto'),
@@ -64,7 +69,7 @@ const NewProduct = () => {
     category: yup.mixed().oneOf(categoriesAllowed, 'Selecciona la categoría de tu producto').defined(),
     description: yup.string().required('Escribe la descripción de tu producto'),
     sku: yup.string(),
-    image: yup.string().required('Ingresa una url')
+    image: yup.string()
   })
 
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -73,7 +78,40 @@ const NewProduct = () => {
 
   const onSubmit = (data) => {
     console.log('datos del formulario', data)
-    setRegisterProduct({ ...data })
+    const dataToPost = { ...data }
+    if (imageSrc === 'url') {
+      setBase64Image('')
+    } else {
+      dataToPost.image = ''
+    }
+    setRegisterProduct({ ...dataToPost, base64Image })
+  }
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader()
+      fileReader.readAsDataURL(file)
+      fileReader.onload = () => {
+        resolve(fileReader.result)
+      }
+      fileReader.onerror = (error) => {
+        reject(error)
+      }
+    })
+  }
+
+  const validImageExtensions = ['image/jpg', 'image/png', 'image/jpeg', 'image/svg', 'image/webp']
+
+  const handleFileRead = async (event) => {
+    const file = event.target.files[0]
+    console.log(file.type)
+    if (validImageExtensions.includes(file.type)) {
+      const base64ImageResult = await convertBase64(file)
+      setBase64ErrorText('')
+      setBase64Image(base64ImageResult)
+    } else {
+      setBase64ErrorText('El formato de archivo no está permitido')
+    }
   }
 
   return (
@@ -144,15 +182,45 @@ const NewProduct = () => {
             />
             <p>{errors.sku?.message}</p>
 
-            <label htmlFor='image'>URL de la imagen del producto</label>
-            <input
-              type='text'
-              name='image'
-              placeholder='URL'
-              id='image'
-              {...register('image')}
-            />
-            <p>{errors.image?.message}</p>
+            <div>
+              <div className='form-check'>
+                <input className='form-check-input' type='radio' name='image-src' id='image-src-url' value='url' checked={imageSrc === 'url'} onChange={(event) => setImageSrc(event.target.value)} />
+                <label className='form-check-label' htmlFor='image-src-url'>
+                  URL
+                </label>
+              </div>
+              <div className='form-check'>
+                <input className='form-check-input' type='radio' name='image-src' id='image-src-file' value='file' checked={imageSrc === 'file'} onChange={(event) => setImageSrc(event.target.value)} />
+                <label className='form-check-label' htmlFor='image-src-file'>
+                  De archivo
+                </label>
+              </div>
+            </div>
+
+            {imageSrc === 'url'
+              ? <><label htmlFor='image'>URL de la imagen del producto</label>
+                <input
+                  type='text'
+                  name='image'
+                  placeholder='URL'
+                  id='image'
+                  {...register('image')}
+                />
+                <p>{errors.image?.message}</p>
+              </>
+              : <>
+                <input
+                  type='file'
+                  name='image64'
+                  id='image64'
+                  onChange={(event) => {
+                    setImageFile(URL.createObjectURL(event.target.files[0]))
+                    handleFileRead(event)
+                  }}
+                />
+                <img src={imageFile} alt='Your-image' />
+                <p>{base64ErrorText}</p>
+                </>}
 
             <button type='submit'>
               Crear producto
