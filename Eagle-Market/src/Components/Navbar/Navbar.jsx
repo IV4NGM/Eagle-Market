@@ -1,7 +1,13 @@
 import './Navbar.scss'
 import eagleLogo from '@/assets/eagle.png'
 import Search from '@mui/icons-material/Search'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined'
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
+import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined'
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
+import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined'
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined'
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
 
 import { NavLink, useNavigate } from 'react-router-dom'
 import useAuthContext from '@/Context/AuthContext/useAuthContext'
@@ -23,7 +29,7 @@ const Navbar = () => {
   return (
     <nav className='navbar navbar-expand-lg bg-body-tertiary sticky-top'>
       <div className='container-fluid'>
-        <NavLink className='navbar-brand' to='/' onClick={() => setNavSearch('')}>
+        <NavLink className='navbar-brand navbar-brand-logo' to='/' onClick={() => setNavSearch('')}>
           <img src={eagleLogo} alt='Eagle blade logo' className='d-inline-block align-text-top logo-nav' />
           <p>Eagle Market</p>
         </NavLink>
@@ -42,10 +48,7 @@ const Navbar = () => {
             placeholder='Busca en todo Eagle Market'
             className='navbar__nav-search'
           />
-          <div className='input-group-text'><Search /></div>
-          <NavLink to='/search' className='navbar__advanced-search'>
-            Búsqueda avanzada
-          </NavLink>
+          <div className='input-group-text navbar__input-group-text'><Search /></div>
         </div>
       </div>
       <button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent'>
@@ -53,27 +56,37 @@ const Navbar = () => {
       </button>
       <div className='collapse navbar-collapse' id='navbarSupportedContent'>
         <div className='navbar-nav me-auto mb-2 mb-lg-0'>
-          {loginStatus && userInfo?.role === 'ADMIN' ? <NavLink to='/new-product'>Crear nuevo producto</NavLink> : ''}
-
-          <div className='d-flex'>
-            {!loginStatus
-              ? <> <NavLink className='navbar-brand' to='/signup'>Registrarse</NavLink>
-                <NavLink className='navbar-brand' to='/login'>Iniciar Sesión</NavLink>
-                </>
-              : <>
-                <NavLink to='/checkout' className='shopping-cart-icon'><ShoppingCartIcon /><span className='shopping-cart-number'>{productsAmount}</span></NavLink>
-                <div className='dropdown navbar__dropdown'>
-                  <button className='btn btn-secondary dropdown-toggle' type='button' data-bs-toggle='dropdown'>
-                    {userInfo.first_name} {userInfo.last_name}
-                  </button>
-                  <ul className='dropdown-menu'>
-                    <li>{userInfo.email}</li>
-                    <li><NavLink to='/my-orders'>Historial</NavLink></li>
-                    <li><NavLink className='navbar-brand' to='/logout'>Cerrar Sesión</NavLink></li>
-                  </ul>
-                </div>
-                </>}
-          </div>
+          <NavLink to='/search' className='navbar__advanced-search'>
+            <p>Búsqueda avanzada</p>
+            <LibraryBooksOutlinedIcon />
+          </NavLink>
+          {loginStatus && userInfo?.role === 'ADMIN' ? <button className='btn btn-success btn-new-product' onClick={() => navigate('/new-product')}>Crear producto</button> : ''}
+          {/* <div className='d-flex'> */}
+          {!loginStatus
+            ? <> <button className='btn btn-secondary btn-not-logged' onClick={() => navigate('/signup')}>Registrarse</button>
+              <button className='btn btn-success btn-not-logged' onClick={() => navigate('/login')}>Iniciar sesión</button>
+            </>
+            : <>
+              <NavLink to='/checkout' className='shopping-cart-icon'><ShoppingCartOutlinedIcon /><span className='shopping-cart-number'>{productsAmount}</span></NavLink>
+              <div className='dropdown navbar__dropdown'>
+                <button className='btn btn-outline-secondary dropdown-toggle' type='button' data-bs-toggle='dropdown'>
+                  {userInfo.first_name} {userInfo.last_name}
+                </button>
+                <ul className='dropdown-menu dropdown-menu-end'>
+                  <li className='dropdown-item-flex'>
+                    <h4 className='dropdown-item-flex--center'><strong>Tu cuenta</strong></h4>
+                    <p className='dropdown-item-flex__p'><AccountBoxOutlinedIcon className='dropdown-item-flex__icon' /> {userInfo.first_name} {userInfo.last_name}</p>
+                    <p className='dropdown-item-flex__p'><EmailOutlinedIcon className='dropdown-item-flex__icon' /> {userInfo.email}</p>
+                    {userInfo.role === 'ADMIN' ? <p className='dropdown-item-flex__p'><VerifiedUserOutlinedIcon className='dropdown-item-flex__icon' /> Administrador</p> : ''}
+                  </li>
+                  {userInfo.role === 'ADMIN' ? <li className='dropdown-item'><NavLink to='/new-product'><AddOutlinedIcon /> Crear producto</NavLink></li> : ''}
+                  <li className='dropdown-item'><NavLink to='/checkout'><ShoppingCartOutlinedIcon /> Ver carrito</NavLink></li>
+                  <li className='dropdown-item'><NavLink to='/my-orders'><ShoppingBagOutlinedIcon /> Mis compras</NavLink></li>
+                  <li className='dropdown-item'><NavLink className='navbar-brand' to='/logout'>Cerrar Sesión</NavLink></li>
+                </ul>
+              </div>
+            </>}
+          {/* </div> */}
         </div>
       </div>
     </nav>

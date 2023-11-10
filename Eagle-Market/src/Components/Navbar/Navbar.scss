@@ -2,47 +2,105 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  padding-right: 30px !important;
+
+  &-brand-logo {
+    margin: 0px 20px;
+    align-content: center;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
 
   &__input-group {
-    margin-right: 100px;
+    margin-right: 50px;
+  }
+
+  &__input-group-text {
+    border-radius: 0px 5px 5px 0px !important;
   }
 
   &__nav-search {
     width: 60%;
   }
 
-  &__dropdown {
-    margin-right: 50px;
-  }
-
   &__advanced-search {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
+    align-items: center;
     margin-left: 20px !important;
+    margin-right: 40px;
+    text-decoration: none;
+    min-width: max-content;
+
+    & p {
+      margin: 0;
+      margin-right: 10px;
+    }
   }
-  
 }
 
-// .navbar__input-group {
-//   margin-right: 100px;
-// }
+.dropdown-menu {
+  padding: 10px !important;
+  width: max-content;
+  position: absolute !important;
+}
 
-// .navbar__nav-search {
-//   width: 60%;
-// }
+.dropdown-item-flex {
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  &--center {
+    align-self: center;
+  }
+
+  &__p {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  &__icon {
+    margin-right: 5px;
+  }
+}
+
+.btn-not-logged, .btn-new-product {
+  display: flex;
+  width: max-content;
+  min-width: max-content;
+}
+
+.btn-not-logged {
+  margin-right: 10px;
+}
 
 .container-fluid {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: nowrap !important;
 }
+
+@media (max-width: 991px) {
+  .navbar-nav {
+    display: grid !important;
+    grid-template-columns: repeat(2, auto) !important;
+    justify-items: center !important;
+    justify-content: space-around !important;
+    row-gap: 10px !important;
+  }
+}
+
 
 .logo-nav{
   width: 40px;
   height: 40px;
-  margin-right: 20px;
-  background-color: #6a040f;
+  margin: 0px 20px;
+  // background-color: #6a040f;
+  background-color: #198754;
   padding: 5px;
   border-radius: 50%;
 }
@@ -50,11 +108,13 @@
 
 .shopping-cart-icon {
   position: relative;
-  margin-right: 50px;
+  margin: 0px 50px;
+  display: flex;
+  align-items: center;
 }
 
 .shopping-cart-number {
-  text-decoration: none !important;
   position: absolute;
-  top: -10px;
+  top: -5px;
+  right: -7px;
 }
