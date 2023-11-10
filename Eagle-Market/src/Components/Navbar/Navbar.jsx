@@ -49,7 +49,14 @@ const Navbar = () => {
             placeholder='Busca en todo Eagle Market'
             className='navbar__nav-search form-control'
           />
-          <div className='input-group-text navbar__input-group-text'><Search /></div>
+          <div
+            className='input-group-text navbar__input-group-text' onClick={() => {
+              setAdvancedSearch(navSearch)
+              setNavSearch('')
+              navigate('/search')
+            }}
+          ><Search />
+          </div>
         </div>
       </div>
       <button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent'>
@@ -66,7 +73,7 @@ const Navbar = () => {
           {!loginStatus
             ? <> <button className='btn btn-secondary btn-not-logged' onClick={() => navigate('/signup')}>Registrarse</button>
               <button className='btn btn-success btn-not-logged' onClick={() => navigate('/login')}>Iniciar sesión</button>
-              </>
+            </>
             : <>
               <NavLink to='/checkout' className='shopping-cart-icon'><ShoppingCartOutlinedIcon /><span className='shopping-cart-number'>{productsAmount}</span></NavLink>
               <div className='dropdown navbar__dropdown'>
@@ -88,7 +95,7 @@ const Navbar = () => {
                   <li className='dropdown-item'><NavLink className='navbar-brand navbar-brand__logout' to='/logout'><LogoutOutlinedIcon /> Cerrar Sesión</NavLink></li>
                 </ul>
               </div>
-              </>}
+            </>}
           {/* </div> */}
         </div>
       </div>

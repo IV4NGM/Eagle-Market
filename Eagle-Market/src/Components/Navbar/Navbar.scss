@@ -6,6 +6,10 @@ $green-success: #198754;
   justify-content: space-around;
   padding-right: 30px !important;
 
+  &--is-active {
+    color: $green-success !important;
+  }
+
   &-brand-logo {
     margin: 0px 20px;
     align-content: center;
@@ -41,6 +45,7 @@ $green-success: #198754;
     margin-right: 40px;
     text-decoration: none;
     min-width: max-content;
+    color: black;
 
     & p {
       margin: 0;
@@ -123,12 +128,12 @@ $green-success: #198754;
   margin: 0px 50px;
   display: flex;
   align-items: center;
-  color: $green-success;
+  color: black;
 }
 
 .shopping-cart-number {
   position: absolute;
   top: -5px;
   right: -7px;
-  color: $green-success;
+  color: black;
 }

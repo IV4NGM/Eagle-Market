@@ -9,7 +9,6 @@ import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import CustomModal from '@/Components/CustomModal/CustomModal'
 import useHistoryApi from '@/Hooks/useHistoryApi'
 import LoggedRedirect from '@/Context/AuthContext/LoggedRedirect'
-import '@/Styles/login.scss'
 
 const Login = () => {
   const navigate = useNavigate()
