@@ -121,16 +121,25 @@ input {
   box-shadow: 0 0 0 0.25rem rgba(25,135,84,.25);
 }
 
-.form{
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form {
   width: 35%;
   margin-top: 20px;
-  display: 'flex';
-  flex-direction: 'column';
+  display: flex;
+  flex-direction: column;
 
   &-container {
     box-shadow: 0px 0px 6px 0px gray;
     padding: 25px;
     border-radius: 10px;
+  }
+
+  &-product {
+    width: 40%;
   }
 }
 
@@ -180,4 +189,41 @@ p.error-text {
     transition: box-shadow .2s ease-in-out;
     // transition: 0.3s ease-in-out;
   }
+}
+
+textarea {
+  min-height: 175px !important;
+}
+
+.form-flex-row {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 10px;
+}
+
+.form-check-input:checked {
+  &:checked {
+    background-color: $green-success;
+    border-color: $green-success;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0.25rem rgba(25,135,84,.25);
+  }
+}
+
+.form-flex-column {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  width: 75%;
+  align-self: center;
+}
+
+.form-image {
+  height: 200px;
+  width: 200px;
+  object-fit: contain;
+  border-radius: 15px;
+  align-self: center;
+  margin-top: 20px;
 }

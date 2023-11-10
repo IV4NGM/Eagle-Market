@@ -7,6 +7,7 @@ import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import NoAdminRedirect from '@/Context/AuthContext/NoAdminRedirect'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import CustomModal from '@/Components/CustomModal/CustomModal'
+import ProductDefaultImage from '@/assets/product-default-image.png'
 
 const EditProduct = () => {
   const navigate = useNavigate()
@@ -86,9 +87,9 @@ const EditProduct = () => {
     }
   }, [id, registerProduct, token])
 
-  const categoriesAllowed = ['Books', 'Movies', 'Music', 'Games', 'Electronics', 'Computers',
-    'Home', 'Garden', 'Tools', 'Grocery', 'Health', 'Beauty', 'Toys', 'Kids', 'Baby', 'Clothing',
-    'Jewerly', 'Sports', 'Outdoors', 'Automotive', 'Industrial', 'Other']
+  const categoriesAllowed = ['Automotive', 'Baby', 'Beauty', 'Books', 'Clothing', 'Computers', 'Electronics',
+    'Games', 'Garden', 'Grocery', 'Health', 'Home', 'Industrial', 'Jewerly', 'Kids', 'Movies', 'Music',
+    'Outdoors', 'Sports', 'Tools', 'Toys', 'Other']
 
   yup.addMethod(yup.string, 'stripEmptyString', function () {
     return this.transform((value) => (value === '' ? undefined : value))
@@ -153,83 +154,97 @@ const EditProduct = () => {
   }
 
   return (
-    <>
+    <div className='page-container'>
       <NoAdminRedirect />
-      <h2>Modificar</h2>
-      <div className='newproduct'>
-        <div className='newproduct-container'>
+      <h2>Modificar producto</h2>
+      <div className='form form-product'>
+        <div className='form-container'>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            style={{ display: 'flex', flexDirection: 'column' }}
           >
-            <label htmlFor='product_name'>Nombre del producto</label>
-            <input
-              type='text'
-              name='product_name'
-              placeholder='Nombre del producto'
-              id='product_name'
-              defaultValue={productDetails.product_name}
-              {...register('product_name')}
-            />
-            <p>{errors.product_name?.message}</p>
+            <div className='form-floating'>
+              <input
+                type='text'
+                name='product_name'
+                placeholder='Nombre del producto'
+                id='product_name'
+                className='form-control'
+                defaultValue={productDetails.product_name}
+                {...register('product_name')}
+              />
+              <label htmlFor='product_name'>Nombre del producto</label>
+            </div>
+            <p className='warning-text'>{errors.product_name?.message}</p>
 
-            <label htmlFor='brand'>Marca del producto</label>
-            <input
-              type='text'
-              name='brand'
-              placeholder='Tu marca'
-              id='brand'
-              defaultValue={productDetails.brand}
-              {...register('brand')}
-            />
-            <p>{errors.brand?.message}</p>
+            <div className='form-floating'>
+              <input
+                type='text'
+                name='brand'
+                placeholder='Tu marca'
+                id='brand'
+                className='form-control'
+                defaultValue={productDetails.brand}
+                {...register('brand')}
+              />
+              <label htmlFor='brand'>Marca del producto</label>
+            </div>
+            <p className='warning-text'>{errors.brand?.message}</p>
 
-            <label htmlFor='price'>Precio del producto</label>
-            <input
-              type='number'
-              name='price'
-              placeholder='Precio'
-              id='price'
-              defaultValue={productDetails.price}
-              {...register('price')}
-            />
-            <p>{errors.price?.message}</p>
+            <div className='form-floating'>
+              <input
+                type='number'
+                name='price'
+                placeholder='Precio'
+                id='price'
+                className='form-control'
+                defaultValue={productDetails.price}
+                {...register('price')}
+              />
+              <label htmlFor='price'>Precio del producto</label>
+            </div>
+            <p className='warning-text'>{errors.price?.message}</p>
 
             {productDetails?.product_name
               ? <>
-                <label htmlFor='category'>Categoría</label>
-                <select name='category' id='category' defaultValue={productDetails.category} {...register('category')}>
+                <select name='category' className='form-select' id='category' defaultValue={productDetails.category} {...register('category')}>
                   <option value=''>Selecciona una categoría</option>
                   {categoriesAllowed.map((element, index) => {
                     return <option value={element} key={index}>{element}</option>
                   })}
                 </select>
-                <p>{errors.category?.message}</p>
-                </>
+                <p className='warning-text'>{errors.category?.message}</p>
+              </>
               : ''}
 
-            <label htmlFor='description'>Descripción del producto</label>
-            <textarea
-              name='description'
-              placeholder='Descripción de tu producto'
-              id='description'
-              defaultValue={productDetails.description}
-              {...register('description')}
-            />
-            <p>{errors.description?.message}</p>
+            <div className='form-floating'>
+              <textarea
+                name='description'
+                placeholder='Descripción de tu producto'
+                id='description'
+                className='form-control'
+                defaultValue={productDetails.description}
+                {...register('description')}
+              />
+              <label htmlFor='description'>Descripción del producto</label>
+            </div>
+            <p className='warning-text'>{errors.description?.message}</p>
 
-            <label htmlFor='sku'>SKU del producto</label>
-            <input
-              type='text'
-              name='sku'
-              placeholder='SKU de tu producto'
-              id='sku'
-              defaultValue={productDetails.sku}
-              {...register('sku')}
-            />
-            <p>{errors.sku?.message}</p>
+            <div className='form-floating'>
+              <input
+                type='text'
+                name='sku'
+                placeholder='SKU de tu producto'
+                id='sku'
+                className='form-control'
+                defaultValue={productDetails.sku}
+                {...register('sku')}
+              />
+              <label htmlFor='sku'>SKU del producto</label>
+            </div>
+            <p className='warning-text'>{errors.sku?.message}</p>
 
-            <div>
+            <p>Imagen</p>
+            <div className='form-flex-row'>
               <div className='form-check'>
                 <input className='form-check-input' type='radio' name='image-src' id='image-src-url' value='url' checked={imageSrc === 'url'} onChange={(event) => setImageSrc(event.target.value)} />
                 <label className='form-check-label' htmlFor='image-src-url'>
@@ -245,34 +260,44 @@ const EditProduct = () => {
             </div>
 
             {imageSrc === 'url'
-              ? <><label htmlFor='image'>URL de la imagen del producto</label>
-                <input
-                  type='text'
-                  name='image'
-                  placeholder='URL'
-                  id='image'
-                  {...register('image')}
-                />
-                <p>{errors.image?.message}</p>
-              </>
-              : <>
+              ? <>
+                <div className='form-floating'>
+                  <input
+                    type='text'
+                    name='image'
+                    placeholder='URL'
+                    id='image'
+                    className='form-control'
+                    {...register('image')}
+                  />
+                  <label htmlFor='image'>URL de la imagen del producto</label>
+                </div>
+                <p className='warning-text'>{errors.image?.message}</p>
+                </>
+              : <div className='form-flex-column'>
                 <input
                   type='file'
                   name='image64'
                   id='image64'
+                  className='form-control'
                   onChange={(event) => {
                     setImageFile(URL.createObjectURL(event.target.files[0]))
                     handleFileRead(event)
                   }}
                 />
-                <img src={imageFile} alt='Your-image' />
-                <p>{base64ErrorText}</p>
-                </>}
+                <img src={imageFile || ProductDefaultImage} className='form-image' alt='Product-image' />
+                <p className='warning-text'>{base64ErrorText}</p>
+              </div>}
 
-            <button type='submit'>
+            <button type='submit' className='btn btn-success'>
               Modificar producto
             </button>
           </form>
+          <div className='form-flex-row'>
+            <button className='btn btn-secondary'>Descartar cambios</button>
+            <button className='btn btn-danger'>Eliminar producto</button>
+          </div>
+
         </div>
       </div>
       <CustomModal
@@ -298,7 +323,7 @@ const EditProduct = () => {
         isCancelButton={false}
         textYes='Volver a Inicio'
       />
-    </>
+    </div>
   )
 }
 

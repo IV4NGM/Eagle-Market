@@ -1,4 +1,5 @@
 $green-success: #198754;
+$green-success-lighter: rgba(61, 164, 116, 0.650);
 
 .navbar {
   display: flex;
@@ -60,10 +61,17 @@ $green-success: #198754;
   position: absolute !important;
 }
 
-.dropdown-item-flex {
+.dropdown-item {
+  &-flex {
   display: flex;
   flex-direction: column;
   // align-items: center;
+  }
+
+  &:active {
+    color: white !important;
+    background-color: $green-success-lighter !important;
+  }
 
   &__title {
     margin: 10px 0px;
