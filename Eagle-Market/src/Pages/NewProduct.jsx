@@ -106,9 +106,13 @@ const NewProduct = () => {
     const file = event.target.files[0]
     console.log(file.type)
     if (validImageExtensions.includes(file.type)) {
-      const base64ImageResult = await convertBase64(file)
-      setBase64ErrorText('')
-      setBase64Image(base64ImageResult)
+      try {
+        const base64ImageResult = await convertBase64(file)
+        setBase64ErrorText('')
+        setBase64Image(base64ImageResult)
+      } catch (error) {
+        setBase64ErrorText('No se pudo procesar tu imagen. Intenta nuevamente más tarde')
+      }
     } else {
       setBase64ErrorText('El formato de archivo no está permitido')
     }
