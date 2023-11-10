@@ -40,7 +40,7 @@ const Signup = () => {
           case 201: return value.json()
           case 400: setErrorMessage('Revisa tus datos e intenta nuevamente')
             throw new Error('IncorrectData')
-          case 403: setErrorMessage('Ya existe un usuario con ese email')
+          case 403: setErrorMessage('Ya existe un usuario registrado con este correo electrónico')
             throw new Error('IncorrectData')
           default: setShowModalFailure(true)
         }
@@ -65,7 +65,8 @@ const Signup = () => {
     last_name: yup.string().required('Escribe tu apellido'),
     gender: yup.mixed().oneOf(['M', 'F', 'O'], 'Selecciona un género').defined(),
     email: yup.string().required('Ingresa un email válido').matches(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Debes ingresar un email válido'),
-    password: yup.string().required('No ingresaste una contraseña').min(5, 'La contraseña debe tener al menos 5 caracteres').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%.^&*])/, 'La contraseña debe tener al menos 5 caracteres, un número, una letra mayúscula, una letra minúscula y un caracter especial'),
+    password: yup.string().required('Ingresa tu contraseña').min(5, 'La contraseña debe tener al menos 5 caracteres').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%.^&*])/, 'La contraseña debe tener un número, una letra mayúscula, una letra minúscula y un caracter especial'),
+    confirm_password: yup.string().oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden').required('Vuelve a escribir tu contraseña'),
     role: yup.mixed().oneOf(['ADMIN', 'CUSTOMER'], 'Selecciona un rol').defined()
   })
 
@@ -75,84 +76,109 @@ const Signup = () => {
 
   const onSubmit = (data) => {
     console.log('datos del formulario', data)
-    setSignUpInfo({ ...data })
+    const dataToPost = { ...data }
+    delete dataToPost.confirm_password
+    setSignUpInfo({ ...dataToPost })
   }
 
   return (
-    <>
+    <div className='page-container'>
       <LoggedRedirect />
       <h2>Regístrate ahora para iniciar a comprar</h2>
-      <div className='login'>
-        <div className='login-container'>
+      <div className='form'>
+        <div className='form-container'>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            style={{ display: 'flex', flexDirection: 'column' }}
           >
-            <label htmlFor='first_name'>Nombre</label>
-            <input
-              type='text'
-              name='first_name'
-              placeholder='Tu Nombre'
-              id='first_name'
-              {...register('first_name', { required: true, maxLength: 20 })}
-            />
-            <p>{errors.first_name?.message}</p>
+            <div className='form-floating'>
+              <input
+                type='text'
+                name='first_name'
+                placeholder='Tu Nombre'
+                id='first_name'
+                className='form-control'
+                {...register('first_name', { required: true, maxLength: 20 })}
+              />
+              <label htmlFor='first_name'>Nombre</label>
+            </div>
+            <p className='warning-text'>{errors.first_name?.message}</p>
 
-            <label htmlFor='last_name'>Apellido</label>
-            <input
-              type='text'
-              name='last_name'
-              placeholder='Tu Apellido'
-              id='last_name'
-              {...register('last_name', { pattern: /^[A-Za-z]+$/i })}
-            />
-            <p>{errors.last_name?.message}</p>
+            <div className='form-floating'>
+              <input
+                type='text'
+                name='last_name'
+                placeholder='Tu Apellido'
+                id='last_name'
+                className='form-control'
+                {...register('last_name')}
+              />
+              <label htmlFor='last_name'>Apellido</label>
+            </div>
+            <p className='warning-text'>{errors.last_name?.message}</p>
 
-            <label htmlFor='gender'>Genero</label>
-            <select name='gender' id='gender' {...register('gender')}>
-              <option value=''>Elige un genero</option>
+            <select name='gender' className='form-select' id='gender' {...register('gender')}>
+              <option value=''>Elige un género</option>
               <option value='M'>Masculino</option>
               <option value='F'>Femenino</option>
               <option value='O'>Otro</option>
             </select>
-            <p>{errors.gender?.message}</p>
+            <p className='warning-text'>{errors.gender?.message}</p>
 
-            <label htmlFor='role'>Rol</label>
-            <select name='role' id='role' {...register('role')}>
+            <select name='role' className='form-select' id='role' {...register('role')}>
               <option value=''>Elige un rol</option>
-              <option value='CUSTOMER'>Customer</option>
-              <option value='ADMIN'>Admin</option>
+              <option value='CUSTOMER'>Cliente</option>
+              <option value='ADMIN'>Administrador</option>
             </select>
-            <p>{errors.role?.message}</p>
+            <p className='warning-text'>{errors.role?.message}</p>
 
-            <label htmlFor='email'>Email</label>
-            <input
-              type='text'
-              name='email'
-              placeholder='correo@mail.com'
-              id='email'
-              {...register('email')}
-            />
-            <p>{errors.email?.message}</p>
+            <div className='form-floating'>
+              <input
+                type='text'
+                name='email'
+                placeholder='correo@mail.com'
+                id='email'
+                className='form-control'
+                {...register('email')}
+              />
+              <label htmlFor='email'>Correo electrónico</label>
+            </div>
+            <p className='warning-text'>{errors.email?.message}</p>
 
-            <label htmlFor='password'>Password</label>
-            <input
-              type='password'
-              name='password'
-              id='password'
-              {...register('password')}
-            />
-            <p>{errors.password?.message}</p>
+            <div className='form-floating'>
+              <input
+                type='password'
+                name='password'
+                id='password'
+                placeholder='contraseña'
+                className='form-control'
+                {...register('password')}
+              />
+              <label htmlFor='password'>Contraseña</label>
+            </div>
+            <p className='warning-text'>{errors.password?.message}</p>
 
-            <p style={{ color: 'red' }}>{errorMessage}</p>
-            <button type='submit'>
+            <div className='form-floating'>
+              <input
+                type='password'
+                name='confirm_password'
+                id='confirm_password'
+                placeholder='contraseña'
+                className='form-control'
+                {...register('confirm_password')}
+              />
+              <label htmlFor='confirm_password'>Confirma tu contraseña</label>
+            </div>
+            <p className='warning-text'>{errors.confirm_password?.message}</p>
+
+            <p className='error-text'>{errorMessage}</p>
+            <button type='submit' className='btn btn-success btn-form'>
               Registrarse
             </button>
           </form>
+          <p>¿Ya eres un usuario?</p>
+          <Link to='/login'>Inicia sesión</Link>
         </div>
       </div>
-      <p>¿Ya eres un usuario?</p>
-      <Link to='/login'>Inicia sesión</Link>
       <CustomModal
         title='Error al crear usuario'
         showModal={showModalFailure}
@@ -176,7 +202,7 @@ const Signup = () => {
         isCancelButton={false}
         textYes='Iniciar sesión'
       />
-    </>
+    </div>
   )
 }
 

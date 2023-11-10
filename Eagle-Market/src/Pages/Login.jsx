@@ -9,6 +9,7 @@ import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import CustomModal from '@/Components/CustomModal/CustomModal'
 import useHistoryApi from '@/Hooks/useHistoryApi'
 import LoggedRedirect from '@/Context/AuthContext/LoggedRedirect'
+import '@/Styles/login.scss'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -94,7 +95,7 @@ const Login = () => {
 
   const loginFormSchema = yup.object().shape({
     email: yup.string().required('Ingresa un email válido').matches(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Debes ingresar un email válido'),
-    password: yup.string().required('No ingresaste una contraseña')
+    password: yup.string().required('Ingresa tu contraseña')
   })
 
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -108,43 +109,48 @@ const Login = () => {
   }
 
   return (
-    <>
+    <div className='page-container'>
       <LoggedRedirect />
       <h2>Inicia sesión para empezar a comprar</h2>
-      <div className='login'>
-        <div className='login-container'>
+      <div className='form'>
+        <div className='form-container'>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            style={{ display: 'flex', flexDirection: 'column' }}
           >
-            <label htmlFor='email'>Email</label>
-            <input
-              type='text'
-              name='email'
-              placeholder='correo@mail.com'
-              id='email'
-              {...register('email')}
-            />
-            <p>{errors.email?.message}</p>
+            <div className='form-floating'>
+              <input
+                type='text'
+                name='email'
+                placeholder='correo@mail.com'
+                id='email'
+                className='form-control'
+                {...register('email')}
+              />
+              <label htmlFor='email'>Correo electrónico</label>
+            </div>
+            <p className='warning-text'>{errors.email?.message}</p>
+            <div className='form-floating'>
+              <input
+                type='password'
+                name='password'
+                placeholder='contraseña'
+                id='password'
+                className='form-control'
+                {...register('password')}
+              />
+              <label htmlFor='password'>Contraseña</label>
+            </div>
+            <p className='warning-text'>{errors.password?.message}</p>
 
-            <label htmlFor='password'>Password</label>
-            <input
-              type='password'
-              name='password'
-              id='password'
-              {...register('password')}
-            />
-            <p>{errors.password?.message}</p>
-
-            <p style={{ color: 'red' }}>{errorMessage}</p>
-            <button type='submit'>
+            <p className='error-text'>{errorMessage}</p>
+            <button type='submit' className='btn btn-success btn-form'>
               Iniciar Sesión
             </button>
           </form>
+          <p>¿Eres un nuevo usuario?</p>
+          <Link to='/signup'>Regístrate ahora</Link>
         </div>
       </div>
-      <p>¿Nuevo usuario?</p>
-      <Link to='/signup'>Regístrate ahora</Link>
       <CustomModal
         title='Error al iniciar sesión'
         showModal={showModalFailure}
@@ -170,7 +176,7 @@ const Login = () => {
         isCancelButton={false}
         textYes='Ir a Inicio'
       />
-    </>
+    </div>
   )
 }
 
