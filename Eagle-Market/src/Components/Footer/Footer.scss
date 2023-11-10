@@ -1,0 +1,28 @@
+.footer{
+  height: 100px !important;
+  min-height: 100px !important;
+}
+
+.footer-container {
+  margin-top: auto;
+  padding-top: 50px !important;
+}
+
+.footer-body{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 30px 0px 30px !important;
+}
+
+.footer-body p{
+  margin: 0;
+}
+
+.mail-footer{
+  display: flex;
+}
+
+.mail-icon-footer{
+  margin-right: 10px;
+}

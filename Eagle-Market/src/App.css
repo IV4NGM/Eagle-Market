@@ -5,6 +5,15 @@
   text-align: center;
 }
 
+html, body, #root {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+ }
+
 .logo {
   height: 6em;
   padding: 1.5em;
