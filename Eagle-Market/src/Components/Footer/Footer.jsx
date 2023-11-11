@@ -5,7 +5,7 @@ import './Footer.scss'
 const Footer = () => {
   return (
     <div className='footer-container'>
-      <nav className='navbar bottom bg-body-tertiary footer'>
+      <nav className='navbar bottom footer navbar-white'>
         <div className='container-fluid footer-body'>
           <p className='bold-text'>Eagle Market 2023</p>
           {/* <div className='attribution'>

@@ -28,7 +28,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className='navbar navbar-expand-lg bg-body-tertiary sticky-top'>
+    <nav className='navbar navbar-expand-lg sticky-top navbar-white'>
       <div className='container-fluid'>
         <NavLink className='navbar-brand navbar-brand-logo' to='/' onClick={() => setNavSearch('')}>
           <img src={eagleLogo} alt='Eagle blade logo' className='d-inline-block align-text-top logo-nav' />

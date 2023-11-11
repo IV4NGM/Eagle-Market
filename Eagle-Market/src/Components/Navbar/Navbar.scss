@@ -66,19 +66,18 @@ $green-success-lighter: rgba(61, 164, 116, 0.650);
   display: flex;
   flex-direction: column;
   // align-items: center;
+    &__title {
+      margin: 10px 0px;
+    }
+
+    &--center {
+      align-self: center;
+    }
   }
 
   &:active {
     color: white !important;
     background-color: $green-success-lighter !important;
-  }
-
-  &__title {
-    margin: 10px 0px;
-  }
-
-  &--center {
-    align-self: center;
   }
 
   &__p {
@@ -141,7 +140,7 @@ $green-success-lighter: rgba(61, 164, 116, 0.650);
 
 .shopping-cart-number {
   position: absolute;
-  top: -5px;
+  top: -8px;
   right: -7px;
   color: black;
 }
