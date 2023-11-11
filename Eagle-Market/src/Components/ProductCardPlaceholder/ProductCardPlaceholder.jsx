@@ -1,8 +1,13 @@
+import ProductDefaultImage from '@/assets/product-default-image.png'
+import './ProductCardPlaceholder.scss'
+
 const ProductCardPlaceholder = () => {
   return (
-    <div className='card' style={{ width: '18rem' }} aria-hidden='true'>
-      <img src='...' className='card-img-top' alt='...' />
-      <div className='card-body'>
+    <div className='card product-card placeholder-card' aria-hidden='true'>
+      <div className='card-image-container'>
+        <img src={ProductDefaultImage} className='card-img-top product-image-card' alt='Product image' />
+      </div>
+      <div className='card-body placeholder-body'>
         <h5 className='card-title placeholder-glow'>
           <span className='placeholder col-6' />
         </h5>
@@ -13,7 +18,7 @@ const ProductCardPlaceholder = () => {
           <span className='placeholder col-6' />
           <span className='placeholder col-8' />
         </p>
-        <a className='btn btn-primary disabled placeholder col-6' aria-disabled='true' />
+        <a className='btn btn-success disabled placeholder col-10' aria-disabled='true' />
       </div>
     </div>
   )
