@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import ProductCard from '@/Components/ProductCard/ProductCard'
 import ProductCardPlaceholder from '@/Components/ProductCardPlaceholder/ProductCardPlaceholder'
+import './SearchCardsContainer.scss'
 
 const SearchCardsContainer = ({ products, loaded, search, selectedCategories, allCategories, prices }) => {
   const productsArray = products.filter((item) => {
@@ -21,7 +22,7 @@ const SearchCardsContainer = ({ products, loaded, search, selectedCategories, al
 
   return (
     <>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      <div className='search-cards-container'>
         {!loaded ? <> <ProductCardPlaceholder /> <ProductCardPlaceholder /> <ProductCardPlaceholder /> </> : ''}
         {productsArray.map((element, index) => {
           return <ProductCard data={element} key={index} />
