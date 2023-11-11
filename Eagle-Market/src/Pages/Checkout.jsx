@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import NoLoggedRedirect from '@/Context/AuthContext/NoLoggedRedirect'
+import '@/Styles/Checkout.scss'
 
 const Checkout = () => {
   const navigate = useNavigate()
@@ -162,6 +163,58 @@ const Checkout = () => {
   return (
     <div className='page-container'>
       <NoLoggedRedirect />
+      {Object.keys(productToBuy).length > 0
+        ? <>
+          <h2>Comprar ahora</h2>
+          <div className='flex-row cart-flex'>
+            <div className='cart-flex-left'>
+              <CartProductCard data={productToBuy} changeValueFunction={changeValueFunction} type='productToBuy' onDelete={() => setShowModalDeleteBuy(true)} />
+            </div>
+            <div className='cart-flex-right'>
+              <div className='card cart-checkout-details'>
+                <h4>Detalles de la compra</h4>
+                <div className='cart-details-grid spaced'>
+                  <p>Cantidad de productos:</p>
+                  <p className='right'>{productToBuy?.product_amount}</p>
+                  <p><strong>Gran total: </strong></p>
+                  <p className='right'><strong>$ {productToBuy?.price * productToBuy?.product_amount}</strong></p>
+                </div>
+                <div className='flex-column'>
+                  <button className='btn btn-success btn-spaced' onClick={() => setShowModalBuyNow(true)}>Comprar ahora</button>
+                  <button className='btn btn-secondary' onClick={addToCart}>Agregar al carrito</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          </>
+        : ''}
+      <h2>Mi carrito</h2>
+      <div className='flex-row cart-flex'>
+        <div className='cart-flex-left'>
+          {cart.map((element, index) => {
+            return (
+              <CartProductCard
+                data={element} changeValueFunction={changeValueFunction} key={index} type='cart' onDelete={() => {
+                  setDeleteCartParams({ newValue: 0, id: element.id })
+                  setShowModalDeleteCartItem(true)
+                }}
+              />
+            )
+          })}
+        </div>
+        <div className='cart-flex-right'>
+          <div className='card cart-checkout-details'>
+            <h4>Detalles de la compra</h4>
+            <div className='cart-details-grid spaced'>
+              <p>Cantidad de productos:</p>
+              <p className='right'>{productsAmount}</p>
+              <p><strong>Gran total: </strong></p>
+              <p className='right'><strong>$ {totalPrice}</strong></p>
+            </div>
+            {cart.length > 0 ? <button className='btn btn-success' onClick={() => setShowModalBuyAllCart(true)}>Comprar carrito</button> : ''}
+          </div>
+        </div>
+      </div>
       <CustomModal
         title='Comprar ahora'
         showModal={showModalBuyNow}
@@ -211,23 +264,6 @@ const Checkout = () => {
         text='¿Estás seguro de que quieres eliminar el producto?'
         onYes={() => modifyCart(deleteCartParams.newValue, deleteCartParams.id)}
       />
-      {Object.keys(productToBuy).length > 0
-        ? <> <h2>Comprar ahora</h2> <CartProductCard data={productToBuy} changeValueFunction={changeValueFunction} type='productToBuy' onDelete={() => setShowModalDeleteBuy(true)} /> <button onClick={() => setShowModalBuyNow(true)}>Comprar ahora</button> <button onClick={addToCart}>Agregar al carrito</button> </>
-        : ''}
-      <h3>Carrito</h3>
-      {cart.map((element, index) => {
-        return (
-          <CartProductCard
-            data={element} changeValueFunction={changeValueFunction} key={index} type='cart' onDelete={() => {
-              setDeleteCartParams({ newValue: 0, id: element.id })
-              setShowModalDeleteCartItem(true)
-            }}
-          />
-        )
-      })}
-      <p>Cantidad de productos: {productsAmount}</p>
-      <p><strong>Gran total: ${totalPrice}</strong></p>
-      {cart.length > 0 ? <button onClick={() => setShowModalBuyAllCart(true)}>Comprar carrito</button> : ''}
     </div>
   )
 }

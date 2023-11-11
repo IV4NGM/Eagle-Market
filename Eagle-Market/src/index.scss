@@ -151,6 +151,10 @@ p.error-text {
     width: 13rem;
     object-fit: cover;
     border-radius: 15px;
+    &--mini {
+      height: 5rem;
+      width: 5rem;
+    }
   }
 }
 
@@ -178,6 +182,11 @@ p.error-text {
     transition: box-shadow .2s ease-in-out;
     // transition: 0.3s ease-in-out;
   }
+}
+
+.placeholder-container {
+  display: flex;
+  margin-top: 30px;
 }
 
 .card-image-container {
@@ -256,6 +265,16 @@ form {
       box-shadow: 0 0 0 0.25rem rgba(25,135,84,.25);
     }
   }
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
 }
 
 .display-linebreak {
