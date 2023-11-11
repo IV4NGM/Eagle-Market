@@ -49,7 +49,7 @@ const OrderDetail = () => {
   const element = history.filter((order) => order.orderId === Number(id))[0]
 
   return (
-    <>
+    <div className='page-container'>
       <NoLoggedRedirect />
       {element ? <HistoryOrderContainer totalPrice={element?.total_price} productsAmount={element?.products_amount} orderId={element?.orderId} orderDate={element?.orderDate} orderTime={element?.orderTime} productsArray={element?.products} /> : ''}
       {historyLoaded && !element ? 'Esta compra no existe.' : ''}
@@ -62,7 +62,7 @@ const OrderDetail = () => {
         textYes='Regresar'
         estatico
       />
-    </>
+    </div>
   )
 }
 

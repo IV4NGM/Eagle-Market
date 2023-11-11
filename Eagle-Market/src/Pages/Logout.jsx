@@ -30,7 +30,7 @@ const Logout = () => {
   }, [setCart, setLastLetter, setLoginStatus, setToken, setUserInfo])
 
   return (
-    <>
+    <div className='page-container'>
       <NoLoggedRedirect />
       <CustomModal
         title='Sesión cerrada exitosamente'
@@ -46,7 +46,7 @@ const Logout = () => {
         textNo='Ir a Inicio'
         textYes='Iniciar sesión con otra cuenta'
       />
-    </>
+    </div>
 
   )
 }

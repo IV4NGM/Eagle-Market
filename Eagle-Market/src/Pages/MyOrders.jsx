@@ -49,7 +49,7 @@ const MyOrders = () => {
   // }, [token])
 
   return (
-    <>
+    <div className='page-container'>
       <NoLoggedRedirect />
       <h2>Historial de compras</h2>
       {historyLoaded && history.length === 0 ? 'No hay compras realizadas todavía' : ''}
@@ -67,7 +67,7 @@ const MyOrders = () => {
         textYes='Regresar'
         estatico
       />
-    </>
+    </div>
 
   )
 }

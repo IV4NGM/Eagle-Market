@@ -127,7 +127,7 @@ const ProductDetail = () => {
   }
 
   return (
-    <>
+    <div className='page-container'>
       {!showModalSuccess
         ? <div>
           <h2>{productDetails.product_name}</h2>
@@ -193,7 +193,7 @@ const ProductDetail = () => {
         textYes='Ver carrito'
         textNo='Seguir comprando'
       />
-    </>
+    </div>
   )
 }
 
