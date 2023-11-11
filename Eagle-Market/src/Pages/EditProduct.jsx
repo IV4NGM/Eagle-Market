@@ -23,6 +23,7 @@ const EditProduct = () => {
   const [showModalSuccess, setShowModalSuccess] = useState(false)
 
   const [imageSrc, setImageSrc] = useState('url')
+  const [imageUrl, setImageUrl] = useState('')
   const [imageFile, setImageFile] = useState()
   const [base64Image, setBase64Image] = useState('')
   const [base64ErrorText, setBase64ErrorText] = useState('')
@@ -78,6 +79,7 @@ const EditProduct = () => {
           if (result.base64Image) {
             setImageFile(result.base64Image)
           }
+          setImageUrl(result.image)
           setImageSrc(result.base64Image ? 'file' : 'url')
           setProductDetails(result)
         })
@@ -105,8 +107,7 @@ const EditProduct = () => {
     price: yup.number('Debes ingresar un número').positive('El precio debe ser positivo').required('Escribe el precio de tu producto').stripEmptyNumber().default(productDetails.price),
     category: yup.mixed().oneOf(categoriesAllowed, 'Selecciona la categoría de tu producto').defined().default(productDetails.category),
     description: yup.string().required('Escribe la descripción de tu producto').stripEmptyString().default(productDetails.description),
-    sku: yup.string().stripEmptyString().default(productDetails.sku),
-    image: yup.string()
+    sku: yup.string().stripEmptyString().default(productDetails.sku)
   })
 
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -115,7 +116,7 @@ const EditProduct = () => {
 
   const onSubmit = (data) => {
     console.log('datos del formulario', data)
-    const dataToPost = { ...data, base64Image }
+    const dataToPost = { ...data, image: imageUrl, base64Image }
     if (imageSrc === 'url') {
       dataToPost.base64Image = ''
       setBase64Image('')
@@ -243,7 +244,7 @@ const EditProduct = () => {
             </div>
             <p className='warning-text'>{errors.sku?.message}</p>
 
-            <p>Imagen</p>
+            <p>Imagen del producto</p>
             <div className='form-flex-row'>
               <div className='form-check'>
                 <input className='form-check-input' type='radio' name='image-src' id='image-src-url' value='url' checked={imageSrc === 'url'} onChange={(event) => setImageSrc(event.target.value)} />
@@ -267,11 +268,15 @@ const EditProduct = () => {
                     name='image'
                     placeholder='URL'
                     id='image'
+                    // defaultValue={productDetails.image}
                     className='form-control'
-                    {...register('image')}
+                    // {...register('image')}
+                    value={imageUrl}
+                    onChange={(event) => setImageUrl(event.target.value)}
                   />
                   <label htmlFor='image'>URL de la imagen del producto</label>
                 </div>
+                <img src={imageUrl || ProductDefaultImage || ''} className='product-image-card edit-image' alt='Product-image' />
                 <p className='warning-text'>{errors.image?.message}</p>
                 </>
               : <div className='form-flex-column'>
@@ -294,8 +299,8 @@ const EditProduct = () => {
             </button>
           </form>
           <div className='form-flex-row'>
-            <button className='btn btn-secondary'>Descartar cambios</button>
-            <button className='btn btn-danger'>Eliminar producto</button>
+            <button className='btn btn-outline-secondary'>Descartar cambios</button>
+            <button className='btn btn-outline-danger'>Eliminar producto</button>
           </div>
 
         </div>

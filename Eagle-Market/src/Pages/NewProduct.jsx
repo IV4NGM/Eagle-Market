@@ -19,6 +19,7 @@ const NewProduct = () => {
   const [showModalSuccess, setShowModalSuccess] = useState(false)
 
   const [imageSrc, setImageSrc] = useState('url')
+  const [imageUrl, setImageUrl] = useState('')
   const [imageFile, setImageFile] = useState()
   const [base64Image, setBase64Image] = useState('')
   const [base64ErrorText, setBase64ErrorText] = useState('')
@@ -200,7 +201,7 @@ const NewProduct = () => {
             </div>
             <p className='warning-text'>{errors.sku?.message}</p>
 
-            <p>Imagen</p>
+            <p>Imagen del producto</p>
             <div className='form-flex-row'>
               <div className='form-check'>
                 <input className='form-check-input' type='radio' name='image-src' id='image-src-url' value='url' checked={imageSrc === 'url'} onChange={(event) => setImageSrc(event.target.value)} />
@@ -226,9 +227,12 @@ const NewProduct = () => {
                     id='image'
                     className='form-control'
                     {...register('image')}
+                    value={imageUrl}
+                    onChange={(event) => setImageUrl(event.target.value)}
                   />
                   <label htmlFor='image'>URL de la imagen del producto</label>
                 </div>
+                <img src={imageUrl || ProductDefaultImage || ''} className='product-image-card edit-image' alt='Product-image' />
                 <p className='warning-text'>{errors.image?.message}</p>
                 </>
               : <div className='form-flex-column'>
