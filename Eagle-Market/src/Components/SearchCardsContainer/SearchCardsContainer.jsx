@@ -2,6 +2,8 @@
 import ProductCard from '@/Components/ProductCard/ProductCard'
 import ProductCardPlaceholder from '@/Components/ProductCardPlaceholder/ProductCardPlaceholder'
 import './SearchCardsContainer.scss'
+import NoProductsImage from '@/assets/no-products-image.png'
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 
 const SearchCardsContainer = ({ products, loaded, search, selectedCategories, allCategories, prices }) => {
   const productsArray = products.filter((item) => {
@@ -24,9 +26,21 @@ const SearchCardsContainer = ({ products, loaded, search, selectedCategories, al
     <>
       <div className='search-cards-container'>
         {!loaded ? <> <ProductCardPlaceholder /> <ProductCardPlaceholder /> <ProductCardPlaceholder /> </> : ''}
-        {productsArray.map((element, index) => {
-          return <ProductCard data={element} key={index} />
-        })}
+        {productsArray.length > 0
+          ? productsArray.map((element, index) => {
+            return <ProductCard data={element} key={index} />
+          })
+          : ''}
+      </div>
+      <div>
+        {!loaded || productsArray.length > 0
+          ? ''
+          : <>
+            {/* <img src={NoProductsImage} alt='No products found' className='no-products-image' /> */}
+            <SearchOutlinedIcon className='not-found-image' />
+            <h5>No hay productos que coincidan con tus criterios de búsqueda.</h5>
+            <h5>Intenta nuevamente con otros parámetros.</h5>
+            </>}
       </div>
     </>
   )
