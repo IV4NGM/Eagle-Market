@@ -117,7 +117,7 @@ const Home = () => {
 
       <div className='flex-wrap'>
         {/* {userInfo?.role === 'ADMIN' ? <div className='card' style={{ width: '18rem' }} onClick={() => navigate('/new-product')}> + </div> : ''} */}
-        {!loaded ? <> <ProductCardPlaceholder /> <ProductCardPlaceholder /> <ProductCardPlaceholder /> </> : ''}
+        {!loaded ? <div className='placeholder-container'> <ProductCardPlaceholder /> <ProductCardPlaceholder /> <ProductCardPlaceholder /> </div> : ''}
         {/* {productsArray.map((element, index) => {
           return <ProductCard data={element} key={index} />
         })} */}
