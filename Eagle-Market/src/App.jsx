@@ -7,6 +7,7 @@ import AuthProvider from '@/Context/AuthContext/AuthProvider'
 import ProductsProvider from '@/Context/ProductsContext/ProductsProvider'
 import CartProvider from '@/Context/CartContext/CartProvider'
 import Loader from '@/Components/Loader/Loader'
+import ScrollButton from '@/Components/ScrollButton/ScrollButton'
 
 function App () {
   return (
@@ -18,6 +19,7 @@ function App () {
               <Loader />
               <Navbar />
               <RouterIndex />
+              <ScrollButton />
               <Footer />
             </CartProvider>
           </ProductsProvider>
