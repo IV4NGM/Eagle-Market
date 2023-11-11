@@ -137,6 +137,7 @@ p.error-text {
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
+  min-height: calc(100vh - 250px);
 }
 
 .btn-form {
@@ -259,4 +260,10 @@ form {
 
 .display-linebreak {
   white-space: pre-line;
+}
+
+.not-found-image {
+  margin-top: 30px;
+  height: 200px !important;
+  width: 200px !important;
 }
