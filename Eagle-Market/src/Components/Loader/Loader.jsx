@@ -1,6 +1,6 @@
 import './Loader.scss'
 import loader from '@/assets/loader.gif'
-import greenLoader from '@/assets/green-loader.gif'
+import greenLoader from '@/assets/green-loader-slow.gif'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 
 // eslint-disable-next-line react/prop-types
