@@ -134,7 +134,10 @@ const ProductDetail = () => {
           <p>Marca: {productDetails.brand}</p>
           <p>Categoría: {productDetails.category}</p>
           <img src={productDetails?.image || productDetails?.base64Image} alt={productDetails.product_name} />
-          <p>Descripción: {productDetails.description}</p>
+          <p>Descripción del producto:</p>
+          <div className='display-linebreak'>
+            {productDetails.description}
+          </div>
           <p>Precio: ${productDetails.price}</p>
           <button onClick={() => setProductAmount(Math.max(1, productAmount - 1))}>-</button>
           <p style={{ display: 'inline' }}>{productAmount}</p>
