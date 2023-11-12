@@ -12,6 +12,13 @@ const nothingFunction = () => {}
 const CartProductCard = ({ data, changeValueFunction = nothingFunction, type = '', onDelete = nothingFunction, changeable = true }) => {
   const navigate = useNavigate()
   // const { userInfo } = useAuthContext()
+  const border = (classNames, changeable) => {
+    if (!changeable) {
+      return classNames + ' no-border'
+    } else {
+      return classNames
+    }
+  }
   return (
     <div
       className='card cart-product-card'onClick={(event) => {
@@ -22,7 +29,7 @@ const CartProductCard = ({ data, changeValueFunction = nothingFunction, type = '
       <div className='cart-image-container'>
         <img src={data?.image || data?.base64Image || ProductDefaultImage} alt={data?.product_name} className='product-image-card product-image-card--mini' />
       </div>
-      <div className='flex-column'>
+      <div className='flex-column cart-details-product'>
         <p><strong>{data?.product_name}</strong></p>
         <p>{data?.brand}</p>
       </div>
@@ -31,37 +38,42 @@ const CartProductCard = ({ data, changeValueFunction = nothingFunction, type = '
         <p>3</p>
         <p className='amount-container-right'>+</p>
       </div> */}
-      <div className='flex-row amount-container'>
+      <div className={border('flex-row amount-container', changeable)}>
         {changeable
-          ? <button
-              className='amount-container-left btn btn-modify-number' onClick={(event) => {
+          ? <div className='amount-container-left'>
+            <button
+              className='btn btn-modify-number' onClick={(event) => {
                 event.stopPropagation()
                 changeValueFunction(type, data?.product_amount - 1, data?.id)
               }}
             >
-            <RemoveOutlinedIcon />
+              <RemoveOutlinedIcon />
             </button>
+            </div>
+
           : ''}
-        <div className='amount-container-number'>{data.product_amount}</div>
+        <div className='amount-container-number'>{data.product_amount} {!changeable ? 'artículos' : ''}</div>
         {changeable
-          ? <button
-              className='amount-container-right btn btn-modify-number' onClick={(event) => {
+          ? <div className='amount-container-right'>
+            <button
+              className='btn btn-modify-number' onClick={(event) => {
                 event.stopPropagation()
                 changeValueFunction(type, data?.product_amount + 1, data?.id)
               }}
             >
-            <AddOutlinedIcon />
+              <AddOutlinedIcon />
             </button>
+          </div>
           : ''}
       </div>
-
       <p>Precio individual: ${data.price}</p>
       <p><strong>Total: ${data.price * data.product_amount}</strong></p>
       {changeable
-        ? <button className='btn btn-outline-danger' onClick={(event) => {
-          event.stopPropagation()
-          onDelete()
-        }}
+        ? <button
+            className='btn btn-outline-danger' onClick={(event) => {
+              event.stopPropagation()
+              onDelete()
+            }}
           >
           <ClearOutlinedIcon />
           </button>

@@ -34,9 +34,16 @@
   margin-right: 1rem;
 }
 
+.cart-details {
+  &-product {
+    width: 11rem;
+  }
+}
+
 .amount-container {
   border: 1px solid rgba(0, 0, 0, 0.175);
   border-radius: 5px;
+  min-height: 3rem;
   // padding: 5px;
   &-left {
     border-right: 1px solid rgba(0, 0, 0, 0.175) !important;
@@ -53,13 +60,12 @@
   }
 }
 
+.no-border {
+  border: 0;
+}
+
 .btn-modify-number {
-  background-color: white;
   border-radius: 0 !important;
   height: 3rem;
   width: 3rem;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

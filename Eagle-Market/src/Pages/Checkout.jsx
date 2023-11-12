@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import NoLoggedRedirect from '@/Context/AuthContext/NoLoggedRedirect'
-import '@/Styles/Checkout.scss'
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 
 const Checkout = () => {
   const navigate = useNavigate()
@@ -58,6 +58,9 @@ const Checkout = () => {
     if (buyNow || buyAllCart) {
       let productsAmount = 0
       let totalPrice = 0
+      const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
+      const localOrderDate = new Date().toLocaleDateString('es-ES', dateOptions)
+      const localOrderTime = new Date().toLocaleTimeString()
       if (buyNow) {
         productsAmount = productToBuy.product_amount
         totalPrice = productToBuy?.product_amount * productToBuy?.price
@@ -77,7 +80,9 @@ const Checkout = () => {
         body: JSON.stringify({
           products: productsToBuy,
           products_amount: productsAmount,
-          total_price: totalPrice
+          total_price: totalPrice,
+          localOrderDate,
+          localOrderTime
         })
       })
 
@@ -105,6 +110,7 @@ const Checkout = () => {
           setShowModalFailure(true)
         })
     }
+    window.scrollTo(0, 0)
   }, [buyAllCart, buyNow, cart, productToBuy, setApiCall, setCart, setProductToBuy, token])
 
   const addToCart = () => {
@@ -188,33 +194,40 @@ const Checkout = () => {
           </div>
           </>
         : ''}
-      <h2>Mi carrito</h2>
-      <div className='flex-row cart-flex'>
-        <div className='cart-flex-left'>
-          {cart.map((element, index) => {
-            return (
-              <CartProductCard
-                data={element} changeValueFunction={changeValueFunction} key={index} type='cart' onDelete={() => {
-                  setDeleteCartParams({ newValue: 0, id: element.id })
-                  setShowModalDeleteCartItem(true)
-                }}
-              />
-            )
-          })}
-        </div>
-        <div className='cart-flex-right'>
-          <div className='card cart-checkout-details'>
-            <h4>Detalles de la compra</h4>
-            <div className='cart-details-grid spaced'>
-              <p>Cantidad de productos:</p>
-              <p className='right'>{productsAmount}</p>
-              <p><strong>Gran total: </strong></p>
-              <p className='right'><strong>$ {totalPrice}</strong></p>
+      <h2 className='spaced'>Mi carrito</h2>
+      {!token || cart.length > 0
+        ? <div className='flex-row cart-flex'>
+          <div className='cart-flex-left'>
+            {cart.map((element, index) => {
+              return (
+                <CartProductCard
+                  data={element} changeValueFunction={changeValueFunction} key={index} type='cart' onDelete={() => {
+                    setDeleteCartParams({ newValue: 0, id: element.id })
+                    setShowModalDeleteCartItem(true)
+                  }}
+                />
+              )
+            })}
+          </div>
+          <div className='cart-flex-right'>
+            <div className='card cart-checkout-details'>
+              <h4>Detalles de la compra</h4>
+              <div className='cart-details-grid spaced'>
+                <p>Cantidad de productos:</p>
+                <p className='right'>{productsAmount}</p>
+                <p><strong>Gran total: </strong></p>
+                <p className='right'><strong>$ {totalPrice}</strong></p>
+              </div>
+              {cart.length > 0 ? <button className='btn btn-success' onClick={() => setShowModalBuyAllCart(true)}>Comprar carrito</button> : ''}
             </div>
-            {cart.length > 0 ? <button className='btn btn-success' onClick={() => setShowModalBuyAllCart(true)}>Comprar carrito</button> : ''}
           </div>
         </div>
-      </div>
+        : <>
+          <SearchOutlinedIcon className='not-found-image' />
+          <h4>Todavía no hay productos en tu carrito</h4>
+          <h4>Vuelve al inicio para seguir comprando</h4>
+          <button className='btn btn-success btn-lg spaced' onClick={() => navigate('/')}>Ir a Inicio</button>
+        </>}
       <CustomModal
         title='Comprar ahora'
         showModal={showModalBuyNow}

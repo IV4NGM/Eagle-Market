@@ -5,6 +5,7 @@ import HistoryOrderContainer from '@/Components/HistoryOrderContainer/HistoryOrd
 import { useNavigate } from 'react-router-dom'
 import useHistoryApi from '@/Hooks/useHistoryApi'
 import NoLoggedRedirect from '@/Context/AuthContext/NoLoggedRedirect'
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 
 const MyOrders = () => {
   const { token, history } = useAuthContext()
@@ -51,13 +52,23 @@ const MyOrders = () => {
   return (
     <div className='page-container'>
       <NoLoggedRedirect />
-      <h2>Historial de compras</h2>
-      {historyLoaded && history.length === 0 ? 'No hay compras realizadas todavía' : ''}
-      {history
+      <h2 className='spaced'>Mis compras</h2>
+      {historyLoaded && history.length === 0
+        ? <><SearchOutlinedIcon className='not-found-image' />
+          <h4>Todavía no has realizado ninguna compra</h4>
+          <h4>Vuelve al inicio para seguir comprando</h4>
+          <button className='btn btn-success btn-lg spaced' onClick={() => navigate('/')}>Ir a Inicio</button>
+        </>
+        : <div className='flex-column orders-container'>
+          {history.map((element, index) => {
+            return <HistoryOrderContainer key={index} totalPrice={element?.total_price} productsAmount={element?.products_amount} orderId={element?.orderId} orderDate={element?.localOrderDate} orderTime={element?.localOrderTime} productsArray={element?.products} onClick={() => navigate(`/my-orders/${element?.orderId}`)} />
+          })}
+          </div>}
+      {/* {history
         ? history.map((element, index) => {
           return <HistoryOrderContainer key={index} totalPrice={element?.total_price} productsAmount={element?.products_amount} orderId={element?.orderId} orderDate={element?.orderDate} orderTime={element?.orderTime} productsArray={element?.products} onClick={() => navigate(`/my-orders/${element?.orderId}`)} />
         })
-        : ''}
+        : ''} */}
       <CustomModal
         title='Error al cargar el historial'
         showModal={showModalFailure}

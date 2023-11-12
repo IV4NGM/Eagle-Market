@@ -4,9 +4,13 @@ import NoLoggedRedirect from '@/Context/AuthContext/NoLoggedRedirect'
 import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import useHistoryApi from '@/Hooks/useHistoryApi'
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined'
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined'
 
 const OrderDetail = () => {
+  const navigate = useNavigate()
   const { token, history } = useAuthContext()
 
   const { id } = useParams()
@@ -51,8 +55,39 @@ const OrderDetail = () => {
   return (
     <div className='page-container'>
       <NoLoggedRedirect />
-      {element ? <HistoryOrderContainer totalPrice={element?.total_price} productsAmount={element?.products_amount} orderId={element?.orderId} orderDate={element?.orderDate} orderTime={element?.orderTime} productsArray={element?.products} /> : ''}
-      {historyLoaded && !element ? 'Esta compra no existe.' : ''}
+      <h2 className='spaced'>Detalles de tu compra</h2>
+      {element
+        ? <div className='flex-row cart-flex'>
+          <div className='cart-flex-left'>
+            <HistoryOrderContainer totalPrice={element?.total_price} productsAmount={element?.products_amount} orderId={element?.orderId} orderDate={element?.localOrderDate} orderTime={element?.localOrderTime} productsArray={element?.products} />
+          </div>
+          <div className='cart-flex-right'>
+            <div className='card cart-checkout-details'>
+              <h4>Detalles de la compra</h4>
+              <div className='flex-column spaced order-date'>
+                <p><CalendarMonthOutlinedIcon /> {element?.localOrderDate}</p>
+                <p><AccessTimeOutlinedIcon /> {element?.localOrderTime}</p>
+              </div>
+              <div className='cart-details-grid spaced'>
+                <p>ID de la orden:</p>
+                <p className='right'>{element?.orderId}</p>
+                <p>Cantidad de productos:</p>
+                <p className='right'>{element?.products_amount}</p>
+                <p><strong>Gran total: </strong></p>
+                <p className='right'><strong>$ {element?.total_price}</strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        : ''}
+      {historyLoaded && !element
+        ? <>
+          <SearchOutlinedIcon className='not-found-image' />
+          <h4>No tenemos registro de esta compra</h4>
+          <h4>Vuelve al inicio para seguir comprando</h4>
+          <button className='btn btn-success btn-lg spaced' onClick={() => navigate('/')}>Ir a Inicio</button>
+          </>
+        : ''}
       <CustomModal
         title='Error al cargar el historial'
         showModal={showModalFailure}
