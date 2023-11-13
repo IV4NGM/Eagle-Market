@@ -268,19 +268,19 @@ const Checkout = () => {
         estatico
       />
       <CustomModal
-        title='Eliminar el producto'
+        title='Eliminar el producto del carrito'
         showModal={showModalDeleteBuy}
         setShowModal={setShowModalDeleteBuy}
-        text='¿Estás seguro de que quieres eliminar el producto?'
+        text='¿Estás seguro de que quieres eliminar el producto del carrito?'
         onYes={() => setProductToBuy({})}
         textYes='Eliminar producto'
         textNo='Cancelar'
       />
       <CustomModal
-        title='Eliminar el producto'
+        title='Eliminar el producto del carrito'
         showModal={showModalDeleteCartItem}
         setShowModal={setShowModalDeleteCartItem}
-        text='¿Estás seguro de que quieres eliminar el producto?'
+        text='¿Estás seguro de que quieres eliminar el producto del carrito?'
         onYes={() => modifyCart(deleteCartParams.newValue, deleteCartParams.id)}
         textYes='Eliminar producto'
         textNo='Cancelar'
