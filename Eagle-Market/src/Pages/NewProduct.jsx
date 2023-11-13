@@ -71,7 +71,7 @@ const NewProduct = () => {
   const registerProductFormSchema = yup.object().shape({
     product_name: yup.string().required('Escribe el nombre de tu producto'),
     brand: yup.string().required('Escribe la marca de tu producto'),
-    price: yup.number('Debes ingresar un número').positive('El precio debe ser positivo').required('Escribe el precio de tu producto').typeError('Debes ingresar un número'),
+    price: yup.string('Debes ingresar un número').required('Escribe el precio de tu producto').matches(/^[1-9]\d*(\.\d{1,2})?$/, 'El precio debe ser un número con máximo 2 decimales').typeError('Debes ingresar un número'),
     category: yup.mixed().oneOf(categoriesAllowed, 'Selecciona la categoría de tu producto').defined(),
     description: yup.string().required('Escribe la descripción de tu producto'),
     sku: yup.string(),
@@ -90,6 +90,7 @@ const NewProduct = () => {
     } else {
       dataToPost.image = ''
     }
+    dataToPost.price = Number(dataToPost.price)
     setRegisterProduct({ ...dataToPost, base64Image })
   }
 
@@ -161,7 +162,7 @@ const NewProduct = () => {
 
             <div className='form-floating'>
               <input
-                type='number'
+                type='text'
                 name='price'
                 placeholder='Precio'
                 id='price'
@@ -283,10 +284,10 @@ const NewProduct = () => {
           navigate('/')
         }}
         onNo={() => {
-          navigate('/')
+          navigate(-1)
         }}
-        isCancelButton={false}
         textYes='Volver a Inicio'
+        textNo='Atrás'
       />
     </div>
   )

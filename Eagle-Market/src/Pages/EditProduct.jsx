@@ -171,7 +171,7 @@ const EditProduct = () => {
   const registerProductFormSchema = yup.object().shape({
     product_name: yup.string().required('Escribe el nombre de tu producto').stripEmptyString().default(productDetails.product_name),
     brand: yup.string().required('Escribe la marca de tu producto').stripEmptyString().default(productDetails.brand),
-    price: yup.number('Debes ingresar un número').positive('El precio debe ser positivo').required('Escribe el precio de tu producto').stripEmptyNumber().default(productDetails.price),
+    price: yup.string('Debes ingresar un número').required('Escribe el precio de tu producto').matches(/^[1-9]\d*(\.\d{1,2})?$/, 'El precio debe ser un número con máximo 2 decimales').typeError('Debes ingresar un número'),
     category: yup.mixed().oneOf(categoriesAllowed, 'Selecciona la categoría de tu producto').defined().default(productDetails.category),
     description: yup.string().required('Escribe la descripción de tu producto').stripEmptyString().default(productDetails.description),
     sku: yup.string().stripEmptyString().default(productDetails.sku)
@@ -190,6 +190,7 @@ const EditProduct = () => {
     } else {
       dataToPost.image = ''
     }
+    dataToPost.price = Number(dataToPost.price)
     console.log('Modificando a', { ...dataToPost })
     setRegisterProduct({ ...dataToPost })
   }
@@ -260,7 +261,7 @@ const EditProduct = () => {
 
             <div className='form-floating'>
               <input
-                type='number'
+                type='text'
                 name='price'
                 placeholder='Precio'
                 id='price'
@@ -362,7 +363,7 @@ const EditProduct = () => {
                     handleFileRead(event)
                   }}
                 />
-                <img src={imageFile || ProductDefaultImage} className='form-image' alt='Product-image' />
+                <img src={imageFile || ProductDefaultImage} className='product-image-card edit-image' alt='Product-image' />
                 <p className='warning-text'>{base64ErrorText}</p>
               </div>}
             <button type='submit' className='btn btn-success'>
@@ -409,10 +410,10 @@ const EditProduct = () => {
           navigate('/')
         }}
         onNo={() => {
-          navigate('/')
+          navigate(-1)
         }}
-        isCancelButton={false}
         textYes='Volver a Inicio'
+        textNo='Atrás'
       />
       <CustomModal
         title='Descartar cambios'
