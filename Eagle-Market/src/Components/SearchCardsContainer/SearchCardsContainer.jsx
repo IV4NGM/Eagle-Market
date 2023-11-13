@@ -5,14 +5,15 @@ import './SearchCardsContainer.scss'
 import NoProductsImage from '@/assets/no-products-image.png'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 
-const SearchCardsContainer = ({ products, loaded, search, selectedCategories, allCategories, prices }) => {
+const SearchCardsContainer = ({ products, loaded, search, selectedCategories, allCategories, prices, categoriesArray }) => {
   const productsArray = products.filter((item) => {
+    const textMatch = item.product_name.toLocaleLowerCase().trim().includes(search.toLocaleLowerCase().trim()) || item.brand.toLocaleLowerCase().trim().includes(search.toLocaleLowerCase().trim()) || item.category.toLocaleLowerCase().trim().includes(search.toLocaleLowerCase().trim())
     let categoriesMatch = true
     let pricesMatch = true
     if (!allCategories) {
-      categoriesMatch = item.product_name.toLocaleLowerCase().trim().includes(search.toLocaleLowerCase().trim()) && selectedCategories.includes(item.category)
+      categoriesMatch = textMatch && selectedCategories.includes(item.category)
     } else {
-      categoriesMatch = item.product_name.toLocaleLowerCase().trim().includes(search.toLocaleLowerCase().trim())
+      categoriesMatch = textMatch
     }
     if (prices[1] === 1000) {
       pricesMatch = item.price >= prices[0]

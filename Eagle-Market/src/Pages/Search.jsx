@@ -126,7 +126,7 @@ const Search = () => {
         </div>
         <div className='products-container'>
           {/* <h3 className='spaced spaced--top'>Productos que coinciden con tu búsqueda</h3> */}
-          <SearchCardsContainer products={products} loaded={loaded} search={advancedSearch} selectedCategories={selectedCategories} allCategories={allCategories} prices={sliderValue} />
+          <SearchCardsContainer products={products} loaded={loaded} search={advancedSearch} selectedCategories={selectedCategories} allCategories={allCategories} prices={sliderValue} categoriesArray={categoriesArray} />
         </div>
         <CustomModal
           title='Error al cargar los productos'
