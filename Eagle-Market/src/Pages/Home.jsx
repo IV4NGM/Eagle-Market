@@ -125,18 +125,15 @@ const Home = () => {
       {
         categoriesArray.map((category, index) => {
           return (
-            <div key={`main-container-${index}`} className='main-container'>
-              {/* <div className='straight-line' /> */}
-              <div key={`div-${index}`} className='carousel-container card'>
-                <Link key={`link-${index}`} to={`/search/${category}`}>
-                  <h2 key={`h2-${index}`}><strong>{category}</strong></h2>
-                </Link>
-                <Carousel key={`carousel-${index}`} responsive={responsiveCarousel}>
-                  {(products.filter((product) => product.category === category)).map((element, index) => {
-                    return <ProductCard data={element} key={`card-${index}`} />
-                  })}
-                </Carousel>
-              </div>
+            <div key={`div-${index}`} className='carousel-container card'>
+              <Link key={`link-${index}`} to={`/search/${category}`}>
+                <h2 key={`h2-${index}`}><strong>{category}</strong></h2>
+              </Link>
+              <Carousel key={`carousel-${index}`} responsive={responsiveCarousel}>
+                {(products.filter((product) => product.category === category)).map((element, index) => {
+                  return <ProductCard data={element} key={`card-${index}`} />
+                })}
+              </Carousel>
             </div>
           )
         })
