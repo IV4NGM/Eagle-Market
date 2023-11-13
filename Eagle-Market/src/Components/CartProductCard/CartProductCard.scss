@@ -40,32 +40,6 @@
   }
 }
 
-.amount-container {
-  border: 1px solid rgba(0, 0, 0, 0.175);
-  border-radius: 5px;
-  min-height: 3rem;
-  // padding: 5px;
-  &-left {
-    border-right: 1px solid rgba(0, 0, 0, 0.175) !important;
-  }
-  &-right {
-    border-left: 1px solid rgba(0, 0, 0, 0.175) !important;
-  }
-  &-number {
-    padding: 0px 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 3rem;
-  }
-}
-
 .no-border {
-  border: 0;
-}
-
-.btn-modify-number {
-  border-radius: 0 !important;
-  height: 3rem;
-  width: 3rem;
+  border: 0 !important;
 }

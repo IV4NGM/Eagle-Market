@@ -149,7 +149,7 @@ p.error-text {
   &-card {
     height: 13rem;
     width: 13rem;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 15px;
     &--mini {
       height: 5rem;
@@ -181,6 +181,88 @@ p.error-text {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,.1);
     transition: box-shadow .2s ease-in-out;
     // transition: 0.3s ease-in-out;
+  }
+}
+
+.product-detail-card {
+  box-shadow: 1px 1px 2px 0 rgba(0,0,0,.12);
+  &:hover {
+    cursor: initial;
+  }
+  &-amount {
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+}
+
+.product-details-image {
+  min-height: 18rem;
+  min-width: 18rem;
+  max-width: 22rem;
+  max-height: 22rem;
+  object-fit: contain;
+  border-radius: 15px;
+}
+
+.btn-modify-number {
+  border-radius: 0 !important;
+  height: 3rem;
+  width: 3rem;
+}
+
+.btn-bottom-spaced {
+  margin-bottom: 1rem;
+}
+
+.product-detail-admin-btn-container {
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.175);
+}
+
+.details-container {
+  align-items: center;
+}
+
+.details-card {
+  padding: 20px;
+  width: 75%;
+  align-self: center;
+  &:hover {
+    cursor: initial;
+  }
+
+  &-container {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+.amount-container {
+  border: 1px solid rgba(0, 0, 0, 0.175);
+  border-radius: 5px;
+  min-height: 3rem;
+  // padding: 5px;
+  &-left {
+    border-right: 1px solid rgba(0, 0, 0, 0.175) !important;
+  }
+  &-right {
+    border-left: 1px solid rgba(0, 0, 0, 0.175) !important;
+  }
+  &-number {
+    padding: 0px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 3rem;
+  }
+}
+
+.separated-section {
+  width: 80%;
+  padding: 20px;
+  &--border {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.175);
   }
 }
 
@@ -267,6 +349,12 @@ form {
   }
 }
 
+.buttons-row {
+  margin: 20px 0px;
+  width: 100%;
+  justify-content: space-between;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -279,6 +367,10 @@ form {
 
 .display-linebreak {
   white-space: pre-line;
+}
+
+.product-description {
+  text-align: justify;
 }
 
 .not-found-image {
