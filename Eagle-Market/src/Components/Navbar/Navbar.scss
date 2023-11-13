@@ -73,6 +73,10 @@ $green-success-lighter: rgba(61, 164, 116, 0.650);
     &--center {
       align-self: center;
     }
+
+    &--margin {
+      margin: 0 1rem;
+    }
   }
 
   &:active {

@@ -81,7 +81,7 @@ const Navbar = () => {
                   {userInfo.first_name} {userInfo.last_name}
                 </button>
                 <ul className='dropdown-menu dropdown-menu-end'>
-                  <li className='dropdown-item-flex'>
+                  <li className='dropdown-item-flex dropdown-item-flex--margin'>
                     <h5 className='dropdown-item-flex--center dropdown-item-flex__title'><strong>Tu cuenta</strong></h5>
                     <p className='dropdown-item-flex__p'><AccountBoxOutlinedIcon className='dropdown-item-flex__icon' /> {userInfo.first_name} {userInfo.last_name}</p>
                     <p className='dropdown-item-flex__p'><EmailOutlinedIcon className='dropdown-item-flex__icon' /> {userInfo.email}</p>
