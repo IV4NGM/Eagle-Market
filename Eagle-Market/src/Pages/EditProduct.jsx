@@ -153,9 +153,12 @@ const EditProduct = () => {
     window.scrollTo(0, 0)
   }, [id, registerProduct, token, deleteProduct])
 
-  const categoriesAllowed = ['Automotive', 'Baby', 'Beauty', 'Books', 'Clothing', 'Computers', 'Electronics',
-    'Games', 'Garden', 'Grocery', 'Health', 'Home', 'Industrial', 'Jewerly', 'Kids', 'Movies', 'Music',
-    'Outdoors', 'Sports', 'Tools', 'Toys', 'Other']
+  // const categoriesAllowed = ['Automotive', 'Baby', 'Beauty', 'Books', 'Clothing', 'Computers', 'Electronics',
+  //   'Games', 'Garden', 'Grocery', 'Health', 'Home', 'Industrial', 'Jewerly', 'Kids', 'Movies', 'Music',
+  //   'Outdoors', 'Sports', 'Tools', 'Toys', 'Other']
+  const categoriesAllowed = ['Automóviles', 'Bebés', 'Belleza', 'Computadoras', 'Deportes',
+    'Despensa', 'Electrónicos', 'Exterior', 'Herramientas', 'Hogar', 'Industrial', 'Jardín',
+    'Joyería', 'Juegos', 'Juguetes', 'Libros', 'Música', 'Niños', 'Películas', 'Ropa', 'Salud', 'Zapatos', 'Otros']
 
   yup.addMethod(yup.string, 'stripEmptyString', function () {
     return this.transform((value) => (value === '' ? undefined : value))
@@ -278,7 +281,7 @@ const EditProduct = () => {
                   })}
                 </select>
                 <p className='warning-text'>{errors.category?.message}</p>
-                </>
+              </>
               : ''}
 
             <div className='form-floating'>
@@ -347,7 +350,7 @@ const EditProduct = () => {
                   }}
                 />
                 <p className='warning-text'>{errors.image?.message}</p>
-              </>
+                </>
               : <div className='form-flex-column'>
                 <input
                   type='file'
@@ -361,7 +364,7 @@ const EditProduct = () => {
                 />
                 <img src={imageFile || ProductDefaultImage} className='form-image' alt='Product-image' />
                 <p className='warning-text'>{base64ErrorText}</p>
-                </div>}
+              </div>}
             <button type='submit' className='btn btn-success'>
               Modificar producto
             </button>
@@ -451,10 +454,10 @@ const EditProduct = () => {
         }}
         onNo={() => {
           setNavSearch('')
-          navigate('/')
+          navigate(-1)
         }}
-        isCancelButton={false}
         textYes='Volver a Inicio'
+        textNo='Atrás'
         estatico
       />
     </div>

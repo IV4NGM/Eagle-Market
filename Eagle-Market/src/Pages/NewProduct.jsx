@@ -58,11 +58,15 @@ const NewProduct = () => {
           setShowModalFailure(true)
         })
     }
+    window.scrollTo(0, 0)
   }, [registerProduct, setApiCall, token])
 
-  const categoriesAllowed = ['Automotive', 'Baby', 'Beauty', 'Books', 'Clothing', 'Computers', 'Electronics',
-    'Games', 'Garden', 'Grocery', 'Health', 'Home', 'Industrial', 'Jewerly', 'Kids', 'Movies', 'Music',
-    'Outdoors', 'Sports', 'Tools', 'Toys', 'Other']
+  // const categoriesAllowed = ['Automotive', 'Baby', 'Beauty', 'Books', 'Clothing', 'Computers', 'Electronics',
+  //   'Games', 'Garden', 'Grocery', 'Health', 'Home', 'Industrial', 'Jewerly', 'Kids', 'Movies', 'Music',
+  //   'Outdoors', 'Sports', 'Tools', 'Toys', 'Other']
+  const categoriesAllowed = ['Automóviles', 'Bebés', 'Belleza', 'Computadoras', 'Deportes',
+    'Despensa', 'Electrónicos', 'Exterior', 'Herramientas', 'Hogar', 'Industrial', 'Jardín',
+    'Joyería', 'Juegos', 'Juguetes', 'Libros', 'Música', 'Niños', 'Películas', 'Ropa', 'Salud', 'Zapatos', 'Otros']
 
   const registerProductFormSchema = yup.object().shape({
     product_name: yup.string().required('Escribe el nombre de tu producto'),
@@ -239,7 +243,7 @@ const NewProduct = () => {
                   }}
                 />
                 <p className='warning-text'>{errors.image?.message}</p>
-              </>
+                </>
               : <div className='form-flex-column'>
                 <input
                   type='file'
@@ -253,7 +257,7 @@ const NewProduct = () => {
                 />
                 <img src={imageFile || ProductDefaultImage} className='product-image-card edit-image' alt='Product-image' />
                 <p className='warning-text'>{base64ErrorText}</p>
-              </div>}
+                </div>}
 
             <button type='submit' className='btn btn-success'>
               Crear producto
