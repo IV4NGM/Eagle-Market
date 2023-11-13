@@ -17,7 +17,7 @@ const ProductCard = ({ data }) => {
               navigate(`/edit/${data?.id}`)
             }}
           ><EditOutlinedIcon />
-        </div>
+          </div>
         : ''}
       <div className='card-image-container'>
         <img
@@ -28,8 +28,8 @@ const ProductCard = ({ data }) => {
         />
       </div>
       <div className='card-body d-flex flex-column h-100 w-100'>
-        <h5><strong>{data?.product_name}</strong></h5>
-        <h6>{data?.brand}</h6>
+        <h5 className='long-text-overflow long-text-overflow--3'><strong>{data?.product_name}</strong></h5>
+        <h6 className='long-text-overflow long-text-overflow--1'>{data?.brand}</h6>
         <h5 className='card-text__success-color'>${data?.price}</h5>
         {/* <a href='#' className='btn btn-success' onClick={(event) => event.stopPropagation()}>Agregar al carrito</a> */}
         {/* {userInfo?.role === 'ADMIN' ? <a href='#' className='btn btn-danger' onClick={(event) => event.stopPropagation()}>Eliminar producto</a> : ''} */}

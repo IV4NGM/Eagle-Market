@@ -16,3 +16,9 @@ $green-success-light: #3da474;
     background-color: gray;
   }
 }
+
+.text-container {
+  max-height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
