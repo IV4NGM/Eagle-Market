@@ -1,0 +1,18 @@
+$green-success-light: #3da474;
+
+.edit-icon {
+  position: absolute;
+  top: -0.75rem;
+  left: -0.75rem;
+  background-color: rgba(154, 154, 154, 0.879);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  &:hover {
+    background-color: gray;
+  }
+}

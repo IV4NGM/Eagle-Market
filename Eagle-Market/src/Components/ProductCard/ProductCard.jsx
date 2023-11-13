@@ -1,13 +1,24 @@
 /* eslint-disable react/prop-types */
-// import useAuthContext from '@/Context/AuthContext/useAuthContext'
+import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import { useNavigate } from 'react-router-dom'
 import ProductDefaultImage from '@/assets/product-default-image.png'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import './ProductCard.scss'
 
 const ProductCard = ({ data }) => {
   const navigate = useNavigate()
-  // const { userInfo } = useAuthContext()
+  const { userInfo } = useAuthContext()
   return (
     <div className='card product-card' onClick={() => navigate(`/product/${data?.id}`)}>
+      {userInfo?.role === 'ADMIN'
+        ? <div
+            className='edit-icon' onClick={(event) => {
+              event.stopPropagation()
+              navigate(`/edit/${data?.id}`)
+            }}
+          ><EditOutlinedIcon />
+          </div>
+        : ''}
       <div className='card-image-container'>
         <img src={data?.image || data?.base64Image || ProductDefaultImage} className='card-img-top product-image-card' alt={data?.product_name} />
       </div>
