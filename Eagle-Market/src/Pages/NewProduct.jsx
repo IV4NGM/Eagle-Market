@@ -246,7 +246,7 @@ const NewProduct = () => {
                     handleFileRead(event)
                   }}
                 />
-                <img src={imageFile || ProductDefaultImage} className='form-image' alt='Product-image' />
+                <img src={imageFile || ProductDefaultImage} className='product-image-card edit-image' alt='Product-image' />
                 <p className='warning-text'>{base64ErrorText}</p>
                 </div>}
 
