@@ -8,6 +8,7 @@ import NoAdminRedirect from '@/Context/AuthContext/NoAdminRedirect'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import CustomModal from '@/Components/CustomModal/CustomModal'
 import ProductDefaultImage from '@/assets/product-default-image.png'
+import useCartContext from '@/Context/CartContext/useCartContext'
 
 const EditProduct = () => {
   const navigate = useNavigate()
@@ -17,10 +18,20 @@ const EditProduct = () => {
   const { token } = useAuthContext()
   const { id } = useParams()
   const [productDetails, setProductDetails] = useState({})
-  const { setApiCall } = useProductsContext()
+  const { setNavSearch, setApiCall } = useProductsContext()
+  const { cart, setCart, productToBuy, setProductToBuy } = useCartContext()
+
+  const [showModalNoProductData, setShowModalNoProductData] = useState(false)
 
   const [showModalFailure, setShowModalFailure] = useState(false)
   const [showModalSuccess, setShowModalSuccess] = useState(false)
+
+  const [showModalCancel, setShowModalCancel] = useState(false)
+
+  const [deleteProduct, setDeleteProduct] = useState(false)
+  const [showModalDelete, setShowModalDelete] = useState(false)
+  const [showModalDeleteFailure, setShowModalDeleteFailure] = useState(false)
+  const [showModalDeleteSuccess, setShowModalDeleteSuccess] = useState(false)
 
   const [imageSrc, setImageSrc] = useState('url')
   const [imageUrl, setImageUrl] = useState('')
@@ -62,7 +73,7 @@ const EditProduct = () => {
           setApiCall(true)
           setShowModalFailure(true)
         })
-    } else {
+    } else if (!deleteProduct) {
       console.log('Getting')
       const getProducts = fetch(`https://eagle-market.onrender.com/items/${id}`, {
         method: 'GET',
@@ -74,20 +85,73 @@ const EditProduct = () => {
         return result.json()
       })
         .then((result) => {
-          console.log(result)
-          setBase64Image(result.base64Image)
-          if (result.base64Image) {
-            setImageFile(result.base64Image)
+          console.log('producto', result)
+          if (Object.keys(result).length > 0) {
+            setProductDetails(result)
+            setBase64Image(result.base64Image)
+            if (result.base64Image) {
+              setImageFile(result.base64Image)
+            }
+            setImageUrl(result.image)
+            setImageSrc(result.base64Image ? 'file' : 'url')
+            setProductDetails(result)
+          } else {
+            setShowModalNoProductData(true)
           }
-          setImageUrl(result.image)
-          setImageSrc(result.base64Image ? 'file' : 'url')
-          setProductDetails(result)
         })
         .catch(e => {
           console.log(e)
+          setShowModalNoProductData(true)
         })
     }
-  }, [id, registerProduct, token])
+    if (deleteProduct) {
+      setDeleteProduct(false)
+      const cleanBuyCart = () => {
+        if (productToBuy?.id === id) {
+          setProductToBuy({})
+        }
+      }
+      const cleanCart = () => {
+        let newCart = [...cart]
+        newCart = newCart.filter((element) => element.id !== id)
+        sessionStorage.setItem('cart', JSON.stringify(newCart))
+        setCart(newCart)
+      }
+      setApiCall(false)
+      const deleteProduct = fetch('https://eagle-market.onrender.com/remove', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          id
+        })
+      })
+
+      deleteProduct.then((value) => {
+        console.log(value)
+        if (value.ok) {
+          return value.json()
+        } else {
+          throw new Error('No está permitido')
+        }
+      })
+        .then((value) => {
+          console.log(value)
+          setApiCall(true)
+          cleanBuyCart()
+          cleanCart()
+          setShowModalDeleteSuccess(true)
+        })
+        .catch((e) => {
+          console.log(e)
+          setApiCall(true)
+          setShowModalDeleteFailure(true)
+        })
+    }
+    window.scrollTo(0, 0)
+  }, [id, registerProduct, token, deleteProduct])
 
   const categoriesAllowed = ['Automotive', 'Baby', 'Beauty', 'Books', 'Clothing', 'Computers', 'Electronics',
     'Games', 'Garden', 'Grocery', 'Health', 'Home', 'Industrial', 'Jewerly', 'Kids', 'Movies', 'Music',
@@ -293,18 +357,32 @@ const EditProduct = () => {
                 <img src={imageFile || ProductDefaultImage} className='form-image' alt='Product-image' />
                 <p className='warning-text'>{base64ErrorText}</p>
               </div>}
-
             <button type='submit' className='btn btn-success'>
               Modificar producto
             </button>
           </form>
-          <div className='form-flex-row'>
-            <button className='btn btn-outline-secondary'>Descartar cambios</button>
-            <button className='btn btn-outline-danger'>Eliminar producto</button>
+          <div className='flex-row buttons-row'>
+            <button className='btn btn-outline-secondary' onClick={() => setShowModalCancel(true)}>Descartar cambios</button>
+            <button className='btn btn-outline-danger' onClick={() => setShowModalDelete(true)}>Eliminar producto</button>
           </div>
-
         </div>
       </div>
+      <CustomModal
+        title='Error al cargar producto'
+        showModal={showModalNoProductData}
+        setShowModal={setShowModalNoProductData}
+        text='No se encontró la información de este producto. Vuelve al inicio para seguir comprando'
+        onYes={() => {
+          setNavSearch('')
+          navigate('/')
+        }}
+        onNo={() => {
+          setNavSearch('')
+          navigate('/')
+        }}
+        isCancelButton={false}
+        textYes='Volver a Inicio'
+      />
       <CustomModal
         title='Error al modificar el producto'
         showModal={showModalFailure}
@@ -327,6 +405,52 @@ const EditProduct = () => {
         }}
         isCancelButton={false}
         textYes='Volver a Inicio'
+      />
+      <CustomModal
+        title='Descartar cambios'
+        showModal={showModalCancel}
+        setShowModal={setShowModalCancel}
+        text='¿Estás seguro de descartar los cambios?'
+        onYes={() => {
+          navigate('/')
+        }}
+        textYes='Descartar cambios'
+        textNo='Seguir editando'
+      />
+      <CustomModal
+        title='Eliminar producto'
+        showModal={showModalDelete}
+        setShowModal={setShowModalDelete}
+        text='¿Estás seguro de que quieres eliminar este producto? Esta acción no se puede deshacer'
+        onYes={() => setDeleteProduct(true)}
+        textYes='Eliminar producto'
+        textNo='Cancelar'
+      />
+      <CustomModal
+        title='Error al eliminar'
+        showModal={showModalDeleteFailure}
+        setShowModal={setShowModalDeleteFailure}
+        text='Hubo un error al eliminar el producto. Intente de nuevo más tarde'
+        isCancelButton={false}
+        textYes='Regresar'
+        estatico
+      />
+      <CustomModal
+        title='Producto eliminado exitosamente'
+        showModal={showModalDeleteSuccess}
+        setShowModal={setShowModalDeleteSuccess}
+        text='Producto eliminado exitosamente. Vuelve al inicio para seguir comprando'
+        onYes={() => {
+          setNavSearch('')
+          navigate('/')
+        }}
+        onNo={() => {
+          setNavSearch('')
+          navigate('/')
+        }}
+        isCancelButton={false}
+        textYes='Volver a Inicio'
+        estatico
       />
     </div>
   )
