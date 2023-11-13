@@ -17,10 +17,15 @@ const ProductCard = ({ data }) => {
               navigate(`/edit/${data?.id}`)
             }}
           ><EditOutlinedIcon />
-          </div>
+        </div>
         : ''}
       <div className='card-image-container'>
-        <img src={data?.image || data?.base64Image || ProductDefaultImage} className='card-img-top product-image-card' alt={data?.product_name} />
+        <img
+          src={data?.image || data?.base64Image || ProductDefaultImage} className='card-img-top product-image-card' alt={data?.product_name} onError={({ currentTarget }) => {
+            currentTarget.onerror = null
+            currentTarget.src = ProductDefaultImage
+          }}
+        />
       </div>
       <div className='card-body d-flex flex-column h-100 w-100'>
         <h5><strong>{data?.product_name}</strong></h5>

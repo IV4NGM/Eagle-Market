@@ -232,9 +232,14 @@ const NewProduct = () => {
                   />
                   <label htmlFor='image'>URL de la imagen del producto</label>
                 </div>
-                <img src={imageUrl || ProductDefaultImage || ''} className='product-image-card edit-image' alt='Product-image' />
+                <img
+                  src={imageUrl || ProductDefaultImage || ''} className='product-image-card edit-image' alt='Product-image' onError={({ currentTarget }) => {
+                    currentTarget.onerror = null
+                    currentTarget.src = ProductDefaultImage
+                  }}
+                />
                 <p className='warning-text'>{errors.image?.message}</p>
-                </>
+              </>
               : <div className='form-flex-column'>
                 <input
                   type='file'
@@ -248,7 +253,7 @@ const NewProduct = () => {
                 />
                 <img src={imageFile || ProductDefaultImage} className='product-image-card edit-image' alt='Product-image' />
                 <p className='warning-text'>{base64ErrorText}</p>
-                </div>}
+              </div>}
 
             <button type='submit' className='btn btn-success'>
               Crear producto

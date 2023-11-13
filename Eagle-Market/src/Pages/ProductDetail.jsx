@@ -28,7 +28,7 @@ const ProductDetail = () => {
   const { setNavSearch, setApiCall } = useProductsContext()
 
   useEffect(() => {
-    if (!showModalSuccess) {
+    if (!showModalSuccess && !deleteProduct) {
       console.log('Getting')
       // setApiCall(false)
       const getProducts = fetch(`https://eagle-market.onrender.com/items/${id}`, {
@@ -147,7 +147,12 @@ const ProductDetail = () => {
                   <h2>{productDetails.product_name}</h2>
                 </div>
                 <div className='separated-section separated-section--border'>
-                  <img src={productDetails?.image || productDetails?.base64Image || ProductDefaultImage} alt={productDetails.product_name} className='product-details-image spaced' />
+                  <img
+                    src={productDetails?.image || productDetails?.base64Image || ProductDefaultImage} alt={productDetails.product_name} className='product-details-image spaced' onError={({ currentTarget }) => {
+                      currentTarget.onerror = null
+                      currentTarget.src = ProductDefaultImage
+                    }}
+                  />
                 </div>
                 <div className='separated-section separated-section--border'>
                   <h4 className='spaced'>Características del producto</h4>
@@ -171,7 +176,7 @@ const ProductDetail = () => {
                         ? <tr className='table-success'>
                           <th scope='row'>SKU</th>
                           <td>{productDetails.sku}</td>
-                        </tr>
+                          </tr>
                         : ''}
                     </tbody>
                   </table>
@@ -223,11 +228,11 @@ const ProductDetail = () => {
                 ? <div className='flex-column product-detail-admin-btn-container'>
                   <button className='btn btn-light spaced btn-bottom-spaced' onClick={() => navigate(`/edit/${productDetails.id}`)}>Editar producto</button>
                   <button className='btn btn-outline-danger btn-bottom-spaced' onClick={() => setShowModalDelete(true)}>Eliminar producto</button>
-                  </div>
+                </div>
                 : ''}
             </div>
           </div>
-          </div>
+        </div>
         : ''}
       <CustomModal
         title='Error al cargar producto'

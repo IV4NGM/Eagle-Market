@@ -27,7 +27,12 @@ const CartProductCard = ({ data, changeValueFunction = nothingFunction, type = '
       }}
     >
       <div className='cart-image-container'>
-        <img src={data?.image || data?.base64Image || ProductDefaultImage} alt={data?.product_name} className='product-image-card product-image-card--mini' />
+        <img
+          src={data?.image || data?.base64Image || ProductDefaultImage} alt={data?.product_name} className='product-image-card product-image-card--mini' onError={({ currentTarget }) => {
+            currentTarget.onerror = null
+            currentTarget.src = ProductDefaultImage
+          }}
+        />
       </div>
       <div className='flex-column cart-details-product'>
         <p><strong>{data?.product_name}</strong></p>
@@ -49,7 +54,7 @@ const CartProductCard = ({ data, changeValueFunction = nothingFunction, type = '
             >
               <RemoveOutlinedIcon />
             </button>
-            </div>
+          </div>
 
           : ''}
         <div className='amount-container-number'>{data.product_amount} {!changeable ? 'artículos' : ''}</div>
@@ -63,7 +68,7 @@ const CartProductCard = ({ data, changeValueFunction = nothingFunction, type = '
             >
               <AddOutlinedIcon />
             </button>
-          </div>
+            </div>
           : ''}
       </div>
       <p>Precio individual: ${data.price}</p>
@@ -76,7 +81,7 @@ const CartProductCard = ({ data, changeValueFunction = nothingFunction, type = '
             }}
           >
           <ClearOutlinedIcon />
-          </button>
+        </button>
         : ''}
 
     </div>
