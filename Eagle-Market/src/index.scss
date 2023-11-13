@@ -125,6 +125,10 @@ p.error-text {
   color: #dc3545;
 }
 
+.medium-text {
+  font-size: 18px;
+}
+
 .navbar {
   &-white {
     --bs-bg-opacity: 1;
@@ -352,7 +356,7 @@ form {
 .buttons-row {
   margin: 20px 0px;
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .flex-row {
