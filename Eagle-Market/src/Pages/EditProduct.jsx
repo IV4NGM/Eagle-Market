@@ -308,7 +308,7 @@ const EditProduct = () => {
             </div>
             <p className='warning-text'>{errors.sku?.message}</p>
 
-            <p>Imagen del producto</p>
+            <p className='medium-text'>Imagen del producto</p>
             <div className='form-flex-row'>
               <div className='form-check'>
                 <input className='form-check-input' type='radio' name='image-src' id='image-src-url' value='url' checked={imageSrc === 'url'} onChange={(event) => setImageSrc(event.target.value)} />
