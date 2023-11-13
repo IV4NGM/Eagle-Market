@@ -15,7 +15,7 @@ const Footer = () => {
           <p>Designed by Iván G M</p>
           <div className='mail-footer'>
             <EmailOutlinedIcon />
-            <Link to='mailto:ivangm_01@hotmail.com'>
+            <Link to='mailto:ivangm_01@hotmail.com' className='mail-icon-footer'>
               ivangm_01@hotmail.com
             </Link>
           </div>
