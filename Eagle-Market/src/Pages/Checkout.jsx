@@ -232,15 +232,19 @@ const Checkout = () => {
         title='Comprar ahora'
         showModal={showModalBuyNow}
         setShowModal={setShowModalBuyNow}
-        text={`¿Estás seguro de que quieres comprar ${productToBuy?.product_amount} artículos con valor de` + ' $ ' + ` ${productToBuy?.product_amount * productToBuy?.price}`}
+        text={`¿Confirmas la compra de ${productToBuy?.product_amount} artículos con valor de` + ' $' + `${productToBuy?.product_amount * productToBuy?.price}?`}
         onYes={() => setBuyNow(true)}
+        textYes='Comprar ahora'
+        textNo='Cancelar'
       />
       <CustomModal
         title='Comprar carrito'
         showModal={showModalBuyAllCart}
         setShowModal={setShowModalBuyAllCart}
-        text={`¿Estás seguro de que quieres comprar ${productsAmount} artículos con valor de` + ' $ ' + ` ${totalPrice}`}
+        text={`¿Confirmas la compra de ${productsAmount} artículos con valor de` + ' $' + `${totalPrice}?`}
         onYes={() => setBuyAllCart(true)}
+        textYes='Comprar ahora'
+        textNo='Cancelar'
       />
       <CustomModal
         title='Compra realizada exitosamente'
@@ -269,6 +273,8 @@ const Checkout = () => {
         setShowModal={setShowModalDeleteBuy}
         text='¿Estás seguro de que quieres eliminar el producto?'
         onYes={() => setProductToBuy({})}
+        textYes='Eliminar producto'
+        textNo='Cancelar'
       />
       <CustomModal
         title='Eliminar el producto'
@@ -276,6 +282,8 @@ const Checkout = () => {
         setShowModal={setShowModalDeleteCartItem}
         text='¿Estás seguro de que quieres eliminar el producto?'
         onYes={() => modifyCart(deleteCartParams.newValue, deleteCartParams.id)}
+        textYes='Eliminar producto'
+        textNo='Cancelar'
       />
     </div>
   )
