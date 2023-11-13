@@ -35,8 +35,8 @@ const CartProductCard = ({ data, changeValueFunction = nothingFunction, type = '
         />
       </div>
       <div className='flex-column cart-details-product'>
-        <p><strong>{data?.product_name}</strong></p>
-        <p>{data?.brand}</p>
+        <p className='long-text-overflow long-text-overflow--3'><strong>{data?.product_name}</strong></p>
+        <p className='long-text-overflow long-text-overflow--1'>{data?.brand}</p>
       </div>
       {/* <div className='flex-row amount-container'>
         <p className='amount-container-left'>-</p>
