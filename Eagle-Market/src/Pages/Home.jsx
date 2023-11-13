@@ -107,7 +107,7 @@ const Home = () => {
       <h3 className='home-title'><i>Donde la elegancia se encuentra con la excelencia</i></h3>
       <h2 className='home-title home-title--spaced'>Explora todas nuestras categorías</h2>
       <div className='categories-container'>
-        <Carousel responsive={responsiveCategoriesCarousel} infinite autoPlay autoPlaySpeed={5000}>
+        <Carousel responsive={responsiveCategoriesCarousel} infinite autoPlay autoPlaySpeed={4000}>
           {categoriesArray.map((element, index) => {
             return <div className='carousel-categories-div' key={`category-div-${index}`}><Link key={`category-link-${index}`} to={`/search/${element}`}>{element}</Link></div>
           })}
@@ -127,7 +127,7 @@ const Home = () => {
           return (
             <div key={`main-container-${index}`} className='main-container'>
               {/* <div className='straight-line' /> */}
-              <div key={`div-${index}`} className='carousel-container'>
+              <div key={`div-${index}`} className='carousel-container card'>
                 <Link key={`link-${index}`} to={`/search/${category}`}>
                   <h2 key={`h2-${index}`}><strong>{category}</strong></h2>
                 </Link>
