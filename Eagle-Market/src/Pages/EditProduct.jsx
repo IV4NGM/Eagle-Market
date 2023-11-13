@@ -114,7 +114,7 @@ const EditProduct = () => {
       const cleanCart = () => {
         let newCart = [...cart]
         newCart = newCart.filter((element) => element.id !== id)
-        sessionStorage.setItem('cart', JSON.stringify(newCart))
+        localStorage.setItem('cart', JSON.stringify(newCart))
         setCart(newCart)
       }
       setApiCall(false)

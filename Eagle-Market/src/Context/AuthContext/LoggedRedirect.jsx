@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom'
 
 const LoggedRedirect = () => {
-  if (sessionStorage.getItem('token')) {
+  if (localStorage.getItem('token')) {
     return <Navigate to='/' />
   }
 }

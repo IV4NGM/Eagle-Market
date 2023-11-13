@@ -7,8 +7,8 @@ const CartProvider = ({ children }) => {
   const [productToBuy, setProductToBuy] = useState({})
 
   useEffect(() => {
-    if (sessionStorage.getItem('cart')) {
-      setCart(JSON.parse(sessionStorage.getItem('cart')))
+    if (localStorage.getItem('cart')) {
+      setCart(JSON.parse(localStorage.getItem('cart')))
     }
   }, [])
 

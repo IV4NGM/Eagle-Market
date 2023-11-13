@@ -25,7 +25,7 @@ const useHistoryApi = () => {
         }
       })
         .then((result) => {
-          sessionStorage.setItem('history', JSON.stringify(result.data))
+          localStorage.setItem('history', JSON.stringify(result.data))
           setHistory(result.data)
           setHistoryLoaded(true)
           console.log('Historial correcto')

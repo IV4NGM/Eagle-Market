@@ -10,18 +10,18 @@ const AuthProvider = ({ children }) => {
   const [history, setHistory] = useState([])
 
   useEffect(() => {
-    if (sessionStorage.getItem('token')) {
-      setToken(sessionStorage.getItem('token'))
-      setLoginStatus(sessionStorage.getItem('loginStatus'))
-      setUserInfo(JSON.parse(sessionStorage.getItem('userInfo')))
-      setLastLetter(sessionStorage.getItem('lastLetter'))
-      setHistory(JSON.parse(sessionStorage.getItem('history')))
+    if (localStorage.getItem('token')) {
+      setToken(localStorage.getItem('token'))
+      setLoginStatus(localStorage.getItem('loginStatus'))
+      setUserInfo(JSON.parse(localStorage.getItem('userInfo')))
+      setLastLetter(localStorage.getItem('lastLetter'))
+      setHistory(JSON.parse(localStorage.getItem('history')))
     } else {
-      sessionStorage.setItem('token', '')
-      sessionStorage.setItem('loginStatus', JSON.stringify(false))
-      sessionStorage.setItem('userInfo', JSON.stringify({}))
-      sessionStorage.setItem('lastLetter', 'o')
-      sessionStorage.setItem('history', JSON.stringify([]))
+      localStorage.setItem('token', '')
+      localStorage.setItem('loginStatus', JSON.stringify(false))
+      localStorage.setItem('userInfo', JSON.stringify({}))
+      localStorage.setItem('lastLetter', 'o')
+      localStorage.setItem('history', JSON.stringify([]))
     }
   }, [])
   console.log(userInfo)

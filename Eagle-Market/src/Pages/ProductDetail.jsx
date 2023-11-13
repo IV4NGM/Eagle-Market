@@ -65,7 +65,7 @@ const ProductDetail = () => {
       const cleanCart = () => {
         let newCart = [...cart]
         newCart = newCart.filter((element) => element.id !== id)
-        sessionStorage.setItem('cart', JSON.stringify(newCart))
+        localStorage.setItem('cart', JSON.stringify(newCart))
         setCart(newCart)
       }
       setApiCall(false)
@@ -119,7 +119,7 @@ const ProductDetail = () => {
         newCart.push({ ...productDetails, product_amount: productAmount })
       }
       console.log(newCart)
-      sessionStorage.setItem('cart', JSON.stringify(newCart))
+      localStorage.setItem('cart', JSON.stringify(newCart))
       setCart(newCart)
       setAddedToCart(true)
     } else {

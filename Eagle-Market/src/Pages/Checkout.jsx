@@ -36,7 +36,7 @@ const Checkout = () => {
     }
 
     const comprarCarrito = () => {
-      sessionStorage.setItem('cart', JSON.stringify([]))
+      localStorage.setItem('cart', JSON.stringify([]))
       setCart([])
       console.log('Carrito comprado')
       setShowModalBuyAllCart(false)
@@ -127,7 +127,7 @@ const Checkout = () => {
       newCart.push({ ...productToBuy })
     }
     console.log(newCart)
-    sessionStorage.setItem('cart', JSON.stringify(newCart))
+    localStorage.setItem('cart', JSON.stringify(newCart))
     setProductToBuy({})
     setCart(newCart)
   }
@@ -140,7 +140,7 @@ const Checkout = () => {
       }
     }
     newArray = newArray.filter(element => element.product_amount > 0)
-    sessionStorage.setItem('cart', JSON.stringify(newArray))
+    localStorage.setItem('cart', JSON.stringify(newArray))
     setCart(newArray)
   }
 
