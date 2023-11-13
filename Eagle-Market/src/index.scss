@@ -163,8 +163,10 @@ p.error-text {
 }
 
 .edit-image {
-  margin-top: 20px;
+  margin-top: 2rem;
   align-self: center;
+  height: 15rem;
+  width: 15rem;
 }
 
 .product-card {
@@ -288,7 +290,7 @@ p.error-text {
 }
 
 textarea {
-  min-height: 175px !important;
+  min-height: 18rem !important;
 }
 
 .form-control:focus, .form-select:focus {
@@ -315,7 +317,7 @@ form {
   }
 
   &-product {
-    width: 40%;
+    width: 60%;
   }
 
   &-image {
@@ -438,4 +440,20 @@ form {
 
 .btn-spaced {
   margin-bottom: 10px
+}
+
+.long-text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  &--1 {
+    -webkit-line-clamp: 1;
+  }
+  &--2 {
+    -webkit-line-clamp: 2;
+  }
+  &--3 {
+    -webkit-line-clamp: 3;
+  }
 }
