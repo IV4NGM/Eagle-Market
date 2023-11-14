@@ -15,6 +15,8 @@ import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import useCartContext from '@/Context/CartContext/useCartContext'
 
+import useMediaQuery from '@mui/material/useMediaQuery'
+
 const Navbar = () => {
   const navigate = useNavigate()
 
@@ -27,9 +29,14 @@ const Navbar = () => {
     productsAmount += item.product_amount
   }
 
+  const maxQueryMatches = useMediaQuery('(max-width:600px)')
+
   return (
-    <nav className='navbar navbar-expand-lg sticky-top navbar-white'>
+    <nav className='navbar navbar-expand-xl sticky-top navbar-white'>
       <div className='container-fluid'>
+        <button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent'>
+          <span className='navbar-toggler-icon' />
+        </button>
         <NavLink className='navbar-brand navbar-brand-logo' to='/' onClick={() => setNavSearch('')}>
           <img src={eagleLogo} alt='Eagle blade logo' className='d-inline-block align-text-top logo-nav' />
           <p>Eagle Market</p>
@@ -47,11 +54,14 @@ const Navbar = () => {
               }
             }}
             placeholder='Busca en todo Eagle Market'
-            className='navbar__nav-search form-control'
+            className='navbar__nav-search form-control nav-search-hide'
           />
           <div
             className='input-group-text navbar__input-group-text' onClick={() => {
               setAdvancedSearch(navSearch)
+              if (maxQueryMatches) {
+                setAdvancedSearch('')
+              }
               setNavSearch('')
               navigate('/search')
             }}
@@ -59,17 +69,13 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent'>
-        <span className='navbar-toggler-icon' />
-      </button>
       <div className='collapse navbar-collapse' id='navbarSupportedContent'>
         <div className='navbar-nav me-auto mb-2 mb-lg-0'>
-          <NavLink to='/search' className='navbar__advanced-search'>
+          <NavLink to='/search' className={loginStatus && userInfo?.role === 'ADMIN' ? 'navbar__advanced-search' : 'navbar__advanced-search take-two-columns'}>
             <p>Búsqueda avanzada</p>
             <LibraryBooksOutlinedIcon />
           </NavLink>
           {loginStatus && userInfo?.role === 'ADMIN' ? <button className='btn btn-success btn-new-product' onClick={() => navigate('/new-product')}>Crear producto</button> : ''}
-          {/* <div className='d-flex'> */}
           {!loginStatus
             ? (
               <>

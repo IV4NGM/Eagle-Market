@@ -17,7 +17,7 @@ const Home = () => {
   const [loaded, setLoaded] = useState(false)
   const [showModalFailure, setShowModalFailure] = useState(false)
 
-  const { products, setProducts } = useProductsContext()
+  const { products, setProducts, setAdvancedSearch } = useProductsContext()
 
   useEffect(() => {
     const getProducts = fetch('https://eagle-market.onrender.com/items', {
@@ -80,9 +80,13 @@ const Home = () => {
       slidesToSlide: 3
     },
     tablet: {
-      breakpoint: { max: 1024, min: 464 },
+      breakpoint: { max: 1024, min: 670 },
       items: 4,
       slidesToSlide: 2
+    },
+    minitablet: {
+      breakpoint: { max: 670, min: 464 },
+      items: 3
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
@@ -99,7 +103,7 @@ const Home = () => {
       <div className='categories-container'>
         <Carousel responsive={responsiveCategoriesCarousel} infinite autoPlay autoPlaySpeed={4000}>
           {categoriesArray.map((element, index) => {
-            return <div className='carousel-categories-div' key={`category-div-${index}`}><Link key={`category-link-${index}`} to={`/search/${element}`}>{element}</Link></div>
+            return <div className='carousel-categories-div' key={`category-div-${index}`}><Link key={`category-link-${index}`} to={`/search/${element}`} onClick={() => setAdvancedSearch('')}>{element}</Link></div>
           })}
         </Carousel>
       </div>
@@ -113,7 +117,7 @@ const Home = () => {
         topCategories.map((category, index) => {
           return (
             <div key={`top-div-${index}`} className='carousel-container card'>
-              <Link key={`top-link-${index}`} to={`/search/${category}`}>
+              <Link key={`top-link-${index}`} to={`/search/${category}`} onClick={() => setAdvancedSearch('')}>
                 <h2 className='spaced' key={`top-h2-${index}`}><strong>{category}</strong></h2>
               </Link>
               <Carousel key={`top-carousel-${index}`} responsive={responsiveCarousel}>
@@ -130,7 +134,7 @@ const Home = () => {
         categoriesArray.map((category, index) => {
           return (
             <div key={`div-${index}`} className='carousel-container card'>
-              <Link key={`link-${index}`} to={`/search/${category}`}>
+              <Link key={`link-${index}`} to={`/search/${category}`} onClick={() => setAdvancedSearch('')}>
                 <h2 className='spaced' key={`h2-${index}`}><strong>{category}</strong></h2>
               </Link>
               <Carousel key={`carousel-${index}`} responsive={responsiveCarousel}>
