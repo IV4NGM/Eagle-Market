@@ -71,7 +71,7 @@ const OrderDetail = () => {
               <div className='cart-details-grid spaced'>
                 <p>ID de la orden:</p>
                 <p className='right'>{element?.orderId}</p>
-                <p>Cantidad de productos:</p>
+                <p>Productos:</p>
                 <p className='right'>{element?.products_amount}</p>
                 <p><strong>Gran total: </strong></p>
                 <p className='right'><strong>$ {element?.total_price}</strong></p>
