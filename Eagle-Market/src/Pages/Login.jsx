@@ -7,20 +7,18 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import CustomModal from '@/Components/CustomModal/CustomModal'
-import useHistoryApi from '@/Hooks/useHistoryApi'
 import LoggedRedirect from '@/Context/AuthContext/LoggedRedirect'
 
 const Login = () => {
   const navigate = useNavigate()
 
-  const { setToken, setLoginStatus, userInfo, setUserInfo, lastLetter, setLastLetter } = useAuthContext()
+  const { setToken, setLoginStatus, userInfo, setUserInfo, lastLetter, setLastLetter, setHistory } = useAuthContext()
   const { setNavSearch, setApiCall } = useProductsContext()
   const { setCart } = useCartContext()
   const [loginInfo, setLoginInfo] = useState({})
   const [errorMessage, setErrorMessage] = useState('')
   const [showModalFailure, setShowModalFailure] = useState(false)
   const [showModalSuccess, setShowModalSuccess] = useState(false)
-  useHistoryApi()
 
   useEffect(() => {
     console.log('effect', loginInfo)
@@ -49,12 +47,6 @@ const Login = () => {
             throw new Error('IncorrectData')
           default: setShowModalFailure(true)
         }
-      //   if (value.ok) {
-      //     return value.json()
-      //   } else {
-      //     setLoginStatus(false)
-      //     throw new Error('No está permitido')
-      //   }
       })
         .then((value) => {
           console.log(value)
@@ -80,7 +72,27 @@ const Login = () => {
             localStorage.setItem('lastLetter', '@')
             setLastLetter('@')
           }
-          // setShowModalSuccess(true)
+          const getHistory = fetch('https://eagle-market.onrender.com/orders-history', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${value.token}`
+            }
+          })
+          return getHistory
+        })
+        .then((result) => {
+          if (result.ok) {
+            return result.json()
+          } else {
+            throw new Error('Error in the server response')
+          }
+        })
+        .then((result) => {
+          localStorage.setItem('history', JSON.stringify(result.data))
+          setHistory(result.data)
+          console.log('Historial correcto desde Login')
+          setApiCall(true)
         })
         .catch((e) => {
           setApiCall(true)
@@ -90,9 +102,11 @@ const Login = () => {
           }
         })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginInfo, setToken, setLoginStatus, setUserInfo, navigate, setCart, setApiCall, setLastLetter])
 
   const loginFormSchema = yup.object().shape({
+    // eslint-disable-next-line no-useless-escape
     email: yup.string().required('Ingresa un email válido').matches(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Debes ingresar un email válido'),
     password: yup.string().required('Ingresa tu contraseña')
   })
@@ -154,7 +168,7 @@ const Login = () => {
         title='Error al iniciar sesión'
         showModal={showModalFailure}
         setShowModal={setShowModalFailure}
-        text='Hubo un error al intentar iniciar sesión. Intente de nuevo más tarde'
+        text='Hubo un error al obtener tus datos de inicio de sesión. Intente de nuevo más tarde'
         isCancelButton={false}
         textYes='Regresar'
         estatico

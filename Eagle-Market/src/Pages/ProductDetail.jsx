@@ -29,8 +29,6 @@ const ProductDetail = () => {
 
   useEffect(() => {
     if (!showModalSuccess && !deleteProduct) {
-      console.log('Getting')
-      // setApiCall(false)
       const getProducts = fetch(`https://eagle-market.onrender.com/items/${id}`, {
         method: 'GET',
         headers: {
@@ -41,7 +39,6 @@ const ProductDetail = () => {
         return result.json()
       })
         .then((result) => {
-          // setApiCall(true)
           console.log('producto', result)
           if (Object.keys(result).length > 0) {
             setProductDetails(result)
@@ -51,7 +48,6 @@ const ProductDetail = () => {
         })
         .catch(e => {
           console.log(e)
-          // setApiCall(true)
           setShowModalNoProductData(true)
         })
     }
@@ -139,100 +135,103 @@ const ProductDetail = () => {
   return (
     <div className='page-container'>
       {!showModalSuccess
-        ? <div className='flex-row cart-flex'>
-          <div className='cart-flex-left details-card-container'>
-            <div className='card details-card'>
-              <div className='flex-column details-container'>
-                <div className='separated-section'>
-                  <h2>{productDetails.product_name}</h2>
-                </div>
-                <div className='separated-section separated-section--border'>
-                  <img
-                    src={productDetails?.image || productDetails?.base64Image || ProductDefaultImage} alt={productDetails.product_name} className='product-details-image spaced' onError={({ currentTarget }) => {
-                      currentTarget.onerror = null
-                      currentTarget.src = ProductDefaultImage
-                    }}
-                  />
-                </div>
-                <div className='separated-section separated-section--border'>
-                  <h4 className='spaced'>Características del producto</h4>
-                  <table className='table'>
-                    <thead>
-                      <tr>
-                        <th scope='col' />
-                        <th scope='col' />
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className='table-success'>
-                        <th scope='row'>Marca</th>
-                        <td>{productDetails.brand}</td>
-                      </tr>
-                      <tr className='table-light'>
-                        <th scope='row'>Categoría</th>
-                        <td>{productDetails.category}</td>
-                      </tr>
-                      {productDetails.sku
-                        ? <tr className='table-success'>
-                          <th scope='row'>SKU</th>
-                          <td>{productDetails.sku}</td>
-                          </tr>
-                        : ''}
-                    </tbody>
-                  </table>
-                </div>
-                <div className='separated-section'>
-                  <h4 className='spaced'>Descripción del producto</h4>
-                  <div className='display-linebreak spaced product-description'>
-                    {productDetails.description}
+        ? (
+          <div className='flex-row cart-flex'>
+            <div className='cart-flex-left details-card-container'>
+              <div className='card details-card'>
+                <div className='flex-column details-container'>
+                  <div className='separated-section'>
+                    <h2>{productDetails.product_name}</h2>
+                  </div>
+                  <div className='separated-section separated-section--border'>
+                    <img
+                      src={productDetails?.image || productDetails?.base64Image || ProductDefaultImage} alt={productDetails.product_name} className='product-details-image spaced' onError={({ currentTarget }) => {
+                        currentTarget.onerror = null
+                        currentTarget.src = ProductDefaultImage
+                      }}
+                    />
+                  </div>
+                  <div className='separated-section separated-section--border'>
+                    <h4 className='spaced'>Características del producto</h4>
+                    <table className='table'>
+                      <thead>
+                        <tr>
+                          <th scope='col' />
+                          <th scope='col' />
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className='table-success'>
+                          <th scope='row'>Marca</th>
+                          <td>{productDetails.brand}</td>
+                        </tr>
+                        <tr className='table-light'>
+                          <th scope='row'>Categoría</th>
+                          <td>{productDetails.category}</td>
+                        </tr>
+                        {productDetails.sku
+                          ? (
+                            <tr className='table-success'>
+                              <th scope='row'>SKU</th>
+                              <td>{productDetails.sku}</td>
+                            </tr>
+                            )
+                          : ''}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className='separated-section'>
+                    <h4 className='spaced'>Descripción del producto</h4>
+                    <div className='display-linebreak spaced product-description'>
+                      {productDetails.description}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className='cart-flex-right'>
-            <div className='card product-detail-card flex-column'>
-              <h4>{productDetails.product_name}</h4>
-              <h4 className='card-text__success-color spaced'>${productDetails.price}</h4>
-              <div className='flex-row product-detail-card-amount'>
-                <div className='flex-row amount-container'>
-                  <div className='amount-container-left'>
-                    <button
-                      className='btn btn-modify-number btn-modify-number-disabled-style' onClick={(event) => {
-                        event.stopPropagation()
-                        setProductAmount(Math.max(1, productAmount - 1))
-                      }}
-                    >
-                      <RemoveOutlinedIcon />
-                    </button>
-                  </div>
-                  <div className='amount-container-number'>{productAmount}</div>
-                  <div className='amount-container-right'>
-                    <button
-                      className='btn btn-modify-number' onClick={(event) => {
-                        event.stopPropagation()
-                        setProductAmount(productAmount + 1)
-                      }}
-                    >
-                      <AddOutlinedIcon />
-                    </button>
+            <div className='cart-flex-right'>
+              <div className='card product-detail-card flex-column'>
+                <h4>{productDetails.product_name}</h4>
+                <h4 className='card-text__success-color spaced'>${productDetails.price}</h4>
+                <div className='flex-row product-detail-card-amount'>
+                  <div className='flex-row amount-container'>
+                    <div className='amount-container-left'>
+                      <button
+                        className='btn btn-modify-number btn-modify-number-disabled-style' onClick={(event) => {
+                          event.stopPropagation()
+                          setProductAmount(Math.max(1, productAmount - 1))
+                        }}
+                      >
+                        <RemoveOutlinedIcon />
+                      </button>
+                    </div>
+                    <div className='amount-container-number'>{productAmount}</div>
+                    <div className='amount-container-right'>
+                      <button
+                        className='btn btn-modify-number' onClick={(event) => {
+                          event.stopPropagation()
+                          setProductAmount(productAmount + 1)
+                        }}
+                      >
+                        <AddOutlinedIcon />
+                      </button>
+                    </div>
                   </div>
                 </div>
+                <button className='btn btn-success btn-bottom-spaced' onClick={() => buyItem()}>Comprar ahora</button>
+                <button className='btn btn-secondary btn-bottom-spaced' onClick={() => addToCart()}>Agregar al carrito</button>
+                {userInfo?.role === 'ADMIN'
+                  ? (
+                    <div className='flex-column product-detail-admin-btn-container'>
+                      <button className='btn btn-light spaced btn-bottom-spaced' onClick={() => navigate(`/edit/${productDetails.id}`)}>Editar producto</button>
+                      <button className='btn btn-outline-danger btn-bottom-spaced' onClick={() => setShowModalDelete(true)}>Eliminar producto</button>
+                    </div>
+                    )
+                  : ''}
               </div>
-              {/* <button onClick={() => setProductAmount(Math.max(1, productAmount - 1))}>-</button>
-              <p style={{ display: 'inline' }}>{productAmount}</p>
-              <button onClick={() => setProductAmount(productAmount + 1)}>+</button> */}
-              <button className='btn btn-success btn-bottom-spaced' onClick={() => buyItem()}>Comprar ahora</button>
-              <button className='btn btn-secondary btn-bottom-spaced' onClick={() => addToCart()}>Agregar al carrito</button>
-              {userInfo?.role === 'ADMIN'
-                ? <div className='flex-column product-detail-admin-btn-container'>
-                  <button className='btn btn-light spaced btn-bottom-spaced' onClick={() => navigate(`/edit/${productDetails.id}`)}>Editar producto</button>
-                  <button className='btn btn-outline-danger btn-bottom-spaced' onClick={() => setShowModalDelete(true)}>Eliminar producto</button>
-                </div>
-                : ''}
             </div>
           </div>
-        </div>
+          )
         : ''}
       <CustomModal
         title='Error al cargar producto'

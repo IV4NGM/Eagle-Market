@@ -30,7 +30,6 @@ const Checkout = () => {
   useEffect(() => {
     const comprarAhora = () => {
       setProductToBuy({})
-      console.log('Comprado')
       setShowModalBuyNow(false)
       setShowModalSuccess(true)
     }
@@ -38,7 +37,6 @@ const Checkout = () => {
     const comprarCarrito = () => {
       localStorage.setItem('cart', JSON.stringify([]))
       setCart([])
-      console.log('Carrito comprado')
       setShowModalBuyAllCart(false)
       setShowModalSuccess(true)
     }
@@ -88,12 +86,10 @@ const Checkout = () => {
       })
 
       buy.then((value) => {
-        console.log(value)
         setApiCall(true)
         return value.json()
       })
         .then((value) => {
-          console.log(value)
           if (buyNow) {
             comprarAhora()
             setBuyNow(false)
@@ -104,7 +100,6 @@ const Checkout = () => {
           }
         })
         .catch((e) => {
-          console.log(e)
           setApiCall(true)
           setBuyNow(false)
           setBuyAllCart(false)
@@ -127,7 +122,6 @@ const Checkout = () => {
     if (!changed) {
       newCart.push({ ...productToBuy })
     }
-    console.log(newCart)
     localStorage.setItem('cart', JSON.stringify(newCart))
     setProductToBuy({})
     setCart(newCart)
@@ -172,70 +166,76 @@ const Checkout = () => {
     <div className='page-container'>
       <NoLoggedRedirect />
       {Object.keys(productToBuy).length > 0
-        ? <>
-          <h2>Comprar ahora</h2>
-          <div className='flex-row cart-flex'>
-            <div className='cart-flex-left'>
-              <CartProductCard data={productToBuy} changeValueFunction={changeValueFunction} type='productToBuy' onDelete={() => setShowModalDeleteBuy(true)} />
-            </div>
-            <div className='cart-flex-right'>
-              <div className='card cart-checkout-details'>
-                <h4>Detalles de la compra</h4>
-                <div className='cart-details-grid spaced'>
-                  <p>Productos:</p>
-                  <p className='right'>{productToBuy?.product_amount}</p>
-                  <p><strong>Gran total: </strong></p>
-                  <p className='right'><strong>$ {Math.round(productToBuy?.price * productToBuy?.product_amount * 100) / 100}</strong></p>
-                </div>
-                <div className='flex-column'>
-                  <button className='btn btn-success btn-spaced' onClick={() => setShowModalBuyNow(true)}>Comprar ahora</button>
-                  <button className='btn btn-secondary' onClick={addToCart}>Agregar al carrito</button>
+        ? (
+          <>
+            <h2>Comprar ahora</h2>
+            <div className='flex-row cart-flex'>
+              <div className='cart-flex-left'>
+                <CartProductCard data={productToBuy} changeValueFunction={changeValueFunction} type='productToBuy' onDelete={() => setShowModalDeleteBuy(true)} />
+              </div>
+              <div className='cart-flex-right'>
+                <div className='card cart-checkout-details'>
+                  <h4>Detalles de la compra</h4>
+                  <div className='cart-details-grid spaced'>
+                    <p>Productos:</p>
+                    <p className='right'>{productToBuy?.product_amount}</p>
+                    <p><strong>Gran total: </strong></p>
+                    <p className='right'><strong>$ {Math.round(productToBuy?.price * productToBuy?.product_amount * 100) / 100}</strong></p>
+                  </div>
+                  <div className='flex-column'>
+                    <button className='btn btn-success btn-spaced' onClick={() => setShowModalBuyNow(true)}>Comprar ahora</button>
+                    <button className='btn btn-secondary' onClick={addToCart}>Agregar al carrito</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </>
+          )
         : ''}
 
       {!token || cart.length > 0
-        ? <>
-          <h2 className='spaced'>Mi carrito</h2>
-          <div className='flex-row cart-flex'>
-            <div className='cart-flex-left'>
-              {cart.map((element, index) => {
-                return (
-                  <CartProductCard
-                    data={element} changeValueFunction={changeValueFunction} key={index} type='cart' onDelete={() => {
-                      setDeleteCartParams({ newValue: 0, id: element.id })
-                      setShowModalDeleteCartItem(true)
-                    }}
-                  />
-                )
-              })}
-            </div>
-            <div className='cart-flex-right'>
-              <div className='card cart-checkout-details'>
-                <h4>Detalles de la compra</h4>
-                <div className='cart-details-grid spaced'>
-                  <p>Productos:</p>
-                  <p className='right'>{productsAmount}</p>
-                  <p><strong>Gran total: </strong></p>
-                  <p className='right'><strong>$ {totalPrice}</strong></p>
+        ? (
+          <>
+            <h2 className='spaced'>Mi carrito</h2>
+            <div className='flex-row cart-flex'>
+              <div className='cart-flex-left'>
+                {cart.map((element, index) => {
+                  return (
+                    <CartProductCard
+                      data={element} changeValueFunction={changeValueFunction} key={index} type='cart' onDelete={() => {
+                        setDeleteCartParams({ newValue: 0, id: element.id })
+                        setShowModalDeleteCartItem(true)
+                      }}
+                    />
+                  )
+                })}
+              </div>
+              <div className='cart-flex-right'>
+                <div className='card cart-checkout-details'>
+                  <h4>Detalles de la compra</h4>
+                  <div className='cart-details-grid spaced'>
+                    <p>Productos:</p>
+                    <p className='right'>{productsAmount}</p>
+                    <p><strong>Gran total: </strong></p>
+                    <p className='right'><strong>$ {totalPrice}</strong></p>
+                  </div>
+                  {cart.length > 0 ? <button className='btn btn-success' onClick={() => setShowModalBuyAllCart(true)}>Comprar carrito</button> : ''}
                 </div>
-                {cart.length > 0 ? <button className='btn btn-success' onClick={() => setShowModalBuyAllCart(true)}>Comprar carrito</button> : ''}
               </div>
             </div>
-          </div>
           </>
+          )
         : ''}
       {(token && cart.length === 0) && Object.keys(productToBuy).length === 0
-        ? <>
-          <h2 className='spaced'>Mi carrito</h2>
-          <SearchOutlinedIcon className='not-found-image' />
-          <h4>Todavía no hay productos en tu carrito</h4>
-          <h4>Vuelve al inicio para seguir comprando</h4>
-          <button className='btn btn-success btn-lg spaced' onClick={() => navigate('/')}>Ir a Inicio</button>
-        </>
+        ? (
+          <>
+            <h2 className='spaced'>Mi carrito</h2>
+            <SearchOutlinedIcon className='not-found-image' />
+            <h4>Todavía no hay productos en tu carrito</h4>
+            <h4>Vuelve al inicio para seguir comprando</h4>
+            <button className='btn btn-success btn-lg spaced' onClick={() => navigate('/')}>Ir a Inicio</button>
+          </>
+          )
         : ''}
       <CustomModal
         title='Comprar ahora'

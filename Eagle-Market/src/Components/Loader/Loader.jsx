@@ -1,5 +1,4 @@
 import './Loader.scss'
-import loader from '@/assets/loader.gif'
 import greenLoader from '@/assets/green-loader-slow.gif'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 
@@ -9,12 +8,12 @@ const Loader = () => {
   return (
     <>
       {!apiCall
-        ? <div className='loader-container'>
-          {/* <p>Cargando contenido...</p> */}
-          <img className='loader-img' src={greenLoader} alt='Loading' />
+        ? (
+          <div className='loader-container'>
+            <img className='loader-img' src={greenLoader} alt='Loading' />
           </div>
+          )
         : ''}
-
     </>
   )
 }

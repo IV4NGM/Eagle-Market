@@ -6,13 +6,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
 import CustomModal from '@/Components/CustomModal/CustomModal'
 import LoggedRedirect from '@/Context/AuthContext/LoggedRedirect'
-import useAuthContext from '@/Context/AuthContext/useAuthContext'
 
 const Signup = () => {
   const navigate = useNavigate()
   const [signUpInfo, setSignUpInfo] = useState({})
   const { setApiCall } = useProductsContext()
-  const { token } = useAuthContext()
 
   const [errorMessage, setErrorMessage] = useState('')
   const [showModalFailure, setShowModalFailure] = useState(false)
@@ -64,6 +62,7 @@ const Signup = () => {
     first_name: yup.string().required('Escribe tu nombre'),
     last_name: yup.string().required('Escribe tu apellido'),
     gender: yup.mixed().oneOf(['M', 'F', 'O'], 'Selecciona un género').defined(),
+    // eslint-disable-next-line no-useless-escape
     email: yup.string().required('Ingresa un email válido').matches(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Debes ingresar un email válido'),
     password: yup.string().required('Ingresa tu contraseña').min(5, 'La contraseña debe tener al menos 5 caracteres').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%.^&*])/, 'La contraseña debe tener un número, una letra mayúscula, una letra minúscula y un caracter especial'),
     confirm_password: yup.string().oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden').required('Vuelve a escribir tu contraseña'),

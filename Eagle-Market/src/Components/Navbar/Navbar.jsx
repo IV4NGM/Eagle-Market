@@ -18,7 +18,7 @@ import useCartContext from '@/Context/CartContext/useCartContext'
 const Navbar = () => {
   const navigate = useNavigate()
 
-  const { loginStatus, userInfo, lastLetter } = useAuthContext()
+  const { loginStatus, userInfo } = useAuthContext()
   const { navSearch, setNavSearch, setAdvancedSearch } = useProductsContext()
   const { cart } = useCartContext()
 
@@ -71,32 +71,36 @@ const Navbar = () => {
           {loginStatus && userInfo?.role === 'ADMIN' ? <button className='btn btn-success btn-new-product' onClick={() => navigate('/new-product')}>Crear producto</button> : ''}
           {/* <div className='d-flex'> */}
           {!loginStatus
-            ? <> <button className='btn btn-secondary btn-not-logged' onClick={() => navigate('/signup')}>Registrarse</button>
-              <button className='btn btn-success btn-not-logged' onClick={() => navigate('/login')}>Iniciar sesión</button>
-            </>
-            : <>
-              <NavLink to='/checkout' className='shopping-cart-icon'><ShoppingCartOutlinedIcon /><span className='shopping-cart-number'>{productsAmount}</span></NavLink>
-              <div className='dropdown navbar__dropdown'>
-                <button className='btn btn-outline-success dropdown-toggle' type='button' data-bs-toggle='dropdown'>
-                  {userInfo.first_name} {userInfo.last_name}
-                </button>
-                <ul className='dropdown-menu dropdown-menu-end'>
-                  <li className='dropdown-item-flex dropdown-item-flex--margin'>
-                    <h5 className='dropdown-item-flex--center dropdown-item-flex__title'><strong>Tu cuenta</strong></h5>
-                    <p className='dropdown-item-flex__p'><AccountBoxOutlinedIcon className='dropdown-item-flex__icon' /> {userInfo.first_name} {userInfo.last_name}</p>
-                    <p className='dropdown-item-flex__p'><EmailOutlinedIcon className='dropdown-item-flex__icon' /> {userInfo.email}</p>
-                    {userInfo.role === 'ADMIN' ? <p className='dropdown-item-flex__p'><VerifiedUserOutlinedIcon className='dropdown-item-flex__icon' /> Administrador</p> : ''}
-                  </li>
-                  <li><hr className='dropdown-divider' /></li>
-                  {userInfo.role === 'ADMIN' ? <li className='dropdown-item'><NavLink to='/new-product'><AddOutlinedIcon /> Crear producto</NavLink></li> : ''}
-                  <li className='dropdown-item'><NavLink to='/checkout'><ShoppingCartOutlinedIcon /> Ver carrito</NavLink></li>
-                  <li className='dropdown-item'><NavLink to='/my-orders'><ShoppingBagOutlinedIcon /> Mis compras</NavLink></li>
-                  <li><hr className='dropdown-divider' /></li>
-                  <li className='dropdown-item'><NavLink className='navbar-brand navbar-brand__logout' to='/logout'><LogoutOutlinedIcon /> Cerrar Sesión</NavLink></li>
-                </ul>
-              </div>
-            </>}
-          {/* </div> */}
+            ? (
+              <>
+                <button className='btn btn-secondary btn-not-logged' onClick={() => navigate('/signup')}>Registrarse</button>
+                <button className='btn btn-success btn-not-logged' onClick={() => navigate('/login')}>Iniciar sesión</button>
+              </>
+              )
+            : (
+              <>
+                <NavLink to='/checkout' className='shopping-cart-icon'><ShoppingCartOutlinedIcon /><span className='shopping-cart-number'>{productsAmount}</span></NavLink>
+                <div className='dropdown navbar__dropdown'>
+                  <button className='btn btn-outline-success dropdown-toggle' type='button' data-bs-toggle='dropdown'>
+                    {userInfo.first_name} {userInfo.last_name}
+                  </button>
+                  <ul className='dropdown-menu dropdown-menu-end'>
+                    <li className='dropdown-item-flex dropdown-item-flex--margin'>
+                      <h5 className='dropdown-item-flex--center dropdown-item-flex__title'><strong>Tu cuenta</strong></h5>
+                      <p className='dropdown-item-flex__p'><AccountBoxOutlinedIcon className='dropdown-item-flex__icon' /> {userInfo.first_name} {userInfo.last_name}</p>
+                      <p className='dropdown-item-flex__p'><EmailOutlinedIcon className='dropdown-item-flex__icon' /> {userInfo.email}</p>
+                      {userInfo.role === 'ADMIN' ? <p className='dropdown-item-flex__p'><VerifiedUserOutlinedIcon className='dropdown-item-flex__icon' /> Administrador</p> : ''}
+                    </li>
+                    <li><hr className='dropdown-divider' /></li>
+                    {userInfo.role === 'ADMIN' ? <li className='dropdown-item'><NavLink to='/new-product'><AddOutlinedIcon /> Crear producto</NavLink></li> : ''}
+                    <li className='dropdown-item'><NavLink to='/checkout'><ShoppingCartOutlinedIcon /> Ver carrito</NavLink></li>
+                    <li className='dropdown-item'><NavLink to='/my-orders'><ShoppingBagOutlinedIcon /> Mis compras</NavLink></li>
+                    <li><hr className='dropdown-divider' /></li>
+                    <li className='dropdown-item'><NavLink className='navbar-brand navbar-brand__logout' to='/logout'><LogoutOutlinedIcon /> Cerrar Sesión</NavLink></li>
+                  </ul>
+                </div>
+              </>
+              )}
         </div>
       </div>
     </nav>

@@ -19,13 +19,15 @@ const CustomModal = ({ title, showModal, setShowModal, text, onYes = nothingFunc
       <Modal.Footer>
         {
           isCancelButton
-            ? <button
+            ? (
+              <button
                 className='btn btn-outline-secondary btn-modal' onClick={() => {
                   onNo()
                   setShowModal(false)
                 }}
               >{textNo}
               </button>
+              )
             : ''
         }
         <button

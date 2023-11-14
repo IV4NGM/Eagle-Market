@@ -61,9 +61,6 @@ const NewProduct = () => {
     window.scrollTo(0, 0)
   }, [registerProduct, setApiCall, token])
 
-  // const categoriesAllowed = ['Automotive', 'Baby', 'Beauty', 'Books', 'Clothing', 'Computers', 'Electronics',
-  //   'Games', 'Garden', 'Grocery', 'Health', 'Home', 'Industrial', 'Jewerly', 'Kids', 'Movies', 'Music',
-  //   'Outdoors', 'Sports', 'Tools', 'Toys', 'Other']
   const categoriesAllowed = ['Automóviles', 'Bebés', 'Belleza', 'Computadoras', 'Deportes',
     'Despensa', 'Electrónicos', 'Exterior', 'Herramientas', 'Hogar', 'Industrial', 'Jardín',
     'Joyería', 'Juegos', 'Juguetes', 'Libros', 'Música', 'Niños', 'Películas', 'Ropa', 'Salud', 'Zapatos', 'Otros']
@@ -223,42 +220,46 @@ const NewProduct = () => {
             </div>
 
             {imageSrc === 'url'
-              ? <>
-                <div className='form-floating'>
-                  <input
-                    type='text'
-                    name='image'
-                    placeholder='URL'
-                    id='image'
-                    className='form-control'
-                    {...register('image')}
-                    value={imageUrl}
-                    onChange={(event) => setImageUrl(event.target.value)}
+              ? (
+                <>
+                  <div className='form-floating'>
+                    <input
+                      type='text'
+                      name='image'
+                      placeholder='URL'
+                      id='image'
+                      className='form-control'
+                      {...register('image')}
+                      value={imageUrl}
+                      onChange={(event) => setImageUrl(event.target.value)}
+                    />
+                    <label htmlFor='image'>URL de la imagen del producto</label>
+                  </div>
+                  <img
+                    src={imageUrl || ProductDefaultImage || ''} className='product-image-card edit-image' alt='Product-image' onError={({ currentTarget }) => {
+                      currentTarget.onerror = null
+                      currentTarget.src = ProductDefaultImage
+                    }}
                   />
-                  <label htmlFor='image'>URL de la imagen del producto</label>
-                </div>
-                <img
-                  src={imageUrl || ProductDefaultImage || ''} className='product-image-card edit-image' alt='Product-image' onError={({ currentTarget }) => {
-                    currentTarget.onerror = null
-                    currentTarget.src = ProductDefaultImage
-                  }}
-                />
-                <p className='warning-text'>{errors.image?.message}</p>
+                  <p className='warning-text'>{errors.image?.message}</p>
                 </>
-              : <div className='form-flex-column'>
-                <input
-                  type='file'
-                  name='image64'
-                  id='image64'
-                  className='form-control'
-                  onChange={(event) => {
-                    setImageFile(URL.createObjectURL(event.target.files[0]))
-                    handleFileRead(event)
-                  }}
-                />
-                <img src={imageFile || ProductDefaultImage} className='product-image-card edit-image' alt='Product-image' />
-                <p className='warning-text'>{base64ErrorText}</p>
-                </div>}
+                )
+              : (
+                <div className='form-flex-column'>
+                  <input
+                    type='file'
+                    name='image64'
+                    id='image64'
+                    className='form-control'
+                    onChange={(event) => {
+                      setImageFile(URL.createObjectURL(event.target.files[0]))
+                      handleFileRead(event)
+                    }}
+                  />
+                  <img src={imageFile || ProductDefaultImage} className='product-image-card edit-image' alt='Product-image' />
+                  <p className='warning-text'>{base64ErrorText}</p>
+                </div>
+                )}
 
             <button type='submit' className='btn btn-success'>
               Crear producto

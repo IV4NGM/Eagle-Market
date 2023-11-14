@@ -2,28 +2,22 @@ import useAuthContext from '@/Context/AuthContext/useAuthContext'
 import ProductCard from '@/Components/ProductCard/ProductCard'
 import { useEffect, useState } from 'react'
 import useProductsContext from '@/Context/ProductsContext/useProductsContext'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import ProductCardPlaceholder from '@/Components/ProductCardPlaceholder/ProductCardPlaceholder'
 import CustomModal from '@/Components/CustomModal/CustomModal'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
-import ItemsCarousel from 'react-items-carousel'
 import '@/Styles/Home.scss'
 import EagleMarketMainPage from '@/assets/EagleMarket-main-page.jpg'
 import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowRightOutlined'
 
 const Home = () => {
   const { loginStatus, userInfo } = useAuthContext()
-  const navigate = useNavigate()
 
   const [loaded, setLoaded] = useState(false)
   const [showModalFailure, setShowModalFailure] = useState(false)
 
   const { products, setProducts } = useProductsContext()
-
-  // Para ItemsCarousel
-  const [activeItemIndex, setActiveItemIndex] = useState(0)
-  const chevronWidth = 40
 
   useEffect(() => {
     console.log('Getting')
@@ -52,10 +46,6 @@ const Home = () => {
     }
   }
   categoriesArray.sort()
-  console.log(categoriesArray)
-  // const categoriesArray = ['Automotive', 'Baby', 'Beauty', 'Books', 'Clothing', 'Computers', 'Electronics',
-  //   'Games', 'Garden', 'Grocery', 'Health', 'Home', 'Industrial', 'Jewerly', 'Kids', 'Movies', 'Music',
-  //   'Outdoors', 'Sports', 'Tools', 'Toys', 'Other']
 
   const topCategories = categoriesArray.filter(category => (products.filter((product) => product.category === category))?.length >= 7)
   topCategories.sort((a, b) => {
@@ -64,7 +54,6 @@ const Home = () => {
 
   const responsiveCarousel = {
     superLargeDesktop: {
-      // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
       items: 8
     },
@@ -84,7 +73,6 @@ const Home = () => {
 
   const responsiveCategoriesCarousel = {
     superLargeDesktop: {
-      // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
       items: 8,
       slidesToSlide: 4
@@ -121,11 +109,7 @@ const Home = () => {
       <h5 className='text-underlined home-title--spaced'><Link to='/search' className='text-black'>Consulta nuestro catálogo <KeyboardDoubleArrowRightOutlinedIcon /></Link></h5>
 
       <div className='flex-wrap'>
-        {/* {userInfo?.role === 'ADMIN' ? <div className='card' style={{ width: '18rem' }} onClick={() => navigate('/new-product')}> + </div> : ''} */}
         {!loaded ? <div className='placeholder-container'> <ProductCardPlaceholder /> <ProductCardPlaceholder /> <ProductCardPlaceholder /> </div> : ''}
-        {/* {productsArray.map((element, index) => {
-          return <ProductCard data={element} key={index} />
-        })} */}
       </div>
       {loaded ? <h2 className='spaced'><strong>Nuestras categorías más famosas</strong></h2> : ''}
       {
@@ -161,38 +145,6 @@ const Home = () => {
           )
         })
       }
-      {/* {
-        categoriesArray.map((category, index) => {
-          return (
-            <div key={`div-${index}`} className='carousel-container'>
-              <Link key={`link-${index}`} to={`/search/${category}`}>
-                <h4 key={`h4-${index}`}>{category}</h4>
-              </Link>
-              <div style={{ padding: `0 ${chevronWidth}px` }}>
-                <ItemsCarousel
-                  placeholderItem={<div style={{ height: 200, background: '#EEE' }} />}
-                  enablePlaceholder
-                  numberOfPlaceholderItems={4}
-                  requestToChangeActive={setActiveItemIndex}
-                  activeItemIndex={activeItemIndex}
-                  numberOfCards={4}
-                  gutter={20}
-                  leftChevron={<button>{'<'}</button>}
-                  rightChevron={<button>{'>'}</button>}
-                  outsideChevron
-                  chevronWidth={chevronWidth}
-                >
-                  {!loaded
-                    ? []
-                    : (products.filter((product) => product.category === category)).map((element, index) => {
-                        return <ProductCard data={element} key={`card-${index}`} />
-                      })}
-                </ItemsCarousel>
-              </div>
-            </div>
-          )
-        })
-      } */}
       <CustomModal
         title='Error al cargar los productos'
         showModal={showModalFailure}

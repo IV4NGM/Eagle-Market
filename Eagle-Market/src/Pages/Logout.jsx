@@ -11,9 +11,7 @@ const Logout = () => {
   const { setCart } = useCartContext()
 
   const [showModalSuccess, setShowModalSuccess] = useState(false)
-  // setToken('')
-  // setLoginStatus(false)
-  // setUserInfo({})
+
   useEffect(() => {
     localStorage.setItem('token', '')
     localStorage.setItem('loginStatus', JSON.stringify(false))
@@ -26,7 +24,6 @@ const Logout = () => {
     setUserInfo({})
     setLastLetter('o')
     setCart([])
-    // setShowModalSuccess(true)
   }, [setCart, setLastLetter, setLoginStatus, setToken, setUserInfo])
 
   return (
