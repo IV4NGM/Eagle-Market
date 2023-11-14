@@ -17,7 +17,6 @@ const MyOrders = () => {
 
   useEffect(() => {
     if (token) {
-      console.log('Getting history')
       setApiCall(false)
       const getProducts = fetch('https://eagle-market.onrender.com/orders-history', {
         method: 'GET',
@@ -27,7 +26,6 @@ const MyOrders = () => {
         }
       })
       getProducts.then((result) => {
-        console.log(result)
         if (result.ok) {
           return result.json()
         } else {
@@ -35,17 +33,14 @@ const MyOrders = () => {
         }
       })
         .then((result) => {
-          console.log(result.data)
           setApiCall(true)
           setHistoryLoaded(true)
           localStorage.setItem('history', JSON.stringify(result.data))
           setHistory(result.data)
-          console.log('history', history)
         })
         .catch((e) => {
           setApiCall(true)
           setHistoryLoaded(false)
-          console.log(e)
           setShowModalFailure(true)
         })
     }

@@ -20,7 +20,6 @@ const Home = () => {
   const { products, setProducts } = useProductsContext()
 
   useEffect(() => {
-    console.log('Getting')
     const getProducts = fetch('https://eagle-market.onrender.com/items', {
       method: 'GET'
     })
@@ -28,12 +27,10 @@ const Home = () => {
       return result.json()
     })
       .then((result) => {
-        console.log(result)
         setLoaded(true)
         setProducts(result)
       })
       .catch(e => {
-        console.log(e)
         setShowModalFailure(true)
       })
     window.scrollTo(0, 0)

@@ -17,9 +17,7 @@ const Signup = () => {
   const [showModalSuccess, setShowModalSuccess] = useState(false)
 
   useEffect(() => {
-    console.log('effect:', signUpInfo)
     if (signUpInfo?.email?.length > 0) {
-      console.log('Signing up')
       setApiCall(false)
       const register = fetch('https://eagle-market.onrender.com/register', {
         method: 'POST',
@@ -32,7 +30,6 @@ const Signup = () => {
       })
 
       register.then((value) => {
-        console.log(value)
         setApiCall(true)
         switch (value.status) {
           case 201: return value.json()
@@ -44,12 +41,10 @@ const Signup = () => {
         }
       })
         .then((value) => {
-          console.log(value)
           setErrorMessage('')
           setShowModalSuccess(true)
         })
         .catch((e) => {
-          console.log(e)
           setApiCall(true)
           if (e.message !== 'IncorrectData') {
             setShowModalFailure(true)
@@ -74,7 +69,6 @@ const Signup = () => {
   })
 
   const onSubmit = (data) => {
-    console.log('datos del formulario', data)
     const dataToPost = { ...data }
     delete dataToPost.confirm_password
     setSignUpInfo({ ...dataToPost })

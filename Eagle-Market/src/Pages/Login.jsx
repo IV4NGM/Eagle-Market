@@ -21,9 +21,7 @@ const Login = () => {
   const [showModalSuccess, setShowModalSuccess] = useState(false)
 
   useEffect(() => {
-    console.log('effect', loginInfo)
     if (loginInfo?.email) {
-      console.log('Logging in')
       setApiCall(false)
       const login = fetch('https://eagle-market.onrender.com/login', {
         method: 'POST',
@@ -37,7 +35,6 @@ const Login = () => {
       })
 
       login.then((value) => {
-        console.log(value)
         setApiCall(true)
         switch (value.status) {
           case 200: return value.json()
@@ -49,10 +46,7 @@ const Login = () => {
         }
       })
         .then((value) => {
-          console.log(value)
-          console.log(value.token)
           const userData = JSON.parse(atob(value.token.split('.')[1]))
-          console.log(userData)
           localStorage.setItem('token', value.token)
           localStorage.setItem('loginStatus', JSON.stringify(true))
           localStorage.setItem('userInfo', JSON.stringify(userData))
@@ -91,12 +85,10 @@ const Login = () => {
         .then((result) => {
           localStorage.setItem('history', JSON.stringify(result.data))
           setHistory(result.data)
-          console.log('Historial correcto desde Login')
           setApiCall(true)
         })
         .catch((e) => {
           setApiCall(true)
-          console.log(e)
           if (e.message !== 'IncorrectData') {
             setShowModalFailure(true)
           }

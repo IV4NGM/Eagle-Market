@@ -39,7 +39,6 @@ const ProductDetail = () => {
         return result.json()
       })
         .then((result) => {
-          console.log('producto', result)
           if (Object.keys(result).length > 0) {
             setProductDetails(result)
           } else {
@@ -47,7 +46,6 @@ const ProductDetail = () => {
           }
         })
         .catch(e => {
-          console.log(e)
           setShowModalNoProductData(true)
         })
     }
@@ -77,7 +75,6 @@ const ProductDetail = () => {
       })
 
       deleteProduct.then((value) => {
-        console.log(value)
         if (value.ok) {
           return value.json()
         } else {
@@ -85,14 +82,12 @@ const ProductDetail = () => {
         }
       })
         .then((value) => {
-          console.log(value)
           setApiCall(true)
           cleanBuyCart()
           cleanCart()
           setShowModalSuccess(true)
         })
         .catch((e) => {
-          console.log(e)
           setApiCall(true)
           setShowModalFailure(true)
         })
@@ -114,7 +109,6 @@ const ProductDetail = () => {
       if (!changed) {
         newCart.push({ ...productDetails, product_amount: productAmount })
       }
-      console.log(newCart)
       localStorage.setItem('cart', JSON.stringify(newCart))
       setCart(newCart)
       setAddedToCart(true)

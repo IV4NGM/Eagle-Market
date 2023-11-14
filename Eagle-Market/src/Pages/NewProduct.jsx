@@ -25,9 +25,7 @@ const NewProduct = () => {
   const [base64ErrorText, setBase64ErrorText] = useState('')
 
   useEffect(() => {
-    console.log('effect:', registerProduct)
     if (registerProduct?.product_name?.length > 0) {
-      console.log('Registrando')
       setApiCall(false)
       const register = fetch('https://eagle-market.onrender.com/items', {
         method: 'POST',
@@ -41,7 +39,6 @@ const NewProduct = () => {
       })
 
       register.then((value) => {
-        console.log(value)
         setApiCall(true)
         switch (value.status) {
           case 200: return value.json()
@@ -49,11 +46,9 @@ const NewProduct = () => {
         }
       })
         .then((value) => {
-          console.log(value)
           setShowModalSuccess(true)
         })
         .catch((e) => {
-          console.log(e)
           setApiCall(true)
           setShowModalFailure(true)
         })
@@ -80,7 +75,6 @@ const NewProduct = () => {
   })
 
   const onSubmit = (data) => {
-    console.log('datos del formulario', data)
     const dataToPost = { ...data }
     if (imageSrc === 'url') {
       setBase64Image('')
@@ -108,7 +102,6 @@ const NewProduct = () => {
 
   const handleFileRead = async (event) => {
     const file = event.target.files[0]
-    console.log(file.type)
     if (validImageExtensions.includes(file.type)) {
       try {
         const base64ImageResult = await convertBase64(file)

@@ -40,9 +40,7 @@ const EditProduct = () => {
   const [base64ErrorText, setBase64ErrorText] = useState('')
 
   useEffect(() => {
-    console.log('effect:', registerProduct)
     if (registerProduct?.product_name?.length > 0 && token) {
-      console.log('Actualizando')
       setApiCall(false)
       const register = fetch(`https://eagle-market.onrender.com/edit/${id}`, {
         method: 'PUT',
@@ -56,7 +54,6 @@ const EditProduct = () => {
       })
 
       register.then((value) => {
-        console.log(value)
         setApiCall(true)
         if (value.ok) {
           return value.json()
@@ -65,16 +62,13 @@ const EditProduct = () => {
         }
       })
         .then((value) => {
-          console.log(value)
           setShowModalSuccess(true)
         })
         .catch((e) => {
-          console.log(e)
           setApiCall(true)
           setShowModalFailure(true)
         })
     } else if (!deleteProduct) {
-      console.log('Getting')
       const getProducts = fetch(`https://eagle-market.onrender.com/items/${id}`, {
         method: 'GET',
         headers: {
@@ -85,7 +79,6 @@ const EditProduct = () => {
         return result.json()
       })
         .then((result) => {
-          console.log('producto', result)
           if (Object.keys(result).length > 0) {
             setProductDetails(result)
             setBase64Image(result.base64Image)
@@ -100,7 +93,6 @@ const EditProduct = () => {
           }
         })
         .catch(e => {
-          console.log(e)
           setShowModalNoProductData(true)
         })
     }
@@ -130,7 +122,6 @@ const EditProduct = () => {
       })
 
       deleteProduct.then((value) => {
-        console.log(value)
         if (value.ok) {
           return value.json()
         } else {
@@ -138,14 +129,12 @@ const EditProduct = () => {
         }
       })
         .then((value) => {
-          console.log(value)
           setApiCall(true)
           cleanBuyCart()
           cleanCart()
           setShowModalDeleteSuccess(true)
         })
         .catch((e) => {
-          console.log(e)
           setApiCall(true)
           setShowModalDeleteFailure(true)
         })
@@ -180,7 +169,6 @@ const EditProduct = () => {
   })
 
   const onSubmit = (data) => {
-    console.log('datos del formulario', data)
     const dataToPost = { ...data, image: imageUrl, base64Image }
     if (imageSrc === 'url') {
       dataToPost.base64Image = ''
@@ -189,7 +177,6 @@ const EditProduct = () => {
       dataToPost.image = ''
     }
     dataToPost.price = Number(dataToPost.price)
-    console.log('Modificando a', { ...dataToPost })
     setRegisterProduct({ ...dataToPost })
   }
 
@@ -210,7 +197,6 @@ const EditProduct = () => {
 
   const handleFileRead = async (event) => {
     const file = event.target.files[0]
-    console.log(file.type)
     if (validImageExtensions.includes(file.type)) {
       const base64ImageResult = await convertBase64(file)
       setBase64ErrorText('')

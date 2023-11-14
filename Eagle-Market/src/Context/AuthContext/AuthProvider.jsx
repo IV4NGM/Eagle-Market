@@ -24,8 +24,6 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem('history', JSON.stringify([]))
     }
   }, [])
-  console.log(userInfo)
-  console.log(history)
 
   const data = { token, setToken, loginStatus, setLoginStatus, userInfo, setUserInfo, lastLetter, setLastLetter, history, setHistory }
   return (
