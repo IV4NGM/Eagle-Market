@@ -19,6 +19,7 @@ const CartProductCard = ({ data, changeValueFunction = nothingFunction, type = '
       return classNames
     }
   }
+  const totalPrice = Math.round(data.price * data.product_amount * 100) / 100
   return (
     <div
       className='card cart-product-card'onClick={(event) => {
@@ -72,7 +73,7 @@ const CartProductCard = ({ data, changeValueFunction = nothingFunction, type = '
           : ''}
       </div>
       <p>Precio individual: ${data.price}</p>
-      <p><strong>Total: ${data.price * data.product_amount}</strong></p>
+      <p><strong>Total: ${totalPrice}</strong></p>
       {changeable
         ? <button
             className='btn btn-outline-danger' onClick={(event) => {

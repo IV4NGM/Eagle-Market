@@ -63,12 +63,13 @@ const Checkout = () => {
       const localOrderTime = new Date().toLocaleTimeString()
       if (buyNow) {
         productsAmount = productToBuy.product_amount
-        totalPrice = productToBuy?.product_amount * productToBuy?.price
+        totalPrice = Math.round(productToBuy?.product_amount * productToBuy?.price * 100) / 100
       } else if (buyAllCart) {
         for (const item of cart) {
           productsAmount += item.product_amount
           totalPrice += item.price * item.product_amount
         }
+        totalPrice = Math.round(totalPrice * 100) / 100
       }
       setApiCall(false)
       const buy = fetch('https://eagle-market.onrender.com/orders', {
@@ -165,6 +166,7 @@ const Checkout = () => {
     productsAmount += item.product_amount
     totalPrice += item.price * item.product_amount
   }
+  totalPrice = Math.round(totalPrice * 100) / 100
 
   return (
     <div className='page-container'>
@@ -180,10 +182,10 @@ const Checkout = () => {
               <div className='card cart-checkout-details'>
                 <h4>Detalles de la compra</h4>
                 <div className='cart-details-grid spaced'>
-                  <p>Cantidad de productos:</p>
+                  <p>Productos:</p>
                   <p className='right'>{productToBuy?.product_amount}</p>
                   <p><strong>Gran total: </strong></p>
-                  <p className='right'><strong>$ {productToBuy?.price * productToBuy?.product_amount}</strong></p>
+                  <p className='right'><strong>$ {Math.round(productToBuy?.price * productToBuy?.product_amount * 100) / 100}</strong></p>
                 </div>
                 <div className='flex-column'>
                   <button className='btn btn-success btn-spaced' onClick={() => setShowModalBuyNow(true)}>Comprar ahora</button>
@@ -215,7 +217,7 @@ const Checkout = () => {
               <div className='card cart-checkout-details'>
                 <h4>Detalles de la compra</h4>
                 <div className='cart-details-grid spaced'>
-                  <p>Cantidad de productos:</p>
+                  <p>Productos:</p>
                   <p className='right'>{productsAmount}</p>
                   <p><strong>Gran total: </strong></p>
                   <p className='right'><strong>$ {totalPrice}</strong></p>
@@ -239,7 +241,7 @@ const Checkout = () => {
         title='Comprar ahora'
         showModal={showModalBuyNow}
         setShowModal={setShowModalBuyNow}
-        text={`¿Confirmas la compra de ${productToBuy?.product_amount} artículos con valor de` + ' $' + `${productToBuy?.product_amount * productToBuy?.price}?`}
+        text={`¿Confirmas la compra de ${productToBuy?.product_amount} artículos con valor de` + ' $' + `${Math.round(productToBuy?.product_amount * productToBuy?.price * 100) / 100}?`}
         onYes={() => setBuyNow(true)}
         textYes='Comprar ahora'
         textNo='Cancelar'
