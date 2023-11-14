@@ -57,6 +57,11 @@ const Home = () => {
   //   'Games', 'Garden', 'Grocery', 'Health', 'Home', 'Industrial', 'Jewerly', 'Kids', 'Movies', 'Music',
   //   'Outdoors', 'Sports', 'Tools', 'Toys', 'Other']
 
+  const topCategories = categoriesArray.filter(category => (products.filter((product) => product.category === category))?.length >= 7)
+  topCategories.sort((a, b) => {
+    return (products.filter((product) => product.category === b))?.length - (products.filter((product) => product.category === a))?.length
+  })
+
   const responsiveCarousel = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -122,12 +127,30 @@ const Home = () => {
           return <ProductCard data={element} key={index} />
         })} */}
       </div>
+      {loaded ? <h2 className='spaced'><strong>Nuestras categorías más famosas</strong></h2> : ''}
+      {
+        topCategories.map((category, index) => {
+          return (
+            <div key={`top-div-${index}`} className='carousel-container card'>
+              <Link key={`top-link-${index}`} to={`/search/${category}`}>
+                <h2 className='spaced' key={`top-h2-${index}`}><strong>{category}</strong></h2>
+              </Link>
+              <Carousel key={`top-carousel-${index}`} responsive={responsiveCarousel}>
+                {(products.filter((product) => product.category === category)).map((element, index) => {
+                  return <ProductCard data={element} key={`card-${index}`} />
+                })}
+              </Carousel>
+            </div>
+          )
+        })
+      }
+      {loaded ? <h2 className='spaced'><strong>Todos nuestros productos</strong></h2> : ''}
       {
         categoriesArray.map((category, index) => {
           return (
             <div key={`div-${index}`} className='carousel-container card'>
               <Link key={`link-${index}`} to={`/search/${category}`}>
-                <h2 key={`h2-${index}`}><strong>{category}</strong></h2>
+                <h2 className='spaced' key={`h2-${index}`}><strong>{category}</strong></h2>
               </Link>
               <Carousel key={`carousel-${index}`} responsive={responsiveCarousel}>
                 {(products.filter((product) => product.category === category)).map((element, index) => {
