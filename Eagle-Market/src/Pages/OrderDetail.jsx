@@ -58,7 +58,7 @@ const OrderDetail = () => {
       {element
         ? (
           <div className='flex-row cart-flex'>
-            <div className='cart-flex-left'>
+            <div className='cart-flex-left cart-flex-left--history'>
               <HistoryOrderContainer totalPrice={element?.total_price} productsAmount={element?.products_amount} orderId={element?.orderId} orderDate={element?.localOrderDate} orderTime={element?.localOrderTime} productsArray={element?.products} />
             </div>
             <div className='cart-flex-right'>
