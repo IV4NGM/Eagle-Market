@@ -482,7 +482,7 @@ form {
     display: flex;
     flex-direction: column !important;
     align-items: center;
-    width: 90%;
+    width: 70%;
   }
   .details-card {
     width: 100%;
@@ -490,15 +490,34 @@ form {
   .product-detail-card {
     width: 100%;
   }
+  .cart-flex-left--history {
+    width: 100%;
+  }
   .cart-flex-right {
     width: 70%;
     margin-top: 20px;
   }
+  .placeholder-container {
+    flex-direction: column;
+  }
+  .orders-container {
+    width: 75%;
+  }
 }
+
+@media (max-width: 700px) {
+  .cart-flex {
+    width: 90%;
+  }
+  .history-cart-card {
+    width: 80%;
+  }
+}
+
 
 @media (max-width: 600px) {
   .cart-flex {
-    width: 95%;
+    width: 85%;
   }
 
   .cart-flex-left {
@@ -519,6 +538,30 @@ form {
   .separated-section {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .orders-container {
+    width: 95%;
+  }
+
+  .history-card-body {
+    width: 95%;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .cart-product-card {
+    width: 75%;
+  }
+
+  .history-cart-card {
+    width: 95%;
+  }
+}
+
+@media (max-width: 400px) {
+  .cart-flex {
+    width: 95%;
   }
 }
 
@@ -546,6 +589,13 @@ form {
 
 .order-date {
   font-size: 18px;
+}
+
+.history-cards-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .btn-spaced {

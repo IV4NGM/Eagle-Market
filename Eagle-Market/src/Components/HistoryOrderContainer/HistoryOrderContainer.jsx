@@ -14,7 +14,7 @@ const HistoryOrderContainer = ({ totalPrice, productsAmount, orderId, orderDate,
         onClick()
       }}
     >
-      <div className='card-body'>
+      <div className='card-body history-card-body'>
         <h4 className='card-title'>Orden {orderId}</h4>
         <div className='flex-row order-summary'>
           <p><CalendarMonthOutlinedIcon /> {orderDate}</p>
@@ -22,9 +22,11 @@ const HistoryOrderContainer = ({ totalPrice, productsAmount, orderId, orderDate,
           <p><ShoppingBagOutlinedIcon /> {productsAmount} productos</p>
           <p><strong>Precio total: ${totalPrice}</strong></p>
         </div>
-        {productsArray.map((element, index) => {
-          return <CartProductCard key={index} data={element} changeable={false} />
-        })}
+        <div className='history-cards-container spaced'>
+          {productsArray.map((element, index) => {
+            return <CartProductCard key={index} data={element} changeable={false} />
+          })}
+        </div>
       </div>
     </div>
   )

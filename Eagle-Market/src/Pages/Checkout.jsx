@@ -169,7 +169,7 @@ const Checkout = () => {
         ? (
           <>
             <h2>Comprar ahora</h2>
-            <div className='flex-row cart-flex'>
+            <div className='flex-row cart-flex cart-flex--checkout'>
               <div className='cart-flex-left'>
                 <CartProductCard data={productToBuy} changeValueFunction={changeValueFunction} type='productToBuy' onDelete={() => setShowModalDeleteBuy(true)} />
               </div>
@@ -197,7 +197,7 @@ const Checkout = () => {
         ? (
           <>
             <h2 className='spaced'>Mi carrito</h2>
-            <div className='flex-row cart-flex'>
+            <div className='flex-row cart-flex  cart-flex--checkout'>
               <div className='cart-flex-left'>
                 {cart.map((element, index) => {
                   return (
