@@ -6,6 +6,7 @@ import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined'
 import ProductDefaultImage from '@/assets/product-default-image.png'
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined'
 
 const nothingFunction = () => {}
 
@@ -55,7 +56,7 @@ const CartProductCard = ({ data, changeValueFunction = nothingFunction, type = '
             </div>
             )
           : ''}
-        <div className='amount-container-number'>{data.product_amount} {!changeable ? 'artículos' : ''}</div>
+        <div className='amount-container-number'>{!changeable ? <ShoppingBagOutlinedIcon /> : ''} {data.product_amount} {!changeable ? 'productos' : ''}</div>
         {changeable
           ? (
             <div className='amount-container-right'>
