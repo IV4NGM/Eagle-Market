@@ -158,7 +158,7 @@ const EditProduct = () => {
   const registerProductFormSchema = yup.object().shape({
     product_name: yup.string().required('Escribe el nombre de tu producto').stripEmptyString().default(productDetails.product_name),
     brand: yup.string().required('Escribe la marca de tu producto').stripEmptyString().default(productDetails.brand),
-    price: yup.string('Debes ingresar un número').required('Escribe el precio de tu producto').matches(/^[1-9]\d*(\.\d{1,2})?$/, 'El precio debe ser un número con máximo 2 decimales').typeError('Debes ingresar un número'),
+    price: yup.string('Debes ingresar un número').required('Escribe el precio de tu producto').stripEmptyString().default(productDetails.price).matches(/^[1-9]\d*(\.\d{1,2})?$/, 'El precio debe ser un número con máximo 2 decimales').typeError('Debes ingresar un número'),
     category: yup.mixed().oneOf(categoriesAllowed, 'Selecciona la categoría de tu producto').defined().default(productDetails.category),
     description: yup.string().required('Escribe la descripción de tu producto').stripEmptyString().default(productDetails.description),
     sku: yup.string().stripEmptyString().default(productDetails.sku)
