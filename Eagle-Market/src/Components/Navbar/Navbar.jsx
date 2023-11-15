@@ -30,6 +30,7 @@ const Navbar = () => {
   }
 
   const maxQueryMatches = useMediaQuery('(max-width:600px)')
+  const minQueryMatches = useMediaQuery('(min-width:1200px)')
 
   return (
     <nav className='navbar navbar-expand-xl sticky-top navbar-white'>
@@ -71,7 +72,7 @@ const Navbar = () => {
       </div>
       <div className='collapse navbar-collapse' id='navbarSupportedContent'>
         <div className='navbar-nav me-auto mb-2 mb-lg-0'>
-          <NavLink to='/search' className={loginStatus && userInfo?.role === 'ADMIN' ? 'navbar__advanced-search' : 'navbar__advanced-search take-two-columns'}>
+          <NavLink to='/search' className={userInfo?.role !== 'ADMIN' && !minQueryMatches ? 'navbar__advanced-search take-two-columns' : 'navbar__advanced-search'}>
             <p>Búsqueda avanzada</p>
             <LibraryBooksOutlinedIcon />
           </NavLink>
