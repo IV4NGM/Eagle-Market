@@ -9,7 +9,9 @@ import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import '@/Styles/Home.scss'
 import EagleMarketMainPage from '@/assets/EagleMarket-main-page.jpg'
+import EagleMarketMainPageMini from '@/assets/EagleMarket-main-page-mini.jpg'
 import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowRightOutlined'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const Home = () => {
   const { loginStatus, userInfo } = useAuthContext()
@@ -93,11 +95,17 @@ const Home = () => {
       items: 2
     }
   }
+
+  const maxQueryMatches = useMediaQuery('(max-width:600px)')
+
   return (
     <div className='page-container'>
       <h2 className='home-title'>¡Hola{loginStatus ? ' ' + userInfo.first_name.toString() : ''}!</h2>
       <h3 className='home-title'>¡Encuentra miles de productos en Eagle Market!</h3>
-      <img className='main-image' src={EagleMarketMainPage} alt='Eagle Market' />
+      <div className='main-image-container'>
+        <img className='main-image' src={EagleMarketMainPageMini} alt='Eagle Market' />
+        <p className='main-image-text'>Eagle Market</p>
+      </div>
       <h3 className='home-title'><i>Donde la elegancia se encuentra con la excelencia</i></h3>
       <h2 className='home-title home-title--spaced'>Explora todas nuestras categorías</h2>
       <div className='categories-container'>

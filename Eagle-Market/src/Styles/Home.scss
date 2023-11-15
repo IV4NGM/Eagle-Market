@@ -11,6 +11,13 @@ $green-success-light: #3da474;
   // border: 2px solid rgba(0,0,0,.1); 
 }
 
+@media (max-width: 600px) {
+  .carousel-container {
+    width: 90%;
+    padding: 5px 35px;
+  }
+}
+
 .main-container {
   width: 100%;
   display: flex;
@@ -51,12 +58,25 @@ $green-success-light: #3da474;
   }
   font-size: 18px;
 }
+.main-image-container {
+  width: 100%;
+  position: relative;
+  margin-bottom: 4vh;
+}
+
+.main-image-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  font-size: calc(1.325rem + .9vw);
+  transform: translate(-50%, -50%);
+}
 
 .main-image {
   width: 70vw;
   height: 55vh;
   object-fit: cover;
-  margin-bottom: 3vh;
 }
 
 .home-title {
