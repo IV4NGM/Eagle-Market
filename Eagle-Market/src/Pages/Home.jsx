@@ -8,10 +8,8 @@ import CustomModal from '@/Components/CustomModal/CustomModal'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import '@/Styles/Home.scss'
-import EagleMarketMainPage from '@/assets/EagleMarket-main-page.jpg'
 import EagleMarketMainPageMini from '@/assets/EagleMarket-main-page-mini.jpg'
 import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowRightOutlined'
-import useMediaQuery from '@mui/material/useMediaQuery'
 
 const Home = () => {
   const { loginStatus, userInfo } = useAuthContext()
@@ -57,15 +55,19 @@ const Home = () => {
       items: 8
     },
     desktop: {
-      breakpoint: { max: 3000, min: 1360 },
+      breakpoint: { max: 3000, min: 1450 },
       items: 4
     },
+    mediumdestktop: {
+      breakpoint: { max: 1450, min: 1200 },
+      items: 3
+    },
     tablet: {
-      breakpoint: { max: 1360, min: 670 },
+      breakpoint: { max: 1200, min: 750 },
       items: 2
     },
     mobile: {
-      breakpoint: { max: 670, min: 0 },
+      breakpoint: { max: 750, min: 0 },
       items: 1
     }
   }
@@ -95,8 +97,6 @@ const Home = () => {
       items: 2
     }
   }
-
-  const maxQueryMatches = useMediaQuery('(max-width:600px)')
 
   return (
     <div className='page-container'>
