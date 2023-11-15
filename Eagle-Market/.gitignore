@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 jsconfig.json
+
+.netlify
+netlify.toml
