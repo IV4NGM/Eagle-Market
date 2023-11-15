@@ -27,3 +27,12 @@
 .mail-icon-footer{
   margin-left: 0.5rem;
 }
+
+@media (max-width: 600px) {
+  .hide-on-small {
+    display: none;
+  }
+  .center-content-on-small {
+    justify-content: center !important;
+  }
+}

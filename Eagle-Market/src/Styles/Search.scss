@@ -59,3 +59,28 @@
     margin-top: 70px;
   }
 }
+
+@media (max-width: 1040px) {
+  .search-page-container {
+    display: flex;
+    flex-direction: column !important;
+    align-items: center;
+    width: 90%;
+  }
+  .filters-container {
+    width: 70%;
+    margin: 0;
+  }
+  .products-container {
+    width: 95%;
+    margin-top: 20px;
+  }
+}
+@media (max-width: 800px) {
+  .search-page-container {
+    width: 95%;
+  }
+  .filters-container {
+    width: 95%;
+  }
+}
