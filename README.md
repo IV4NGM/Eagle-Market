@@ -1,6 +1,6 @@
 # Eagle-Market
 
-Este proyecto es un ecommerce creado con React basado en la API desarrollada en mi repositorio [ecommerce-json-server](https://github.com/IV4NGM/ecommerce-json-server "ecommerce-json-server"). Se encuentra desplegada en la dirección web [eagle-market.netlify.app](eagle-market.netlify.app "eagle-market.netlify.app").
+Este proyecto es un ecommerce creado con React basado en la API desarrollada en mi repositorio [ecommerce-json-server](https://github.com/IV4NGM/ecommerce-json-server "ecommerce-json-server"). Se encuentra desplegada en la dirección web [eagle-market.netlify.app](www.eagle-market.netlify.app "www.eagle-market.netlify.app").
 
 ### Características principales
 
