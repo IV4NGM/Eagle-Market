@@ -15,7 +15,7 @@ Este proyecto es un ecommerce creado con React basado en la API desarrollada en 
 
 * El diseño del sitio es completamente *responsive*.
 * Se hace uso de localStorage para guardar los datos de inicio de sesión.
-* Se utiliza React Context para actualizar el [carrito de compras](Carrito "Carrito"), manejar los datos de inicio de sesión y el historial de compras.
+* Se utiliza React Context para actualizar el [carrito de compras](#carrito "Carrito"), manejar los datos de inicio de sesión y el historial de compras.
 * Se hace uso de React Router Dom para manejar las rutas. A continuación se enlistan las principales propiedades y funcionalidades de cada ruta y algunos componentes especiales.
 
 #### Rutas
@@ -30,11 +30,11 @@ Posteriormente se muestra una sección de categorías principales, que correspon
 
 Por último, se muestran todas las categorías no vacías ordenadas alfabéticamente, cada una mostrando sus productos dentro de un *carousel*.
 
-Al darle clic al nombre de cada categoría (tanto en el *carousel* de categorías como en los demás elementos *carousel* de productos clasificados por categoría) se redirige a la página de [Búsqueda avanzada](Search "Search") mostrando únicamente los productos de la categoría seleccionada.
+Al darle clic al nombre de cada categoría (tanto en el *carousel* de categorías como en los demás elementos *carousel* de productos clasificados por categoría) se redirige a la página de [Búsqueda avanzada](#search "Search") mostrando únicamente los productos de la categoría seleccionada.
 
 Todos los elementos *carousel* mencionados anteriormente son *responsive*.
 
-Mientras no se cargan todos los productos de la API se muestran 3 [Placeholders de tarjetas de productos](Placeholders "Placeholders").
+Mientras no se cargan todos los productos de la API se muestran 3 [Placeholders de tarjetas de productos](#placeholders "Placeholders").
 
 ##### Search
 
@@ -58,7 +58,7 @@ En caso de no haber resultados, se muestra un mensaje especial sin arrojar algú
 
 Los filtros se aplican inmediatamente, y existe una opción de restablecerlos por medio de un botón.
 
-Mientras no se cargan todos los productos de la API se muestran 3 [Placeholders de tarjetas de productos](Placeholders "Placeholders").
+Mientras no se cargan todos los productos de la API se muestran 3 [Placeholders de tarjetas de productos](#placeholders "Placeholders").
 
 ##### Login
 
@@ -68,9 +68,9 @@ En caso de que el conjunto de correo electrónico y contraseña proporcionados n
 
 En lo que se espera la respuesta de la API se muestra una imagen de carga.
 
-Si los datos ingresados son correctos, se redirige automáticamente a la página de [Home](Home "Home").
+Si los datos ingresados son correctos, se redirige automáticamente a la página de [Home](#home "Home").
 
-Además, hay un botón que permite ir a la página de [Registro](Signup "Signup") para crear una cuenta nueva.
+Además, hay un botón que permite ir a la página de [Registro](#signup "Signup") para crear una cuenta nueva.
 
 ##### Signup
 
@@ -80,9 +80,9 @@ Si el correo electrónico ya se encuentra registrado se muetra un texto de error
 
 En lo que se espera la respuesta de la API se muestra una imagen de carga.
 
-Si los datos ingresados son aceptados se muestra un *Modal* de confirmación y se indica que se debe iniciar sesión para continuar. Sin importar la acción que haga el usuario con este modal (aceptarlo, cerrarlo o dar clic fuera de él), se redirige automáticamente a la página de [Iniciar sesión](Login "Login").
+Si los datos ingresados son aceptados se muestra un *Modal* de confirmación y se indica que se debe iniciar sesión para continuar. Sin importar la acción que haga el usuario con este modal (aceptarlo, cerrarlo o dar clic fuera de él), se redirige automáticamente a la página de [Iniciar sesión](#login "Login").
 
-Además, hay un botón que permite ir a la página de [Iniciar sesión](Login "Login") si se quiere usar una cuenta ya existente.
+Además, hay un botón que permite ir a la página de [Iniciar sesión](#login "Login") si se quiere usar una cuenta ya existente.
 
 ##### ProductDetails
 
@@ -90,9 +90,9 @@ Esta página permite ver los detalles de un producto: su nombre, imagen, precio,
 
 La descripción se muestra con los saltos de línea ingresados al crear el producto. La marca, categoría y SKU (en caso de existir) se presentan en una tabla.
 
-Se puede seleccionar la cantidad de artículos de este mismo producto que se quieren ya sea agregar al carrito o comprar ahora. Para conocer más detalles sobre estas dos acciones véase [Checkout](Checkout "Chekout").
+Se puede seleccionar la cantidad de artículos de este mismo producto que se quieren ya sea agregar al carrito o comprar ahora. Para conocer más detalles sobre estas dos acciones véase [Checkout](#checkout "Chekout").
 
-Si se es administrador, existen dos botones adicionales a los demás tipos de usuario: uno para editar el producto y otro para eliminarlo. El botón de editar producto redirige a una página especial para ello, y el de eliminarlo muestra un *Modal* de confirmación para realizarlo. Para más detalles véase [Funcionalidades especiales de Administrador](Administrador "Administrador").
+Si se es administrador, existen dos botones adicionales a los demás tipos de usuario: uno para editar el producto y otro para eliminarlo. El botón de editar producto redirige a una página especial para ello, y el de eliminarlo muestra un *Modal* de confirmación para realizarlo. Para más detalles véase [Funcionalidades especiales de Administrador](#administrador "Administrador").
 
 Hay una imagen por defecto para los productos que no tienen información de alguna imagen en específico o si esta información es incorrecta (por ejemplo, si el link de la imagen que debería estar ahí no sirve).
 
@@ -105,7 +105,7 @@ Esta página permite modificar y eliminar elementos que se desean comprar, y pos
 
 Las tarjetas de los productos en estas secciones contienen botones que permiten modificar la cantidad elegida de cada artículo, restando o sumando 1, respecitvamente. Cuando la cantidad es igual a 1 y se da clic en el botón de restar, aparece un *Modal* de confirmación para eliminarlo del carrito. Además, independientemente de la cantidad, hay un botón en forma de X que permite eliminar el artículo del carrito, mostrando un *Modal* para confirmarlo.
 
-Al dar clic en cada tarjeta de un producto se dirige a [Detalles del producto](ProductDetails "ProductDetails").
+Al dar clic en cada tarjeta de un producto se dirige a [Detalles del producto](#productDetails "ProductDetails").
 
 Al dar clic en algún botón para comprar, aparece un modal de confirmación, y en caso de que se acepte, se hace una llamada a la API para registrar dicha compra, mostrando una imagen de carga mientras se espera a la respuesta. Posteriormente a esto aparece otro *Modal*, diciendo si la compra pudo o no realizarse correctamente.
 
@@ -117,9 +117,9 @@ En Mis Compras aparece el historial de compras realizadas por el usuario. Este p
 
 Las compras aparecen mostrando su ID, fecha y hora de compra, cantidad de productos, precio total y cuáles son los artículos comprados, incluyendo sus cantidades individuales.
 
-Al dar clic en cada compra se redirige a [Detalles de la compra](OrderDetails "OrderDetails").
+Al dar clic en cada compra se redirige a [Detalles de la compra](#orderDetails "OrderDetails").
 
-Al dar clic en cada tarjeta de un producto se dirige a [Detalles del producto](ProductDetails "ProductDetails").
+Al dar clic en cada tarjeta de un producto se dirige a [Detalles del producto](#productDetails "ProductDetails").
 
 Si el usuario no ha realizado alguna compra se muestra una imagen de fondo y se sugiere ir a Inicio para comprar.
 
@@ -127,7 +127,7 @@ Si el usuario no ha realizado alguna compra se muestra una imagen de fondo y se 
 
 En esta página se muestra el detalle individual de la compra seleccionada, mostrando en un contenedor su ID, fecha y hora de compra, cantidad de productos, precio total y cuáles son los artículos comprados, incluyendo sus cantidades individuales. En otro contenedor se muestra un resumen que solo incluye su ID, fecha y hora de compra, cantidad de productos y precio total.
 
-Al dar clic en cada tarjeta de un producto se dirige a [Detalles del producto](ProductDetails "ProductDetails").
+Al dar clic en cada tarjeta de un producto se dirige a [Detalles del producto](#productDetails "ProductDetails").
 
 Este presenta una imagen de carga mientras se hace un llamado a la API para recuperar el historial del usuario, y muestra un *Modal* si existe algún error en este llamado.
 
@@ -141,9 +141,9 @@ Esta es la página por defecto cuando se introduce una ruta que no se tiene regi
 
 ##### Navbar
 
-La Navbar tiene un diseño totalmente *responsive* adaptándose a distintos tipos de pantalla. Muestra botones de Registrarse e Iniciar Sesión cuando no hay un usuario con una sesión activa, y otro botón que dice el nombre del usuario en caso contrario. Al dar clic en este último se despliega un menú con la información de la cuenta del usuario activo: su nombre, correo electrónico, y una insignia en caso de que sea administrador. Además, aparecen botones para [Ver carrito](Checkout "Checkout"), ir al [Historial de compras](MyOrders "MyOrders") y Cerrar Sesión. Si se es administrador también se incluye un botón para Crear un producto.
+La Navbar tiene un diseño totalmente *responsive* adaptándose a distintos tipos de pantalla. Muestra botones de Registrarse e Iniciar Sesión cuando no hay un usuario con una sesión activa, y otro botón que dice el nombre del usuario en caso contrario. Al dar clic en este último se despliega un menú con la información de la cuenta del usuario activo: su nombre, correo electrónico, y una insignia en caso de que sea administrador. Además, aparecen botones para [Ver carrito](#checkout "Checkout"), ir al [Historial de compras](#myOrders "MyOrders") y Cerrar Sesión. Si se es administrador también se incluye un botón para Crear un producto.
 
-En el tamaño de pantalla más chica desaparece la barra de búsqueda y se sustituye únicamente por una lupa, la cual al darle clic redirige a [Búsqueda avanzada](Search "Search"). En los otros tamaños en donde sí hay barra de búsqueda, al dar enter o darle clic en la lupa redirige a [Búsqueda avanzada](Search "Search") colocando en el texto de búsqueda el que se incluyó en esta barra antes de darle clic.
+En el tamaño de pantalla más chica desaparece la barra de búsqueda y se sustituye únicamente por una lupa, la cual al darle clic redirige a [Búsqueda avanzada](#search "Search"). En los otros tamaños en donde sí hay barra de búsqueda, al dar enter o darle clic en la lupa redirige a [Búsqueda avanzada](#search "Search") colocando en el texto de búsqueda el que se incluyó en esta barra antes de darle clic.
 
 ##### Footer
 
@@ -151,7 +151,7 @@ El Footer incluye los datos de la página y mi correo electrónico de contacto: 
 
 ##### Tarjetas de productos
 
-Muestran la imagen del producto, el nombre, la marca y un botón que sirve para ver detalles. Al darle clic a cada tarjeta redirige a [Detalles del producto](ProductDetails "ProductDetails"). El nombre del producto tiene un límite máximo de 3 líneas, y la marca de 1. En caso de que estos límites se excedan, se muestran tres puntos suspensivos (...), evitando *overflow*.
+Muestran la imagen del producto, el nombre, la marca y un botón que sirve para ver detalles. Al darle clic a cada tarjeta redirige a [Detalles del producto](#productDetails "ProductDetails"). El nombre del producto tiene un límite máximo de 3 líneas, y la marca de 1. En caso de que estos límites se excedan, se muestran tres puntos suspensivos (...), evitando *overflow*.
 
 Hay una imagen por defecto para los productos que no tienen información de alguna imagen en específico o si esta información es incorrecta (por ejemplo, si el link de la imagen que debería estar ahí no sirve).
 
