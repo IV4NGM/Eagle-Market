@@ -155,7 +155,7 @@ Muestran la imagen del producto, el nombre, la marca y un botón que sirve para 
 
 Hay una imagen por defecto para los productos que no tienen información de alguna imagen en específico o si esta información es incorrecta (por ejemplo, si el link de la imagen que debería estar ahí no sirve).
 
-Si se es administrador se muestra un pequeño lápiz en la esquina superior izquierda de cada tarjeta, que al darle clic redirige a una página para editar dicho producto. Para más detalles véase [Funcionalidades especiales de Administrador](Administrador "Administrador").
+Si se es administrador se muestra un pequeño lápiz en la esquina superior izquierda de cada tarjeta, que al darle clic redirige a una página para editar dicho producto. Para más detalles véase [Funcionalidades especiales de Administrador](#administrador "Administrador").
 
 ###### Placeholders
 
