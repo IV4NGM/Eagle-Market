@@ -2,8 +2,10 @@
   &-body {
     width: 100% !important;
   }
-}
-
-.placeholder-card {
-  margin: 15px 15px !important;
+  &-card {
+    margin: 15px 15px !important;
+  }
+  &-search-card {
+    margin: 15px 0 !important;
+  }
 }

@@ -1,9 +1,10 @@
 import ProductDefaultImage from '@/assets/product-default-image.png'
 import './ProductCardPlaceholder.scss'
 
-const ProductCardPlaceholder = () => {
+// eslint-disable-next-line react/prop-types
+const ProductCardPlaceholder = ({ searchCard = false }) => {
   return (
-    <div className='card product-card placeholder-card' aria-hidden='true'>
+    <div className={'card product-card ' + (searchCard ? 'placeholder-search-card' : 'placeholder-card')} aria-hidden='true'>
       <div className='card-image-container'>
         <img src={ProductDefaultImage} className='card-img-top product-image-card' alt='Product image' />
       </div>

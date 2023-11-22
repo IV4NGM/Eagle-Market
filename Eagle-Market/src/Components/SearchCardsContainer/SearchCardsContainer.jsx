@@ -25,7 +25,7 @@ const SearchCardsContainer = ({ products, loaded, search, selectedCategories, al
   return (
     <>
       <div className='search-cards-container'>
-        {!loaded ? <> <ProductCardPlaceholder /> <ProductCardPlaceholder /> <ProductCardPlaceholder /> </> : ''}
+        {!loaded ? <> <ProductCardPlaceholder searchCard /> <ProductCardPlaceholder searchCard /> <ProductCardPlaceholder searchCard /> </> : ''}
         {productsArray.length > 0
           ? productsArray.map((element, index) => {
             return <ProductCard data={element} key={index} />
